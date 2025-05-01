@@ -5,6 +5,7 @@ const withNextra = nextra({
   // themeConfig: "./theme.config.jsx",
   defaultShowCopyCode: true,
   readingTime: true,
+  // contentDirBasePath: "/blog2",
 });
 
 export default withNextra({
@@ -20,4 +21,5 @@ export default withNextra({
       },
     ],
   },
+  turbopack: true,
 });

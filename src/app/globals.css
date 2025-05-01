@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "../styles/default.css";
+/* @import "../styles/cards.css"; */
+@import "../styles/code-block.css";
+
+
+.xbackground {
+  @apply h-screen bg-stone-50 overflow-y-scroll;
+}
+
+.xbutton {
+  @apply bg-black text-white hover:bg-black/60 transition-colors rounded p-2 inline-block;
+}
+
+main {}
+
+.xtop-page {
+  h1 {
+    @apply text-5xl font-medium my-2;
+  }
+
+  h2 {
+    @apply text-3xl font-medium my-2;
+  }
+
+  h3 {
+    @apply text-2xl font-light my-2;
+  }
+}
+
+.xblog-top {
+  h1 {
+    @apply text-5xl font-medium my-2;
+  }
+
+  h2 {
+    @apply text-2xl font-medium;
+  }
+
+  p {
+    @apply my-0;
+  }
+
+  time {
+    @apply block text-sm text-gray-500;
+  }
+
+  .xblog-card {
+    @apply my-10;
+  }
+}
+
+
+.xprose {
+  header {
+    @apply mt-36 mb-20;
+  }
+
+  h1 {
+    @apply text-4xl font-medium mt-5 mb-3;
+  }
+
+  h2 {
+    @apply text-3xl font-medium mt-5 mb-3;
+  }
+
+  h3 {
+    @apply text-2xl font-medium mt-5 mb-3;
+  }
+
+  h4 {
+    @apply text-xl font-medium mt-5 mb-3;
+  }
+
+  ul {
+    @apply list-disc list-outside ml-5;
+  }
+
+  li {
+    @apply my-2;
+  }
+
+  ol {
+    @apply list-decimal list-outside ml-5;
+  }
+
+  .xprose-meta {
+    @apply text-sm text-gray-500;
+  }
+}
+
+p {
+  @apply my-2;
+}
+
+.nextra-tag {
+  @apply px-2.5 py-0.5 text-sm font-semibold rounded-md transition-colors shadow-sm;
+  @apply bg-neutral-900 text-white;
+  @apply dark:bg-gray-50 dark:text-black;
+
+  &:hover {
+    @apply bg-neutral-700;
+    @apply dark:bg-gray-200;
+  }
+}

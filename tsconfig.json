@@ -22,13 +22,15 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".",
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "**/*.mdx"
   ],
   "exclude": [
     "node_modules"
