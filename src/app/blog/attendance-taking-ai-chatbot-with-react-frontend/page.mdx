@@ -17,8 +17,8 @@ image: /assets/attendance-taking-ai-chatbot-with-react-frontend.jpg
 ---
 
 import { Callout } from "nextra/components";
-
-<img src="/assets/attendance-taking-ai-chatbot-with-react-frontend.jpg" />
+import image1 from "./attendance-taking-ai-chatbot-screen.gif";
+import Image from "next/image";
 
 In the previous [post #1](/blog/student-attendance-chatbot) and [post #2](/blog/student-attendance-chatbot-with-parallel-function-calling), I built a student attendance chatbot using _OpenAI_ and _LangChainJS_. The code runs on the server side and features an interactive prompt in the terminal. However, it wasn't very convenient for users to quickly test the chatbot and see the results. In this post, I'll demonstrate how I added a minimal _ReactJS_ frontend for the chatbot.
 
@@ -28,8 +28,8 @@ I accomplished (1) effortlessly with [Fastify](https://fastify.dev/), aggregatin
 
 The frontend development also progressed quickly, thanks to code snippets from [Zeshanshakil](https://medium.com/@zeshanshakil0/lets-create-ai-chatbot-from-scratch-in-reactjs-223ff435f740) with some modifications.
 
-<img
-  src="/assets/attendance-taking-ai-chatbot-screen.gif"
+<Image
+  src={image1}
   alt="screen capture of the chatbot frontend with reactjs"
 />
 

@@ -9,8 +9,9 @@ author: Calvin
 ---
 
 import { Callout } from "nextra/components";
-
-<img src="/images/SCR-20231019-klaw.png" />
+import Image from "next/image";
+import image1 from "./SCR-20231019-kkvw.png";
+import image2 from "./SCR-20231019-klaw.png";
 
 <Callout>
 All the code below can be found in my GitHub:
@@ -341,11 +342,21 @@ export default App;
 
 To test the effect, run `yarn dev` to start the dev server, which automatically opens the app in a browser to see the "normal" state:
 
-<img src="/images/SCR-20231019-kkvw.png" />
-
+<Image
+  src={image1}
+  alt="version checker web app screen1"
+  width={800}
+  height={0}
+  />
 Then, you can change the value in `signature.json` from an editor, and save the file to see the "update available" state.
 
-<img src="/images/SCR-20231019-klaw.png" />
+<Image
+  src={image2}
+  alt="version checker web app screen2"
+  width={800}
+  height={0}
+  />
+
 
 ## Source Code
 

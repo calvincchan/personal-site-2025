@@ -10,7 +10,15 @@ tags:
 author: Calvin
 ---
 
-<img src="/images/SCR-20231017-mndm.png" alt="icon image maker web app" />
+import Image from "next/image";
+import image1 from "./SCR-20231017-mndm.png";
+
+<Image
+  src={image1}
+  alt="icon image maker web app"
+  width={800}
+  height={0}
+  priority />
 
 Just a quick and simple frontend for testing and building the image URL the Icon Image Maker Lambda function. It is built with React and [Vite](https://vitejs.dev/). You can easily control the parameters and see the result in real-time.
 

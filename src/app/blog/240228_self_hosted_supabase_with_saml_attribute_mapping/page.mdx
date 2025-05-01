@@ -12,7 +12,8 @@ draft: false
 image: /assets/240228_self_hosted_supabase_with_saml_attribute_mapping.jpg
 ---
 
-<img src="/assets/240228_self_hosted_supabase_with_saml_attribute_mapping.jpg" />
+import Image from "next/image";
+import image1 from "./SCR-20240228-ldfm.png";
 
 I have been using _Supabase_ for my latest projects. As my previous blog post demonstrated, _Supabase_ supports [custom Single Sign-On](https://supabase.com/docs/guides/auth/sso/auth-sso-saml) via SAML 2.0 protocol. If you have an identity provider that is compatible to SAML 2.0, you can integrate it into your _Supabase_ instance, both hosted or self-hosted. For self-hosted Supabase, you can find my guide on enabling SSO here: [Enabling custom SAML SSO on Your Self-hosted Supabase](https://calvincchan.com/blog/self-hosted-supabase-enable-sso)
 
@@ -24,7 +25,10 @@ First, make sure the Identity Provider is properly configured and that the user 
 
 I use auth0.com for this demo. After creating a new application, don't forget to set the correct Callback URL (http://localhost:8000/sso/saml/acs) and Allowed Web Origins (http://localhost:5173) (or your own client URL).
 
-<img src="/assets/SCR-20240228-ldfm.png" />
+<Image
+  src={image1}
+  alt="screen capture of the auth0 application settings"
+  className="w-full h-auto"/>
 
 ## Run A Local Instance Of Supabase
 

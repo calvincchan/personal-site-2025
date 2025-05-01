@@ -12,10 +12,9 @@ draft: false
 image: /assets/240806-chat-with-your-logseq-journal-with-gpt4all.jpg
 ---
 
-<img
-  src="/assets/240806-chat-with-your-logseq-journal-with-gpt4all.jpg"
-  alt="Top Banner"
-/>
+import Image from "next/image";
+import image1 from "./240806-SCR-20240806-muox.png";
+import image2 from "./240806-gpt4all.gif";
 
 In previous [Logseq RAG experiments](/tags/logseq-rag), I used a locally running
 instance of Ollama to "chat" with my Logseq journal, trying to generate insights
@@ -24,13 +23,20 @@ but the setup process was a bit cumbersome.
 
 Recently, I discovered [GPT4All](https://gpt4all.com/), an all-in-one desktop app that can run local GPT models, as well as connect to cloud-based models if an API key is provided. The app is easy to use and has a nice chat interface with chat history. Most importantly, it can take a folder of files as a knowledge base and generate responses based on the content of the files. This is perfect for Logseq journals! First, I assigned the Logseq MD document folder to the app:
 
-<img
-  src="/assets/240806-SCR-20240806-muox.png"
+<Image
+  src={image1}
   alt="Assigning Logseq folder in GPT4All app"
+  width={800}
+  height={0}
 />
 
 Once the folder is assigned, it automatically indexes the files for quick querying. I can then ask questions or start a conversation with the GPT model of my choice.
 
-<img src="/assets/240806-gpt4all.gif" alt="Using GPT4All with Logseq" />
+<Image
+  src={image2}
+  alt="Using GPT4All with Logseq"
+  width={800}
+  height={0}
+/>
 
 I am using my MacBook Pro M1, and the response speed is quite fast. Considering that everything is running locally, I am quite impressed. It got me thinking that this is what Siri should be like, and I am pretty sure Apple has the technology to do this and will eventually implement it.
