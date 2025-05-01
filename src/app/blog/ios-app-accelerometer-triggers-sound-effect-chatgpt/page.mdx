@@ -1,0 +1,86 @@
+---
+title: Build Super Mario Bros Coin App Using Accelerometer to Trigger Sound Effect
+date: 2023/10/25
+description: With the help of ChatGPT, I made this iOS app that plays the Super Mario Bros coin sound effect when the user *Gentally* punch the back of the phone.
+tags:
+  - ai coding
+  - chatgpt
+  - ios
+  - swift
+author: Calvin
+image: /assets/red-plumber.jpg
+---
+
+import { YouTube } from "src/_components/YouTube";
+
+<YouTube id="HS0RGEa-e6k" />
+
+Halloween is approaching, and my 4-year-old son wants to be Super Mario, his latest obsession after watching the movie. As a tech-loving dad, I decided to create something fun for his trick-or-treat tour and learn something new at the same time. In this experiment, I used ChatGPT to develop an iOS app that plays the Super Mario Bros coin sound when you gently **punch** the back of the phone. Let's get into it and see how it's done.
+
+**TLDR**:
+
+1. The final code can be found in [Red Plumber repo on GitHub](https://github.com/calvincchan/red-plumber)
+2. you can see my [full conversation with ChatGPT here](https://chat.openai.com/share/45ad3816-394a-4322-b2af-50761d519df8)
+
+First prompt:
+
+```
+  I want to start an iOS project that uses accelerometer to trigger a sound
+  effect playback. Can you help?
+```
+
+```
+Of course, Calvin! To start an iOS project that uses the accelerometer to trigger sound effects, you'll need to work with Core Motion for accelerometer data and an audio framework like AVAudioPlayer for sound playback. Here are the general steps:
+
+1. Create a new Xcode project.
+2. Import the Core Motion framework.
+3. Set up a reference to the accelerometer data using CMMotionManager.
+4. Set up an AVAudioPlayer to handle your sound effect.
+5. Monitor the accelerometer data, and when the desired motion occurs, trigger the sound effect with AVAudioPlayer.
+6. You can use the accelerometer data (e.g., device motion, acceleration, or attitude) to detect motion changes and decide when to play the sound. If you have any specific questions or need more guidance on a particular step, feel free to ask!
+```
+
+Nice general direction. Since I don't really know Swift, I continued to ask for more details on step 3.
+
+```
+Can you tell me how to do step 3?
+```
+
+ChatGPT replied me with a few code snippets. However, when looking at my empty Xcode project, I realized that I need to know which file to put the code snippets in. So I asked:
+
+```
+Should I put the code in `ViewController` or `AppDelegate`?
+```
+
+And ChatGPT explained to me that I should put the code in `ViewController`. This is very useful to people no knowledge about iOS coding style.
+
+Next, I asked how to modify the existing code in `ViewController.swift`:
+
+````
+The current content of ViewController.swift is this:
+
+```
+import UIKit
+
+class ViewController: UIViewController {
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do any additional setup after loading the view.
+  }
+
+
+}
+```
+
+Can you add the suggested code for detecting sudden jolt? And when a jolt is detected, playback a predefined custom sound effect
+
+````
+
+Then the reply will be a ready to copy code with the suggested snippets added to the right place.
+
+You can guess how the journey carried on from this point. I asked about how to add the _mp3_ sound file to the project, play multiple instances of the sound with some overlaps, adjusting the sensitivity of the accelerometer, and so on. ChatGPT was able to answer all my questions and provide me with the code snippets to get me going.
+
+The while project took me about 2 hours from start to finish.
+
+GitHub: https://github.com/calvincchan/red-plumber

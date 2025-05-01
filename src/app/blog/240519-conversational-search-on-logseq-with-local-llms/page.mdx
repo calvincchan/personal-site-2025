@@ -1,0 +1,79 @@
+---
+title: "Unleash Your Logseq Knowledge: Conversational Search with Local LLMs"
+date: 2024/05/19
+description: "Transform your Logseq experience with conversational search powered by locally running Ollama. Retrieve the most relevant information with ease while keeping your data private and secure!"
+tags:
+  - logseq
+  - logseq-rag
+  - llm
+  - ollama
+  - ai
+  - privacy
+  - knowledge-management
+  - conversational-search
+  - personal-knowledge-base
+  - productivity
+author: Calvin
+draft: false
+image: /assets/240519-conversational-search-on-logseq-with-local-llms.jpg
+---
+
+import { Callout } from "nextra/components";
+
+<img
+  src="/assets/240519-conversational-search-on-logseq-with-local-llms.jpg"
+  alt="Conversational Search on Logseq with Local LLMs"
+/>
+
+Ever feel like your Logseq is a treasure trove of information, but buried deep within lies the nugget you desperately need? Daily tasks, web clippings, and personal notes - it's a wealth of knowledge, but searching effectively can be a challenge.
+
+In this post, we'll explore the exciting potential of local Large Language Models (LLMs) to transform your Logseq experience. Imagine a conversational interface where you can chat with your personal knowledge base, retrieving the most relevant information with ease. All while keeping your data private and secure!
+
+## The Challenge: Information Overload
+
+Let's face it, life is busy. We juggle tasks, encounter interesting web pages, and jot down personal reflections, all within Logseq. Over time, this creates a vast collection of journals. But when it comes time to recall that specific website you bookmarked months ago, or that insightful note you wrote during a brainstorming session, searching through endless entries can be frustrating.
+
+## The Solution: Local LLM + Conversational Search
+
+Here's where local LLMs come in. Unlike traditional cloud-based LLMs, local LLMs operate entirely on your device. This means your data stays private, while you still harness the power of advanced language processing.
+
+By integrating a local LLM with Logseq, we can create a conversational search interface. Instead of clunky keyword searches, you simply talk to your knowledge base! Ask questions like:
+
+- "Hey Logseq, remind me of that website I saved about sustainable gardening?"
+- "Can you summarize my key takeaways from last month's brainstorming session on project X?"
+- "Show me all my notes related to productivity hacks."
+
+The LLM, trained on your Logseq data, understands the context of your queries and delivers the most relevant information in a natural, conversational manner.
+
+## Benefits of Local LLM Integration
+
+- **Effortless Search:** No more struggling with keywords or complex search strings. Just ask your questions in natural language.
+- **Enhanced Recall:** The LLM can connect seemingly unrelated notes and journals, surfacing insights you might have missed.
+- **Deeper Knowledge Exploration:** Conversational search encourages a more fluid exploration of your knowledge base, fostering new connections and ideas.
+- **Privacy by Design:** Local LLMs keep your data secure on your own device, eliminating privacy concerns associated with cloud-based solutions.
+
+## Getting Started with Local LLM and Logseq
+
+As a proof of concept, I have created a Git repository with a simple implementation of a conversational search interface using Ollama and Logseq.
+
+<Callout>
+  You can find the repository at
+  https://github.com/calvincchan/logseq-rag/tree/v1.0.0
+</Callout>
+
+- Use Langchain to connect to local Ollama with `llama3` Model.
+- Directly access the Logseq data using the file system.
+- For simplicity, use the Memory Vector Store to store the data.
+- For simplicity of Typescript support and speed, I use `bun` instead of `node`.
+
+This version is a simple proof of concept. Future versions will include more advanced features and optimizations:
+
+- Test with other LLM models.
+- Implement a more sophisticated memory store.
+- Experiment with different loading and parsing strategies.
+- Enable chat memory.
+- Interface with WhatsApp, Telegram, or other messaging platforms.
+
+## The Future of Personal Knowledge Management
+
+Integrating local LLMs with Logseq promises to revolutionize the way we interact with our personal knowledge bases. Imagine a future where you have a seamless conversation with your own data, effortlessly retrieving the information you need, all while safeguarding your privacy.

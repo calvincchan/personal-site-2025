@@ -1,0 +1,60 @@
+---
+title: "Logseq RAG Further Exploration with Qdrant and Chat History"
+date: 2024/05/24
+description: "Improve the performance of the Logseq RAG chatbot project."
+tags:
+  - logseq
+  - logseq-rag
+  - llm
+  - ollama
+  - ai
+  - knowledge-management
+  - conversational-search
+  - personal-knowledge-base
+  - productivity
+author: Calvin
+draft: false
+image: /assets/240524-logseq-rag-further-exploration-with-qdrant-and-chat-history.jpg
+---
+
+import { Callout } from "nextra/components";
+import { YouTube } from "src/_components/YouTube";
+
+<img src="/assets/240524-logseq-rag-further-exploration-with-qdrant-and-chat-history.jpg" />
+
+In the previous blog post ["Unleash Your Logseq Knowledge: Conversational Search
+with Local LLMs](./240519-conversational-search-on-logseq-with-local-llms), I explored
+how to build a chatbot powered by your Logseq journals and a local Large Language
+Model (LLM). Since then, I've been experimenting with some improvements to enhance
+the system's performance and functionality:
+
+- **Leveraging Qdrant for Vector Storage:** I replaced the memory vector store with [Qdrant](https://qdrant.com/). Here's what excites me about Qdrant:
+
+  - **Performance Boost:** It's specifically designed for vector similarity search, making retrieval of relevant information from your journals significantly faster.
+  - **Easy Docker Setup:** I can quickly spin up a test Qdrant database using Docker. This makes it convenient to get started and experiment without complex installation processes.
+
+- **Timestamp Integration in TextLoader:** I modified the TextLoader component to incorporate timestamp information. This allows the chatbot to consider the temporal context of your entries when responding to queries. By understanding the chronology of your notes, the chatbot can deliver more nuanced and relevant responses.
+
+- **Introducing Chat History:** I've implemented a chat history feature. This enables the chatbot to track the conversation flow and tailor its responses based on the context of previous interactions. By remembering past exchanges, the chatbot can provide more coherent and informative answers that build upon the conversation.
+
+These refinements aim to create a more efficient and informative chatbot experience built upon your Logseq knowledge base. I'll be sure to share further developments and findings in future posts as I continue exploring the potential of Logseq RAG.
+
+<Callout>
+  You can find this version of the repository at
+  https://github.com/calvincchan/logseq-rag/tree/v1.1.0
+</Callout>
+
+## Example Chat Log
+
+Here's a sample chat log to illustrate the conversational search experience with Logseq RAG:
+
+<YouTube id="wxpNUKsJTl0" />
+
+The first 2 queries demonstrate the chatbot's ability to retrieve relevant information from my test Logseq journals. However, the following queries are quite our of context. I was expecting it to fetch the information about the best practices for action button design in my journals, and it failed to do so.
+
+I'll continue refining the chatbot's capabilities to enhance its performance and accuracy. Stay tuned for more updates. Thank you for following along!
+
+<Callout>
+  You can find the repository at
+  https://github.com/calvincchan/logseq-rag/tree/v1.1.0
+</Callout>

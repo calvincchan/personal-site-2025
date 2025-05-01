@@ -1,0 +1,216 @@
+---
+title: Making a Student Attendance Tracking ChatBot
+date: 2023/12/14
+description: I built a chatbot that can take attendance and answer questions about attendance history, using LangChain and OpenAI "Function Calling".
+tags:
+  - langchain
+  - ai
+  - chatbot
+  - openai
+  - function-calling
+  - sql-chain
+  - csv-loader
+author: Calvin
+draft: false
+image: /assets/student-attendance-chatbot.jpg
+---
+
+import { Callout } from "nextra/components";
+
+<img src="/assets/student-attendance-chatbot.jpg" />
+<Callout>
+  I built a chatbot that can take attendance and answer questions about
+  attendance history, using LangChain and OpenAI "Function Calling".
+
+[Run in CodeSandbox](https://githubbox.com/calvincchan/student-attendance-chatbot/tree/version-3) or [View Source Code](https://github.com/calvincchan/student-attendance-chatbot)
+
+Note: don't forget to set the "OPENAI_API_KEY" environment variable with your OpenAI API key.
+
+</Callout>
+
+In the school software I built, there is a feature that enables teachers to take attendance. The teacher can view a list of students in the class and mark them as present, absent, late, or excused each day. The attendance is then saved to the database. The teacher can also access the attendance history of each student. Since this is a web app, the teacher has to use a computer for this task. Not to mention, the teacher has to manually mark each student one by one and day by day.
+
+Now, with the help of AI, I want to explore the possibilities of building a simple chatbot that can assist teachers with such tedious tasks. The teacher can text or talk to the chatbot to take attendance in natural language. Imagine the teacher can just pull out their smartphone, launch the chat app, and say, "Mark everyone as present today except for John Doe." The chatbot will then dutifully update the attendance in the database as instructed.
+
+On the other hand, parents can also use the chatbot to communicate with the teacher about their children's attendance. For example, the parent can say, "John Doe is sick today," or "John Doe will be late today" to the chatbot. The chatbot will then notify the teacher about the message. After a bit of brainstorming, I came up with the following examples:
+
+### 1. Taking attendance:
+
+- "Mark everyone as present in class 1B."
+- "Mark everyone as present in class 1C except for Daisy."
+- "Tom is sick today. The rest of the class is present."
+- "Sophia is not here today. Please notify her parents."
+
+### 2. Teacher can ask questions about attendance history:
+
+- "Who was absent in class 1A last week?"
+- "Who was late in class 1B last month?"
+- "How many days did John Doe miss in class 1A last month?"
+- "Generate a report of attendance last school year."
+
+### 3. Parents can interact with the chatbot:
+
+- "Tell the teacher that John Doe is sick today."
+- "John Doe will be late today."
+- "How many days did John Doe miss last month?"
+
+For this experiment, I'll use the _LangChain_ library and _OpenAI_ to build the chatbot.
+
+## Version 1 - import student table with CSV Loader
+
+First of all, I need to load a [CSV file of 124 sample student data](https://github.com/calvincchan/student-attendance-chatbot/blob/main/data/student.csv) into _LangChain_ and ask questions about it. The CSV file contains the following columns:
+
+- id
+- firstname
+- lastname
+- homeroom
+- gender
+
+_LangChain_ libraries comes with a CSV Loader so I'll give this a try.
+
+```typescript
+import { CSVLoader } from "langchain/document_loaders/fs/csv";
+```
+
+After loading the student data, I asked a simple question: "List all the female students in homeroom 7". However, I found that the result is not correct:
+
+Received answer:
+
+```csv
+10035,7,Lily,Lam,F
+10077,7,Chloe,Hernandez,F
+10119,7,Sophia,Shah,F
+10091,7,Olivia,Wang,F
+```
+
+The expected result should have 9 students:
+
+```csv
+10007,7,Amara,Patel,F
+10021,7,Zara,Kaur,F
+10035,7,Lily,Lam,F
+10049,7,Scarlett,Martinez,F
+10063,7,Sofia,Ramirez,F
+10077,7,Chloe,Hernandez,F
+10091,7,Olivia,Wang,F
+10105,7,Emily,Patel,F
+10119,7,Sophia,Shah,F
+```
+
+Why is the answer not correct? After a little research, it seems that the CSV Loader approach has some disadvantages:
+
+1. While the current LLM model can easily read and parse a huge corpus of natural language content, it is not efficient at processing relational data and the table structure.
+
+2. It cannot handle complex queries as efficiently and accurately as SQL queries.
+
+3. The limitation of token length will probably cause the model to miss some important information in the long run, making it unfeasible to scale up.
+
+I need to find another way to let the chatbot understand the student data better and answer the questions correctly.
+
+<Callout emoji="✨">
+Run version 1 in CodeSandbox:
+
+[Run in CodeSandbox](https://githubbox.com/calvincchan/student-attendance-chatbot/tree/version-1)
+
+</Callout>
+
+## Version 2 - SQL Chain
+
+So, the next approach is to use SQL Chain. SQL Chain is a library that allows you to query data in a relational database using natural language. You can think of it as an English-to-SQL translator. There is a risk of running raw SQL and messing up the database, but I'll give it a try just for learning.
+
+The idea is to first ask the LLM to generate an SQL query from my natural language question, then run the SQL query in the database, and finally return the result to the user.
+
+<Callout emoji="✨">
+Run version 2 in CodeSandbox:
+
+[Run in CodeSandbox](https://githubbox.com/calvincchan/student-attendance-chatbot/tree/version-2)
+
+</Callout>
+
+I found that although the idea of directly manipulating the database with generated SQL is very cool, the queries it generates are pretty inconsistent, and at worst, it would not work because of the data conflict. For example, I asked the script to "mark all students in homeroom 7 as present today," but it generated an INSERT query that can only be run once. If I run the query again, it will throw an error because the student data already exists in the database.
+
+Giving up on the idea of directly manipulating the database, I decided to use _Function Callings_ to update the attendance data instead. This way, I can protect the data the way I want and yet expose the necessary operations to the chatbot to do its job.
+
+## Version 3 - Function Calling
+
+In this version, I'll use _OpenAI Function Calling_ feature to update the attendance data. The idea is to first ask the LLM to generate function calls from my natural language question, then run the returned function and arguments, and finally return the result to the user.
+
+<Callout emoji="✨">
+Run version 3 in CodeSandbox:
+
+[Run in CodeSandbox](https://githubbox.com/calvincchan/student-attendance-chatbot/tree/version-3)
+
+</Callout>
+
+The result is pretty close to what I imagined. I was able to interact with the chatbot with natural language questions. Example:
+
+- Mia is sick today.
+- Everybody is present today.
+- Show me the attendance this month.
+- Who was sick this month?
+
+The following is the code history:
+
+```
+Loading students into the database...
+✨ Hello Mr. Smith! The default homeroom is 1, and today's date is 2023-12-28. How can I assist you today?
+> hello
+✨ Hello Mr. Smith! How can I assist you today?
+> show me the attendance
+10001   Mia Chen        1       2023-12-01      1
+10008   Aiden Kumar     1       2023-12-01      1
+10015   Mila Lee        1       2023-12-01      1
+10022   Ezra Wang       1       2023-12-01      0       fever and cough
+> show me the attendance today
+> what's the date of today
+✨ Today's date is 2023-12-28.
+> mark everyone as present today
+Marked all students in homeroom 1 as present on 2023-12-28
+10001   Mia Chen        1       2023-12-28      1
+10008   Aiden Kumar     1       2023-12-28      1
+10015   Mila Lee        1       2023-12-28      1
+10022   Ezra Wang       1       2023-12-28      1
+10029   Aaliyah Lopez   1       2023-12-28      1
+10036   Liam Rao        1       2023-12-28      1
+10043   Lily Wu 1       2023-12-28      1
+10050   Kai Singh       1       2023-12-28      1
+10057   Avery Lin       1       2023-12-28      1
+10064   Mason Lam       1       2023-12-28      1
+10071   Harper Gupta    1       2023-12-28      1
+10078   William Kim     1       2023-12-28      1
+10085   Ella Morales    1       2023-12-28      1
+10092   Lucas Kumar     1       2023-12-28      1
+10099   Ava Singh       1       2023-12-28      1
+10106   Liam Hernandez  1       2023-12-28      1
+10113   Lily Garcia     1       2023-12-28      1
+10120   Harper Lam      1       2023-12-28      1
+> who was absent this month?
+10022   Ezra Wang       1       2023-12-01      0       fever and cough
+> Lily was sick 2 days ago
+Found multiple students with name Lily. Please be more specific.
+> Lily Wu was sick 2 days ago
+Set attendance for student 10043 on 2023-12-26 to false with reason sick
+10043   Lily Wu 1       2023-12-26      0       sick
+> who was absent this month?
+10022   Ezra Wang       1       2023-12-01      0       fever and cough
+10043   Lily Wu 1       2023-12-26      0       sick
+>
+```
+
+There are still some issues to be resolved:
+
+1. The current version is not able to memorize the history of the conversation. Currently, I am just hardcoding the context into the init prompt and sending the same init prompt to the LLM every time. I need to find a way to let the chatbot remember the context of the conversation so that it's possible to ask follow-up questions.
+
+2. I cannot figure out how to get the chatbot to call multiple functions in one conversation. For example, I want to ask the chatbot to "mark everyone as present today except for John Doe," but it can only process the first request and simply ignore the rest.
+
+3. There are some discussions about whether to use _OpenAI Function Callings_ or simply write a comprehensive prompt to teach the chatbot how to respond in the desired JSON format. Function Calling yields more consistent results, but it's not as flexible as engineering your own prompt.
+
+4. User interface - it would be cool to integrate the chatbot into common instant messaging apps like WhatsApp, Slack, or Telegram.
+
+<Callout emoji="⭐️">
+Follow-up: I have written new versions to address the issues above. Check out the following links:
+
+- [Using OpenAI Parallel Function Calling](/blog/student-attendance-chatbot-with-parallel-function-calling)
+- [With Interactive React Frontend](/blog/attendance-taking-ai-chatbot-with-react-frontend)
+
+</Callout>

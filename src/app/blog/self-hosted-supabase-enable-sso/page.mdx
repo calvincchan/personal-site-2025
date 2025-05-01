@@ -1,0 +1,231 @@
+---
+title: Enabling custom SAML SSO on Your Self-hosted Supabase
+date: 2023/12/07
+description: Steps to connect a self-hosted Supabase to a custom SAML identity provider and enable SSO. This is the first part of a two-part article. The second part will show how to integrate the SSO feature with refine.js.
+tags:
+  - supabase
+  - saml
+  - sso
+  - single-sign-on
+  - refinejs
+author: Calvin
+image: /assets/self-hosted-supabase-enable-sso.jpg
+---
+
+I use Supabase and refine.js for my latest client project. Supabase is a very well designed and easy to use backend suite, with a very active development team. As required by the client, I need to run the software suite on-premise. While developing with Supabase for authentication and data management is a walk in the park, one tricky issue is that SSO (Single Sign On) with custom SAML Identify Provider is not enabled by default. Although Supabase supports SSO feature for their hosted service, it is not clearly documented how to enable SSO when it comes to self-hosted deployment. This article is to document the steps I took to enable SSO for Supabase. I will also write another article later to show how to integrate the SSO feature with refine.js.
+
+## Prerequisite
+
+- A running instance of Supabase. You can follow this guide to start the suite with docker-compose: https://supabase.com/docs/guides/self-hosting/docker. For this example, I will run the docker-compose on my local machine, and the Kong API gateway will be available at http://localhost:8000.
+- For public facing server, you can use Nginx for reverse proxy.
+- A SAML identity provider. I use https://auth0.com for this article.
+
+## Enable SAML in Supabase
+
+### Generate private key and add it to .env file
+
+First, run the following command to generate a private key. A private key is required for the SAML Service Provider to sign the SAML response.
+
+```
+openssl genpkey -algorithm rsa -outform DER -out private_key.der
+```
+
+Then, convert it into base64 format and copy the output to .env file.
+
+```
+base64 -i private_key.der
+```
+
+Finally, put it in .env file at the same directory as `/docker/docker-compose.yaml`
+
+```env filename=".env"
+GOTRUE_SAML_ENABLED=true
+GOTRUE_SAML_PRIVATE_KEY=(your private key in base64)
+```
+
+### Update docker-compose.yaml to enable SAML
+
+Next, we need to pass the new env vars to the docker container that runs the GoTrue auth service. Add the following to `/docker/docker-compose.yaml`.
+
+```yaml filename="docker-compose.yaml" {7-8}
+  auth:
+    container_name: supabase-auth
+    image: supabase/gotrue:v2.99.0
+    ...
+    environment:
+      ...
+      GOTRUE_SAML_ENABLED: ${GOTRUE_SAML_ENABLED}
+      GOTRUE_SAML_PRIVATE_KEY: ${GOTRUE_SAML_PRIVATE_KEY}
+      ...
+```
+
+### Expose the SAML endpoints in Kong
+
+Referring to an issue (https://github.com/supabase/cli/issues/1335) in the Supabase git repo, we need to expose two SAML endpoints in Kong. The kong.yml file is located at `/docker/volumes/api/kong.yml`.
+
+```yaml filename="kong.xml"
+  ...
+  ## Open SSO routes (by calvincchan)
+  - name: auth-v1-open-sso-acs
+    url: "http://auth:9999/sso/saml/acs"
+    routes:
+      - name: auth-v1-open-sso-acs
+        strip_path: true
+        paths:
+        - /auth/v1/sso/saml/acs
+        - /sso/saml/acs
+    plugins:
+      - name: cors
+  - name: auth-v1-open-sso-metadata
+    url: "http://auth:9999/sso/saml/metadata"
+    routes:
+      - name: auth-v1-open-sso-metadata
+        strip_path: true
+        paths:
+        - /auth/v1/sso/saml/metadata
+    plugins:
+      - name: cors
+  ...
+```
+
+The paths `/auth/v1/sso/saml/acs` and `/sso/saml/acs` seem to be redundant, but I have to add both of them for Auth0 to return to my site properly after login.
+
+### Optionally expose the new `/sso/saml/acs` path in the reverse proxy server (Nginx)
+
+If you are deploying the suite to a public server behind a reverse proxy, you need to expose the new `/sso/saml/acs` path to docker. For example, if you are using nginx, you can add the following to your nginx config file (Assuming there is a "kong" upstream defined in the nginx config file)
+
+```nginx filename="nginx.conf"
+    # SSO
+    location ~ ^/sso/(.*)$ {
+        proxy_set_header Host $host;
+        proxy_pass http://kong;
+        proxy_redirect off;
+    }
+```
+
+Restart the Nginx to apply the changes.
+
+### Test Supabase
+
+Restart the containers by `docker-compose down; docker-compose up -d`. To test if the SAML endpoints are working, you can use the following API call:
+
+```bash
+API_KEY=(your supabase service role key);
+curl -X GET http://localhost:8000/auth/v1/settings \
+  -H 'APIKey: '"$API_KEY"'' \
+  -H 'Authorization: Bearer '"$API_KEY"'';
+```
+
+You should be able to see `"saml_enabled": true` in the output:
+
+```json {13}
+{
+  "external": {
+    "apple": false,
+    "azure": false,
+    "bitbucket": false,
+    ...
+  },
+  "disable_signup": false,
+  "mailer_autoconfirm": false,
+  "phone_autoconfirm": true,
+  "sms_provider": "",
+  "mfa_enabled": false,
+  "saml_enabled": true
+}
+```
+
+## Add SAML identity provider to Supabase
+
+In this section, let's walk through how to add Auth0 as the SAML identity provider to Supabase. The steps are similar for other SAML identity providers.
+
+1. In Auth0, go to Applications > Applications > Create Application. Select "Single Page Web Applications" as the application type. Then, click "Create".
+2. In the next page, select "Settings" tab. Under "Allowed Callback URLs", add the following URL based on your deployment:
+   - for local test: `http://localhost:8000/sso/saml/acs`
+   - for production: `https://yourdomain.com/sso/saml/acs`
+3. In the same page and the same "Settings" tab, scroll down to "Advanced Settings" and click "Endpoints". Copy the "SAML Metadata URL" to your clipboard.
+4. In your terminal, run the following command to add the SAML identity provider to Supabase:
+
+```bash
+API_KEY=(your supabase service role key);
+curl -X POST http://localhost:8000/auth/v1/admin/sso/providers \
+  -H 'APIKey: '"$API_KEY"'' \
+  -H 'Authorization: Bearer '"$API_KEY"'' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "type": "saml",
+    "metadata_url": "(paste the SAML Metadata URL here)",
+    "domains": ["yourdomain.auth0.com"]
+  }';
+```
+
+If the command is successful, you should see the fetched metadata XML in the output.
+
+To verify if the SAML identity provider is added successfully, you can run the following command:
+
+```bash
+API_KEY=(your supabase service role key);
+curl -X GET http://localhost:8000/auth/v1/admin/sso/providers \
+  -H 'APIKey: '"$API_KEY"'' \
+  -H 'Authorization: Bearer '"$API_KEY"'' \
+```
+
+The output should look like:
+
+```json
+{
+  "items": [
+    {
+      "id": "2bc1c44f-ccea-4289-a736-4d6d333d4af0",
+      "saml": {
+        "entity_id": "urn:yourdomain.auth0.com",
+        "metadata_url": "https://yourdomain.auth0.com/samlp/metadata/__auth0_client_id__",
+        "attribute_mapping": {}
+      },
+      "domains": [{ "domain": "yourdomain.auth0.com" }],
+      "created_at": "2023-12-07T19:34:09.907022Z",
+      "updated_at": "2023-12-07T19:34:09.907022Z"
+    }
+  ]
+}
+```
+
+## Final step
+
+After following the steps above, your Supabase instance should support sign-in through SSO. You can test it using the following API call:
+
+```bash
+API_KEY=(your supabase service role key);
+curl -X POST http://localhost:8000/auth/v1/sso \
+  -H 'APIKey: '"$API_KEY"'' \
+  -H 'Authorization: Bearer '"$API_KEY"'' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "domain": "yourdomain.auth0.com",
+    "skip_http_redirect": true
+  }';
+```
+
+The output should be a JSON with a `url` property. This is the URL to redirect the user to the external SSO login screen.
+
+```json
+{
+  "url": "https://dev-g8es4m0caprhrd4c.us.auth0.com/samlp/PU7tL448jcXfMpixiStfO3zzbmsBQktG?SAMLRequest=nJJPb9s8DIe%2FiqG7%2F8aNY6ExkDZ43wVIV69Jh2E3WmZirZbk..."
+}
+```
+
+In the next article I will show how to add the SSO feature to a refine.js app.
+
+### References
+
+- Supabase GitHub issue about enabling SAML https://github.com/supabase/cli/issues/1335
+- GoTrue API doc to manage SAML IdP https://github.com/supabase/gotrue/blob/master/openapi.yaml#L1441-L1608
+- Supabase Javascript Client https://supabase.com/docs/reference/javascript/auth-signinwithsso
+
+### Update at 2024-08-02
+
+- In the last step of the article, I made a mistake to the API endpoint to retrieve the SSO URL. Instead of `https://supabase.com/docs/reference/javascript/auth-signinwithsso` it should be `http://localhost:8000/auth/v1/sso`. Thanks [Liam Laird](https://www.linkedin.com/in/liam-laird-19062818b) for pointing out the mistake.
+
+### Update at 2024-11-21
+
+- Jackson Oh pointed out that, in "Final Step" section, the HTTP action should be POST instead of GET. Thanks Jackson for pointing out the typo.

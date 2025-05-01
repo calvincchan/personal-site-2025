@@ -1,0 +1,120 @@
+---
+title: Self-hosted Supabase - Auto Expiring Session After X Minutes
+date: 2024/04/16
+description: By default, an authenticated user of Supabase Javascript Client will stay logged in indefinitely regardless of the JWT expiry time and browser closing/reopening. This guide will show you how to implement auto-expiring sessions that self destroy after X minutes.
+tags:
+  - supabase
+  - auth
+  - jwt
+  - session
+author: Calvin
+image: /assets/240416_supabase_js_auto_expiring_session.jpg
+draft: false
+---
+
+import { Callout } from "nextra/components";
+
+<Callout type="info">
+TL;DR
+
+- By default, an authenticated user of Supabase Javascript Client will stay logged in indefinitely regardless of the JWT expiry time and browser closing/reopening.
+- This guide will show you how to implement auto-expiring sessions, a.k.a. Time-boxed sessions in https://supabase.com/docs/guides/auth/sessions: e.g. after closing the browser tab for X mins, the browser will automatically destroy the token without auto refresh, hence terminating the session.
+- You can use time-boxed sessions easily with the hosted Supabase; however, it requires some manual work for self-hosted Supabase.
+
+</Callout>
+
+<img src="/assets/240416_supabase_js_auto_expiring_session.jpg" />
+
+When building webapps with Supabase, it is almost effortless to integrate the authentication system using the official [Javascript client library](https://supabase.com/docs/reference/javascript/installing). It provides simple [Auth APIs](https://supabase.com/docs/reference/javascript/auth-api) to authenticate users with the most common methods, such as email-password authentication, social login, and custom Single Sign-On (SSO) via SAML.
+
+As documented, the authentication process is based on JWT token. When a user logs in, Supabase will return a JWT token that you can use to authenticate future requests. The token is stored in the browser's local storage and is sent along with every subsequent request to the server.
+
+JWT is great for stateless authentication, meaning the server doesn't need to store any session information. However, it also means that the token is valid until it expires. For a self-hosted Supabase, you can control the lifetime of the token by editing the `.env` file:
+
+```env filename=".env"
+...
+JWT_EXPIRY=3600 // 1 hour in seconds
+...
+```
+
+However, if you are using the Javascript Client Library, the default behaviour is to automatically "refresh" the token if it is expired. Also, the token is "persistent" by default, meaning it will be stored in the browser's local storage, so closing and reopening the browser will not terminate the session. (reference: [Javascript Client Library => Initializing](https://supabase.com/docs/reference/javascript/initializing) => Parameters => options => auth => `autoRefreshToken` and `persistSession`)
+
+In other words, the user will stay logged in indefinitely regardless of the JWT expiry time and browser closing.
+
+The hosted Supabase offers a convenient way to configure the session lifetime: https://supabase.com/docs/guides/auth/sessions It offers a feature called "Time-boxed sessions" that allows you to terminate a session after a fixed amount of time. However, this feature is not available for self-hosted Supabase.
+
+## Implementing Auto-Expiring Sessions
+
+To implement auto-expiring sessions for self-hosted Supabase, you need to provide a custom storage provider. The following is my implementation of a localStorage compatible provider that supports auto-expiring a storage item:
+
+```typescript filename="supabaseClient.ts"
+import { createClient } from "@supabase/supabase-js";
+import { ExpireStorage } from "./ExpireStorage";
+export const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    storage: ExpireStorage,
+  },
+});
+```
+
+```typescript filename="ExpireStorage.ts"
+interface StorageData {
+  value: string;
+  expireAt?: Date;
+}
+
+export default class ExpireStorage {
+  /** Lifetime of the session token in minutes. Feel free to change the value. */
+  static expireInMinutes = 10;
+
+  static async getItem(key: string) {
+    const rawData = localStorage.getItem(key);
+    if (rawData === null) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    const data: StorageData = JSON.parse(rawData);
+    if (
+      data !== null &&
+      data.expireAt &&
+      new Date(data.expireAt) < new Date()
+    ) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return data?.value;
+  }
+
+  static async setItem(key: string, value: string) {
+    const data: StorageData = { value };
+    if (this.expireInMinutes) {
+      const expireAt = this.getExpireDate(this.expireInMinutes);
+      data.expireAt = expireAt;
+    } else {
+      const expireAt = JSON.parse(localStorage.getItem(key) || "")?.expireAt;
+      if (expireAt) {
+        data.expireAt = expireAt;
+      } else {
+        return;
+      }
+    }
+    const jsonString = JSON.stringify(data);
+    return localStorage.setItem(key, jsonString);
+  }
+
+  static async removeItem(key: string) {
+    return localStorage.removeItem(key);
+  }
+
+  static getExpireDate(expireInMinutes: number) {
+    const now = new Date();
+    const expireTime = new Date(now);
+    expireTime.setMinutes(now.getMinutes() + expireInMinutes);
+    return expireTime;
+  }
+}
+```
+
+## Thoughts
+
+The above implementation is a simple way to implement auto-expiring sessions for self-hosted Supabase. It does the job by destroy the storage item automatically after a fixed amount of time. However, there is no visible warning to the user that the session is terminated. Developer should add extra logic and UI to handle the expiration from the client side, such as redirecting the user to the login page when the token is expired.

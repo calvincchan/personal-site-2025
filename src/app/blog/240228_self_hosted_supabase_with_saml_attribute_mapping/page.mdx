@@ -1,0 +1,289 @@
+---
+title: Self-hosted Supabase With SAML Attribute Mapping
+date: 2024/02/28
+lastmod: 2024-10-07 09:39
+description: Guide to map additional attributes from the SAML Identity Provider to the Supabase user.
+tags:
+  - supabase
+  - sso
+  - saml
+author: Calvin
+draft: false
+image: /assets/240228_self_hosted_supabase_with_saml_attribute_mapping.jpg
+---
+
+<img src="/assets/240228_self_hosted_supabase_with_saml_attribute_mapping.jpg" />
+
+I have been using _Supabase_ for my latest projects. As my previous blog post demonstrated, _Supabase_ supports [custom Single Sign-On](https://supabase.com/docs/guides/auth/sso/auth-sso-saml) via SAML 2.0 protocol. If you have an identity provider that is compatible to SAML 2.0, you can integrate it into your _Supabase_ instance, both hosted or self-hosted. For self-hosted Supabase, you can find my guide on enabling SSO here: [Enabling custom SAML SSO on Your Self-hosted Supabase](https://calvincchan.com/blog/self-hosted-supabase-enable-sso)
+
+In the [GitHub issue](https://github.com/supabase/cli/issues/1335) that inspired me to write that blog post, [prewittridge-jonathan](https://github.com/prewittridge-jonathan) asked if it's possible to map additional attributes from the Identity Provider to the Supabase user. I had not done it myself, but very quickly **Jonathan** provided his solution. For future reference, I will document his solution here as a guide.
+
+## Prepare Your Source Identity
+
+First, make sure the Identity Provider is properly configured and that the user profile has the correct metadata (name, picture...) to be imported.
+
+I use auth0.com for this demo. After creating a new application, don't forget to set the correct Callback URL (http://localhost:8000/sso/saml/acs) and Allowed Web Origins (http://localhost:5173) (or your own client URL).
+
+<img src="/assets/SCR-20240228-ldfm.png" />
+
+## Run A Local Instance Of Supabase
+
+1. Check out this Git at https://github.com/calvincchan/supabase-saml-demo and follow the README.md to run a local instance of Supabase.
+
+2. This is the important part: construct the attribute mapping in the IdP. First you need to learn what attributes are being offered by your IdP. In the case of auth0, you can find the SAML Metadata URL in the "Applications > Pick An Application > Advanced Settings > Endpoints > SAML Metadata URL" section. It's a long URL that looks like this: `https://dev-???.us.auth0.com/samlp/??????/metadata`. Download the XML file and look for the `<Attribute>` tag. Here is an example:
+
+```xml
+<EntityDescriptor entityID="urn:dev-????.us.auth0.com" xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+  <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <X509Data>
+          <X509Certificate>MIIDHTCCAgW...</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </KeyDescriptor>
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://dev-?????.us.auth0.com/samlp/????/logout"/>
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://dev-?????.us.auth0.com/samlp/????/logout"/>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://dev-????.us.auth0.com/samlp/????"/>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://dev-????.us.auth0.com/samlp/????"/>
+    <Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="E-Mail Address" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="Given Name" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="Name" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="Surname" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"/>
+    <Attribute Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" FriendlyName="Name ID" xmlns="urn:oasis:names:tc:SAML:2.0:assertion"/>
+  </IDPSSODescriptor>
+</EntityDescriptor>
+```
+
+Note the "Name" attribute of the `<Attribute>` tag. You will need to use this value in the next step.
+
+3. configure IdP using `curl`. Follow the format of the "attribute_mapping" object.
+
+```bash
+API_KEY=(your supabase service role key);
+curl -X POST http://localhost:8000/auth/v1/admin/sso/providers \
+  -H 'APIKey: '"$API_KEY"'' \
+  -H 'Authorization: Bearer '"$API_KEY"'' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "type": "saml",
+    "metadata_url": "(paste the SAML Metadata URL here)",
+    "domains": ["auth0.com"]
+    "attribute_mapping": {
+      "keys": {
+        "email": { "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress" },
+        "given_name": { "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname" },
+        "name": { "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name" },
+        "family_name": { "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname" },
+        "name_id": { "name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier" }
+      }
+    }
+  }';
+```
+
+## Run Client
+
+1. Init the client React project `yarn create vite client --template react-ts`
+
+2. Install dependencies `yarn add @supabase/supabase-js react-router-dom`
+
+3. Add the `supabase-client.ts` file
+
+```typescript filename="src/supabase-client.ts"
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_URL = "http://localhost:8000";
+const SUPABASE_KEY = "(your supabase anon key)";
+export const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+```
+
+4. Add the `App.tsx` file
+
+```tsx filename="src/App.tsx"
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import "./App.css";
+import { SSO_DOMAIN, supabaseClient } from "./supabase-client";
+
+function App() {
+  async function ssoLogin(sso_domain: string = SSO_DOMAIN) {
+    const { data, error } = await supabaseClient.auth.signInWithSSO({
+      domain: sso_domain,
+    });
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    if (data?.url) {
+      // redirect the user to the identity provider's authentication flow
+      window.location.href = data.url;
+      return;
+    } else {
+      alert("Unable to open SSO login page.");
+    }
+  }
+
+  const [authState, setAuthState] = useState<AuthChangeEvent | "">("");
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    supabaseClient.auth.onAuthStateChange((event, sessionValue) => {
+      if (event === "INITIAL_SESSION") {
+        setSession(sessionValue);
+      } else {
+        setAuthState(event);
+      }
+    });
+  }, []);
+
+  async function logout() {
+    await supabaseClient.auth.signOut();
+    setSession(null);
+  }
+
+  return (
+    <>
+      <h1>SSO Login Demo</h1>
+      <p>Auth state: {JSON.stringify(authState)}</p>
+      <h2>Session</h2>
+      <pre>{JSON.stringify(session, null, 2)}</pre>
+      {authState === "SIGNED_IN" ? (
+        <p>
+          <button onClick={() => logout()}>Sign Out</button>
+        </p>
+      ) : (
+        <p>
+          <button onClick={() => ssoLogin()}>SSO Login</button>
+        </p>
+      )}
+    </>
+  );
+}
+
+export default App;
+```
+
+## Testing
+
+First, lets look at the post-login response from the IdP. Pay attention to the "user_metadata" block.
+
+```json
+{
+  "access_token": "eyJhbGciOi????",
+  "expires_in": 3600,
+  "expires_at": 1709164420,
+  "refresh_token": "????",
+  "token_type": "bearer",
+  "user": {
+    "id": "8d6541e3-3ea9-40b3-bb36-c368c00629e8",
+    "aud": "authenticated",
+    "role": "authenticated",
+    "email": "lumber7554@calvincchan.com",
+    "email_confirmed_at": "2024-02-28T22:53:40.286628Z",
+    "phone": "",
+    "confirmed_at": "2024-02-28T22:53:40.286628Z",
+    "last_sign_in_at": "2024-02-28T22:53:40.287062Z",
+    "app_metadata": {
+      "provider": "sso:4185e776-b9ff-438c-b74a-949012d4b152",
+      "providers": ["sso:4185e776-b9ff-438c-b74a-949012d4b152"]
+    },
+    "user_metadata": {
+      "custom_claims": {},
+      "email": "lumber7554@calvincchan.com",
+      "email_verified": true,
+      "iss": "urn:dev-????.us.auth0.com",
+      "phone_verified": false,
+      "sub": "lumber7554@calvincchan.com"
+    },
+    "identities": [
+      {
+        "identity_id": "07e24a33-331c-41a7-8aae-0048debfc02c",
+        "id": "lumber7554@calvincchan.com",
+        "user_id": "8d6541e3-3ea9-40b3-bb36-c368c00629e8",
+        "identity_data": {
+          "custom_claims": {},
+          "email": "lumber7554@calvincchan.com",
+          "email_verified": true,
+          "iss": "urn:dev-????.us.auth0.com",
+          "phone_verified": false,
+          "sub": "lumber7554@calvincchan.com"
+        },
+        "provider": "sso:4185e776-b9ff-438c-b74a-949012d4b152",
+        "last_sign_in_at": "2024-02-28T22:53:40.28311Z",
+        "created_at": "2024-02-28T22:53:40.283162Z",
+        "updated_at": "2024-02-28T22:53:40.283162Z",
+        "email": "lumber7554@calvincchan.com"
+      }
+    ],
+    "created_at": "2024-02-28T22:53:40.280364Z",
+    "updated_at": "2024-02-28T22:53:40.288326Z"
+  }
+}
+```
+
+Now, with attribute mapping and you will get this:
+
+```json
+{
+  "access_token": "eyJhbGciOi????",
+  "expires_in": 3600,
+  "expires_at": 1709164594,
+  "refresh_token": "????",
+  "token_type": "bearer",
+  "user": {
+    "id": "3fb8bc0d-fd5c-4c9c-bc58-fa0cf61ae1e0",
+    "aud": "authenticated",
+    "role": "authenticated",
+    "email": "lumber7554@calvincchan.com",
+    "email_confirmed_at": "2024-02-28T22:56:34.339447Z",
+    "phone": "",
+    "confirmed_at": "2024-02-28T22:56:34.339447Z",
+    "last_sign_in_at": "2024-02-28T22:56:34.340085Z",
+    "app_metadata": {
+      "provider": "sso:4185e776-b9ff-438c-b74a-949012d4b152",
+      "providers": ["sso:4185e776-b9ff-438c-b74a-949012d4b152"]
+    },
+    "user_metadata": {
+      "custom_claims": {
+        "name_id": "auth0|65df956e3a906f0fbe8af5db"
+      },
+      "email": "lumber7554@calvincchan.com",
+      "email_verified": true,
+      "iss": "urn:dev-????.us.auth0.com",
+      "name": "Jack Lumber",
+      "phone_verified": false,
+      "sub": "lumber7554@calvincchan.com"
+    },
+    "identities": [
+      {
+        "identity_id": "99df49fe-2c34-4586-9962-108603c603a6",
+        "id": "lumber7554@calvincchan.com",
+        "user_id": "3fb8bc0d-fd5c-4c9c-bc58-fa0cf61ae1e0",
+        "identity_data": {
+          "custom_claims": {
+            "name_id": "auth0|65df956e3a906f0fbe8af5db"
+          },
+          "email": "lumber7554@calvincchan.com",
+          "email_verified": true,
+          "iss": "urn:dev-????.us.auth0.com",
+          "name": "Jack Lumber",
+          "phone_verified": false,
+          "sub": "lumber7554@calvincchan.com"
+        },
+        "provider": "sso:4185e776-b9ff-438c-b74a-949012d4b152",
+        "last_sign_in_at": "2024-02-28T22:56:34.33544Z",
+        "created_at": "2024-02-28T22:56:34.335489Z",
+        "updated_at": "2024-02-28T22:56:34.335489Z",
+        "email": "lumber7554@calvincchan.com"
+      }
+    ],
+    "created_at": "2024-02-28T22:56:34.332212Z",
+    "updated_at": "2024-02-28T22:56:34.342142Z"
+  }
+}
+```
+
+I see that there are new attributes in the second response: `custom_claims.name_id` and `name`. I am not sure why I don't get the `given_name` and `family_name` attributes, but I am happy with the result. I can now use the `name` attribute to display the user's name in my application.

@@ -1,0 +1,123 @@
+---
+title: Local LLM for Function Calling with Open Llama, NexusRaven and JS/TS
+date: 2024/02/12
+description: This post explores running Function Calling locally with NexusRaven, a model trained specifically for this task. Using a local LLM is preferable when you want to keep your data on-premise rather than sending it to the cloud.
+tags:
+  - ai
+  - llm
+  - nexusraven
+  - ollama
+  - langchain
+  - function-calling
+author: Calvin
+draft: false
+image: /assets/240212_local_llm_for_function_calling_with_open_llama_nexus_raven_and_js_ts.jpg
+---
+
+<img src="/assets/240212_local_llm_for_function_calling_with_open_llama_nexus_raven_and_js_ts.jpg" />
+
+In a previous post, I discussed using _OpenAI_ to call functions, a useful feature for integrating AI into existing projects without local setup. This post explores running **Function Calling** locally with _NexusRaven_, a model trained specifically for this task. Using a local LLM is preferable when you want to keep your data on-premise rather than sending it to the cloud. However, running NexusRaven locally requires a powerful computer with good GPU for reasonable performance.
+
+[NexusRaven](https://nexusflow.ai/) is a model trained specifically to perform function calling. It is trained on a large dataset of Python code and can be used to generate code that calls functions in serial, nested or parallel manner.
+
+## Installation
+
+First, install Open Llama from [the official download page](https://ollama.com/download). My computer is a MacBook Pro with M1 chip, so I downloaded the Apple Silicon version. After downloading, follow the installation instructions to install Open Llama.
+
+Next, install [NexusRaven](https://nexusflow.ai/) using the `ollama` command line tool. Open a terminal and run the following command:
+
+```bash
+ollama pull nexusRaven;
+```
+
+Then run the following command to start the server and get the API port:
+
+```bash
+ollama serve;
+```
+
+The default port should be `127.0.0.1:11434`.
+
+## Running the Model
+
+Now that the Ollama server with NexusRaven model is running on the local machine, we can invoke the model using the following JS code:
+
+```javascript
+/** Prepare LLM model with tools */
+const model = new Ollama({
+  baseUrl: "http://localhost:11434",
+  model: "nexusRaven",
+  temperature: 0.001,
+});
+```
+
+According to the official documentation's suggestion, the temperature should be set very low (0.001) to achieve optimal results. The `temperature` parameter is employed to regulate the randomness of the output.
+
+Next, prepare the prompt in the correct format. To obtain the best outcome, please refer to the official documentation (https://github.com/nexusflowai/NexusRaven/blob/main/docs/prompting_readme.md) for the proper prompt structure. In essence, you need to provide function descriptions using Python-like syntax.
+
+```javascript
+async function generateResponse(model: LLM, question: string) {
+  const prompt = PromptTemplate.fromTemplate(`<human>:
+    OPTION:
+    <func_start>def hello_world(n : int)<func_end>
+    <docstring_start>
+    \"\"\"
+    Prints hello world to the user.
+
+    Args:
+    n (int) : Number of times to print hello world.
+    \"\"\"
+    <docstring_end>
+
+    OPTION:
+    <func_start>def hello_universe(n : int)<func_end>
+    <docstring_start>
+    \"\"\"
+    Prints hello universe to the user.
+
+    Args:
+    n (int) : Number of times to print hello universe.
+    \"\"\"
+    <docstring_end>
+
+    User Query: Question: {question}
+
+    Please pick a function from the above options that best answers the user query and fill in the appropriate arguments.<human_end>
+    `);
+
+  const response = await model.invoke(await prompt.format({ question }));
+
+  return response;
+}
+```
+
+Putting it all together, we can now call the `generateResponse` function to get the result. Here is an example of calling the function with the question "Please print hello universe 31 times.".
+
+```text {4}
+Hello, this is demo of local LLM using Ollama and NexusRaven.
+✔ Please print hello universe 31 times.
+[11.08s] LLM
+result Call: hello_universe(n=31)
+Thought: The function call `hello_universe(n=31)` answers the question "Please print hello universe 31 times." because it passes the value 31 as an argument to the `hello_universe` function, which is defined in the options provided.
+
+The `hello_universe` function takes a single argument `n`, which represents the number of times to print the message "Hello universe". In this case, we are passing the value 31 as the argument `n`, so the function will print the message "Hello universe" 31 times.
+
+Therefore, the function call `hello_universe(n=31)` answers the question by calling the `hello_universe` function with the argument `n=31`, which will result in the message being printed 31 times.
+```
+
+The result is a call to the function `hello_universe(n=31)`.
+
+import { Callout } from "nextra/components";
+
+<Callout emoji="⭐️">
+The example code can be found at Github:
+
+https://github.com/calvincchan/nexusraven-demo
+
+</Callout>
+
+## Thoughts
+
+- This example is just a simple demo and not very useful. However, it demonstrates the basic usage of the local LLM model with _Langchain_. To progress further, you can add more functions and more complex questions to the prompt.
+- As of the time of writing, _NexusRaven_ only offers _Langchain_ Python library, but no _Langchain_ JS/TS library. I might be a good open-source project to create a _Langchain_ JS/TS library for _NexusRaven_.
+- For function definitions, we can use [Zod](https://www.npmjs.com/package/zod) to define the function signature and docstring, then convert it to Python-like syntax and feed it to the prompt template.

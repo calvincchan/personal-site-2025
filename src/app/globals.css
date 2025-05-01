@@ -87,6 +87,14 @@ main {}
   .xprose-meta {
     @apply text-sm text-gray-500;
   }
+
+  a {
+    @apply underline;
+
+    svg {
+      @apply inline-block;
+    }
+  }
 }
 
 p {

@@ -1,0 +1,53 @@
+---
+title: Redesign iconimg.com
+date: 2023/11/1
+description: Improve the user experience of iconimg.com with a new design.
+tags:
+  - react
+  - mui
+  - icon-image-maker
+author: Calvin
+---
+
+A while ago I built [iconimg.com](https://iconimg.com) to showcase my work on the [Lambda serverless function](https://github.com/calvincchan/icon-button-generator) that generates placeholder images from open source icons. Although the original design was based on Material UI, it was designed specifically for smaller screen, hence not very user friendly on desktop. In addition, I didn't look into search engine optimization (SEO) at all. I decided to polish this project a bit before I start working on the next one.
+
+This is the original design:
+
+import Image from "next/image";
+
+<Image
+  src="/assets/SCR-20231101-ptyh.png"
+  alt="original design of iconimg.com"
+  width={300}
+  height={0}
+/>
+
+## New design
+
+1. Use left/right panes where the left drawer shows the controls and the right pane to show the grid of selectable icons.
+2. When an icon is selected, a drawer will show at the right side to show the preview nad ready-to-copy URL.
+3. The grid of icons is now bigger and easier to select.
+
+<Image
+  src="/assets/SCR-20231101-pzqp.png"
+  alt="New left/right layout of iconimg.com"
+  width={500}
+  height={0}
+/>
+
+### To Be Done: Frontend
+
+1. Add a quick search bar to search for icons by name or keyword.
+2. Add a button to copy the URL to clipboard.
+3. Add more controls to customize the image, such as transparency, better color picker, etc.
+4. Add deboucee to the preview image so that it doesn't update too frequently.
+5. Improve responsiveness of the layout.
+
+### To Be Done: Backend
+
+1. Support more icon sets
+2. Possible to deploy to other cloud providers?
+3. Switch to custom domain (iconimg.com)
+4. Add Documentation on how to use the API
+
+This is still a work in progress, but I'm happy with the new design so far. I will continue to work on this project and hopefully it will be useful to others as well.

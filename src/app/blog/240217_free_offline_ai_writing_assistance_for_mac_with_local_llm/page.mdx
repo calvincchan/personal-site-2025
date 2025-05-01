@@ -1,0 +1,42 @@
+---
+title: Free Offline AI Writing Assistance For Mac With Local LLM
+date: 2024/02/17
+description: Guide to run your own offline AI writing assistance using Open Llama and Raycast on Mac
+tags:
+  - ai
+  - writing
+  - productivity
+author: Calvin
+draft: false
+image: /assets/240217_free_offline_ai_writing_assistance_for_mac_with_local_llm.jpg
+---
+
+<img src="/assets/240217_free_offline_ai_writing_assistance_for_mac_with_local_llm.jpg" />
+
+Composing emails, writing blog posts, and discussing project details with colleagues, all require strong writing skills to ensure clarity and efficiency in conveying ideas to the audiences. Beyond expressing thoughts clearly and in a well-structured manner, we must also pay attention to details such as spelling, tone, and grammar.
+
+Numerous AI writing assistance services have sprung up on the internet, both free and paid. Although each has its own strengths and weaknesses, they all promise to enhance your writing results. For example, you can copy-and-paste your draft email into the free _ChatGPT_/_Gemini_ interface and ask it to "correct spelling and grammar" or "rewrite this in technical writing tone." Some services offer more sophisticated commands and improved editing workflow integrations, resulting in enhanced output quality and a streamlined writing experience.
+
+During the research on running LLMs locally with _Open Llama_, I stumbled upon a technique to apply local LLM to my writing workflow.
+
+### Installation
+
+    - Install Ollama at https://ollama.com/download if it is not installed already
+    - Install [Raycast](https://www.raycast.com/) app (Mac only)
+    - Install [Raycast Ollama extension](https://github.com/raycast/extensions/blob/adebac205d46181643f0b8b77c22b89c5d799611/extensions/raycast-ollama/README.md)
+    - Use the command "Manage Models" to configure the model. For starter, please use the "mistral" model. If the model is not installed yet, *Raycast* will automatically pull it for you.
+
+### Usage
+
+    - **Fix spelling and grammar** - this the command can keep your original writing style as much as possible while fixing the obvious spelling and grammar mistakes. Just select the text to be fixed, then bring out the *Raycast* dialog and use the command "Fix spelling and grammar".
+    - **Improve writing** - this command rewrites your content into longer text.
+    - There are a few other commands to manipulate your content, such as "Rephrase as tweet", "Explain this in simple terms".
+
+<video controls>
+  <source src="/assets/240217-screen.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+If you have a decently powerful computer, it would be fun to try this technique to get a reasonably good writing assistance that runs locally and for free. I am a Mac user so this guide only covers the Mac platform with my favorite _Raycast_ utility tool. With the recent release of Ollama for Windows, I am positive that the same technique can be replicated for Windows users.
+
+If you have a relatively powerful computer, it would be fun to try this technique to get a reasonably good writing assistance that runs locally and for free. I am a Mac user, so this guide only covers the Mac platform using my favorite utility tool, Raycast. With the [recent release of Ollama on Windows (preview)](https://github.com/ollama/ollama/releases/tag/v0.1.25), I'm confident that the same technique can be replicated for Windows users.

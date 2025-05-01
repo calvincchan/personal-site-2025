@@ -1,0 +1,99 @@
+---
+title: Persist state in ReactJS
+date: 2024/05/13
+description: How to persist state in ReactJS by storing the state of a component in the browser's session storage, so that when the user refreshes the page, the state is not lost.
+tags:
+  - reactjs
+  - typescript
+  - hook
+  - custom-hook
+  - react-persist-state
+author: Calvin
+draft: false
+image: /assets/240513_persist_state_in_reactjs.jpg
+---
+
+<img src="/assets/240513_persist_state_in_reactjs.jpg" />
+import {Callout} from "nextra/components";
+
+In this post I will demonstrate how to persist state in ReactJS by storing the state of a component in the browser's session storage, so that when the user refreshes the page, the state is not lost.
+
+## Why persist state in ReactJS?
+
+For example, you may have a form that the user has filled out, and you want to remember the state of the form so that when the user refreshes the page, the form is still filled out.
+
+## Implementation in Typescript
+
+We will create a custom hook called `usePersistState` that will take an initial value and an ID, and return the state, a function to set the state, and a function to clear the state from storage.
+
+At the first render, the hook will check if there is a value stored in storage with the provided ID, and if there is, it will use that value as the initial value. Otherwise, it will use the provided initial value or the result of the provided init function.
+
+Next, we will use the `useEffect` hook to store the state in storage whenever the state changes.
+
+Finally, we will provide a function to clear the state from storage, and optionally revert the state to the initial value.
+
+```typescript
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+
+const storage = sessionStorage;
+
+/**
+ * Custom hook that provides a persisted state value, a function to update the state value,
+ * and a function to clear the state value from storage.
+ *
+ * @template T - The type of the state value
+ * @param {T | (() => T)} initValue - The initial value of the state, or a function that returns the initial value
+ * @param {string} id - The identifier for the state value in storage
+ * @returns {[T, Dispatch<SetStateAction<T>>, (revertToInitValue: boolean) => void]} - An array containing the state value, the state update function, and the clear function
+ */
+export function usePersistedState<T>(
+  initValue: T | (() => T),
+  id: string
+): [T, Dispatch<SetStateAction<T>>, (revertToInitValue: boolean) => void] {
+  const storageKey = "state:" + id;
+
+  /** Set initial value */
+  const _initValue = useMemo<T>(() => {
+    const stateString = storage.getItem(storageKey);
+    /** If there is a value stored in storage, use that */
+    if (stateString) {
+      return JSON.parse(stateString);
+    }
+    /** Otherwise use the provided initial value */
+    return initValue instanceof Function ? initValue() : initValue;
+  }, [initValue, storageKey]);
+
+  /** React state */
+  const [state, setState] = useState<T>(_initValue);
+
+  /** Store serialized state in storage whenever the state changes */
+  useEffect(() => {
+    const stateString = JSON.stringify(state);
+    storage.setItem(storageKey, stateString);
+  }, [state, storageKey]);
+
+  /** Clear state from storage. If revertToInitValue=true, revert to initial value */
+  const clear = (revertToInitValue: boolean) => {
+    storage.removeItem(storageKey);
+    if (revertToInitValue === true) setState(_initValue);
+  };
+
+  return [state, setState, clear];
+}
+```
+
+To use the `usePersistedState` hook, simply import it and call it with the initial value and the ID you want to use to store the state in storage.
+
+```typescript
+const [counter, setCounter, clear] = usePersistedState<number>(1, "counter1");
+```
+
+You can find a fully working example of this implementation in the following CodeSandbox and the GitHub repository:
+
+<Callout>
+
+[Run in CodeSandbox](https://githubbox.com/calvincchan/use-persisted-state)
+
+[GitHub Repository](https://github.com/calvincchan/use-persisted-state)
+
+</Callout>

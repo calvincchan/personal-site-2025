@@ -1,0 +1,46 @@
+---
+title: Self-hosted Supabase - Adding Custom Claims Using Auth Hook
+date: 2024/03/21
+description: Notes on how to add custom claims to JWT token using the auth hook in self-hosted Supabase.
+tags:
+  - supabase
+  - auth
+  - jwt
+  - saml
+author: Calvin
+---
+
+I have been using self-hosted Supabase with SAML authentication to accept login from a third-party identity provider. The SAML authentication is working fine out of the box, but I need a robust way to pass user roles from my database to the client application. I found an official guide on how to add custom claims to the JWT token:
+
+https://supabase.com/docs/guides/auth/auth-hooks
+
+Basically, you need to provide a PostgreSQL function that will be called when the user logs in. The function will receive the user object and you can add custom claims to the JWT token. In the official guide, the name of the function is `custom_access_token_hook`.
+
+In the guide [Local Development](https://supabase.com/docs/guides/auth/auth-hooks#local-development) it mentioned that to enable auth hooks is to add `[auth.hook.custom_access_token]` to the `config.toml` file.
+
+However, when deploying to the staging/production servers with **Docker Compose**, the configration is different.
+
+## Steps
+
+### 1. Modify the `.env` file. Assuming your Postgres function is called `custom_access_token_hook`:
+
+```env filename=".env"
+GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED=true
+GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_URI="pg-functions://postgres/public/custom_access_token_hook"
+```
+
+### 2. Pass the env variables to the docker container. Add the following to `services` > `auth` section:
+
+```yaml filename="docker-compose.yml"
+services:
+  auth:
+    GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED: ${GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED}
+    GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_URI: ${GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_URI}
+    ...
+```
+
+After restarting the Docker containers, the `user role` should be added to the JWT token following a successful authentication.
+
+## Further Read: Role Based Access Control (RBAC)
+
+If you are interested in further utilizing the new `user_role` value and integrate it with database side Role Based Access Control (RBAC), you can refer to the following guide: [Custom Claims & Role-based Access Control (RBAC)](https://supabase.com/docs/guides/auth/custom-claims-and-role-based-access-control-rbac).

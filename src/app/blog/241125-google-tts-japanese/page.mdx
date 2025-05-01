@@ -1,0 +1,101 @@
+---
+title: Generating a Japanese Voiceover Using Google Text-to-Speech API
+date: 2024-11-25
+description: Learn how to generate a Japanese voiceover using the Google Text-to-Speech (TTS) API in the Google Cloud Platform (GCP).
+tags:
+  - google cloud
+  - text-to-speech
+  - tts
+  - japanese
+  - voiceover
+  - gcp
+  - ssml
+author: Calvin
+---
+
+import { Callout } from "nextra/components";
+
+Demonstrate how to generate a Japanese voiceover mp3 file using the Google Text-to-Speech (TTS) API in the Google Cloud Platform (GCP).
+
+---
+
+## Overview
+
+This blog post documents the steps I followed to generate a Japanese voiceover using Google Text-to-Speech (TTS) API. The API is part of the Google Cloud Platform (GCP) and supports generating high-quality speech in multiple languages.
+
+This project originated from a request by a Japanese doctor friend of mine who is creating a series of educational videos using PowerPoint slides. These videos are in Japanese, and adding a professional-sounding voiceover was a critical requirement. After exploring several options, I decided to use the Google TTS API for its quality and flexibility.
+
+---
+
+## Prerequisites
+
+Before you start, make sure you have the following:
+
+1. A [Google Cloud Platform](https://cloud.google.com/) account.
+2. An active project in the Google Cloud Console.
+3. A service account key file in JSON format for authentication.
+
+---
+
+## Step 1: Enable the Google Text-to-Speech API
+
+1. Log in to the [Google Cloud Console API Library](https://console.cloud.google.com/apis/library).
+2. Select your project from the top navigation bar.
+3. Search for "Text-to-Speech API" in the library and select it.
+4. Click the **Enable** button to activate the API for your project.
+
+---
+
+## Step 2: Create a Service Account and Key
+
+1. Navigate to the [IAM & Admin Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts) page.
+2. Create a new service account and assign it the **Owner** role (for simplicity; adjust permissions as needed for production).
+3. Download the service account key file in JSON format, as it will be required for authentication.
+
+---
+
+## Step 3: Clone My GitHub Repository
+
+To simplify the process, I created a JavaScript script that uses the Google TTS API to generate speech from text. The repository is available on GitHub:
+
+<Callout>
+  [GitHub: google-tts-script](https://github.com/calvincchan/google-tts-script)
+</Callout>
+
+The script includes detailed instructions on setting up and running the tool.
+
+---
+
+## Step 4: Enhancing Speech with SSML
+
+After generating an initial voiceover, I noticed that the output could be improved by controlling the pauses and pacing. To address this, I converted the plain text into **SSML (Speech Synthesis Markup Language)**. This allowed me to fine-tune the speech by adding breaks, adjusting pitch, and controlling intonation.
+
+Here is an example of the SSML I used:
+
+```xml
+<speak>
+  <s>ファン・ゴッホは、1853年、オランダ南部のズンデルトで牧師の家に生まれた（出生、少年時代）。</s>
+  <s>1869年、画商グーピル商会に勤め始め、ハーグ、ロンドン、パリで働くが、1876年、商会を解雇された（グーピル商会）。</s>
+  <s>その後イギリスで教師として働いたりオランダのドルトレヒトの書店で働いたりするうちに聖職者を志すようになり、1877年、アムステルダムで神学部の受験勉強を始めるが挫折した。</s>
+  <s>1878年末以降、ベルギーの炭坑地帯ボリナージュ地方で伝道活動を行ううち、画家を目指すことを決意した（聖職者への志望）。</s>
+  <s>以降、オランダのエッテン（1881年4月-12月）、ハーグ（1882年1月-1883年9月）、ニューネン（1883年12月-1885年11月）、ベルギーのアントウェルペン（1885年11月-1886年2月）と移り、弟テオドルス（通称テオ）の援助を受けながら画作を続けた。</s>
+  <s>オランダ時代には、貧しい農民の生活を描いた暗い色調の絵が多く、ニューネンで制作した『ジャガイモを食べる人々』はこの時代の主要作品である。</s>
+</speak>
+```
+
+### The Result
+
+Below is the generated audio output for the SSML sample above:
+
+<audio controls>
+  <source src="/assets/241125-sample.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+
+## Observations and Next Steps
+
+- The SSML format significantly improved the output by making the speech more natural and expressive.
+- The generated voice quality was excellent, but achieving the right pacing required some trial and error with SSML adjustments.
+- I plan to refine the script further and explore additional SSML features to enhance the voiceovers for my friend's educational videos.
+
+This project demonstrated how Google TTS, combined with SSML, can create professional-quality voiceovers. I look forward to using this method for other projects and sharing my findings.

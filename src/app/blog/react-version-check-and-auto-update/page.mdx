@@ -1,0 +1,354 @@
+---
+title: Version Checking and Auto Update for React Web App
+date: 2023/10/18
+description: A simple way to constantly check for updates and reload your React app automatically when there is a new version deployed.
+tags:
+  - react
+  - react-version-checker
+author: Calvin
+---
+
+import { Callout } from "nextra/components";
+
+<img src="/images/SCR-20231019-klaw.png" />
+
+<Callout>
+All the code below can be found in my GitHub:
+
+https://github.com/calvincchan/react-version-checker
+
+</Callout>
+
+## The Problem
+
+When developing client side web app, it's often important to ensure that the app is updated with the latest version. This is especially true when user leaves the app page opened for a long time. In this case, the user may not be aware that the app is not updated and is running an outdated version.
+
+In this post, I will demoonstrate a simple way to check for updates and reload the app if there is a new version.
+
+## The Solution
+
+1. Generate a version number for the app and embed it in the code on every build.
+
+2. Write the same version number to a file on the server and make sure it is accessible to the client.
+
+3. Have the app periodically fetch for the version number file, and compare it with the embedded value. If the values don't match, reload the app either automatically or with a prompt.
+
+## The Implementation
+
+### 1. Generate and Embed Version Number in React
+
+I will use React (Typescript) with Vite as the bundler for this example. The same concept can be applied to other frameworks and bundlers.
+
+```bash
+yarn create vite my-app --template react-ts
+yarn install
+```
+
+Once the basic files are ready, we can start implementing the version number generating and embedding logic.
+
+First, I use a simple bash script to generate the version number. The script reads the version number from `package.json` and appends the git commit count and hash. I do this so that I can easily identify the version number from the git commit history. You can use any other method to generate the version number.
+
+```sh filename="scripts/get-version.sh"
+
+VERSION=$(grep -m 1 -o '"version": *"[^"]*"' ./package.json | awk -F'"' '{print $4}');
+GIT_COMMIT_COUNT=$(git rev-list --count HEAD);
+GIT_COMMIT_HASH=$(git rev-parse --short HEAD);
+APP_VERSION="$VERSION-$GIT_COMMIT_COUNT-$GIT_COMMIT_HASH";
+echo $APP_VERSION
+```
+
+Next, I need to embed the version number to the code. Since I am using [Vite](https://vite.dev) for this example, I can use the `define` option in `vite.config.ts` to inject the version number into the code. The version number will be available as `__APP_VERSION__` in the code.
+
+Note that after build the value of `__APP_VERSION__` will be replaced with the actual version number.
+
+```ts filename="vite.config.ts"
+import react from "@vitejs/plugin-react";
+import { execSync } from "child_process";
+import { defineConfig } from "vite";
+
+// Get current tag/commit and last commit date from git
+const version = execSync("./scripts/get-version.sh").toString().trim();
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    __APP_VERSION__: JSON.stringify(version),
+  },
+});
+```
+
+<Callout>
+  `child_process` is a built-in module in Node.js. Typescript does not know
+  about it by default, so I install the `@types/node` type declaration to avoid
+  errors: `yarn add -D @types/node`
+</Callout>
+
+For Typescript to recognize the `__APP_VERSION__` variable, I need to add the following line to `src/vite-env.d.ts`.
+
+```ts filename="src/vite-env.d.ts"
+/// <reference types="vite/client" />
+declare const __APP_VERSION__: string;
+```
+
+Now I can use the `__APP_VERSION__` everywhere in the code.
+
+```tsx filename="src/App.tsx"
+import "./App.css";
+
+function App() {
+  return (
+    <>
+      <p>__APP_VERSION__: {__APP_VERSION__}</p>
+    </>
+  );
+}
+
+export default App;
+```
+
+### 2. Write Version Number to a JSON File on Every Build
+
+Then, I use another script to call the `get-version.sh` shell script and write the same version number to a file `signature.json` into the `public/` folder. Is way, the JSON file will be available to the client for periodic fetching.
+
+```sh filename="scripts/sync-version.sh"
+
+APP_VERSION=$(./scripts/get-version.sh);
+echo "{\"version\":\"$APP_VERSION\"}" > ./public/signature.json
+```
+
+And to make sure it gets executed on every dev and build, I add the following line to `package.json`.
+
+From:
+
+```json filename="package.json"
+  ...
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+  },
+```
+
+To:
+
+```json filename="package.json"
+  ...
+  "scripts": {
+    "dev": "./scripts/sync-version.sh && vite", // run sync-version.sh before dev
+    "prebuild": "./scripts/sync-version.sh", // and before build
+    "build": "tsc && vite build",
+  },
+```
+
+### 3. Periodically Fetch and Compare
+
+Finally, I put together the logic to fetch the version number file and compare it with the embedded (local) version number in a fixed interval.
+
+First, I use vite config to define the interval time:
+
+```ts filename="vite.config.ts"
+// add the version check time interval to the define option
+...
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    ...
+    __VERSION_CHECK_INTERVAL__: 1000 * 30, // check new version every 30 seconds
+  },
+});
+```
+
+And the type declaration:
+
+```ts filename="src/vite-env.d.ts"
+/// <reference types="vite/client" />
+declare const __APP_VERSION__: string;
+declare const __VERSION_CHECK_INTERVAL__: number; // add this line
+```
+
+Then in `App.tsx` add the callback function to fetch the remote version and store the value in state:
+
+```tsx filename="src/App.tsx"
+import { useCallback, useEffect, useState } from "react";
+import "./App.css";
+
+const appVersion = __APP_VERSION__;
+const versionCheckInterval = __VERSION_CHECK_INTERVAL__;
+
+function App() {
+  /** The remote version fetched from JSON */
+  const [newVersion, setNewVersion] = useState("");
+  const [lastChecked, setLastChecked] = useState<Date | null>(null);
+
+  /** Fetch remote version from signature.json. Add timestamp for cache busting. */
+  const fetchRemoteVersion = useCallback(
+    () =>
+      fetch(`/signature.json?${Date.now()}`, {
+        cache: "no-store",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data: { version: string }) => {
+          setNewVersion(data.version);
+          setLastChecked(new Date());
+          return data.version;
+        }),
+    []
+  );
+
+  //...(to be continued)
+}
+```
+
+Add the effect to call the `fetchRemoteVersion` function when:
+
+1. The page is first loaded. In this case we want to just reload the page if there is a new version without any prompt.
+2. Every 10 seconds, fetch again to check for new version. If a new version is found, prompt the user to reload the page.
+
+```tsx filename="src/App.tsx"
+function App() {
+  //...
+
+  const [showNewVersion, setShowNewVersion] = useState(false);
+
+  useEffect(() => {
+    /** initial run and update without prompt */
+    fetchRemoteVersion().then((version) => {
+      if (version !== appVersion) {
+        hardReloadPage();
+      }
+    });
+
+    /** interval run and show prompt if update is needed */
+    const timer = setInterval(() => {
+      fetchRemoteVersion().then((version) => {
+        if (version !== appVersion) {
+          setShowNewVersion(true);
+        } else {
+          console.log("version not changed");
+        }
+      });
+    }, versionCheckInterval);
+    return () => clearInterval(timer);
+  }, [fetchRemoteVersion]);
+
+  /** Use your favorite way to perform a hard reload on the current page. */
+  function hardReloadPage() {
+    window.location.reload();
+  }
+
+  return (
+    <>
+      <p>Local version: {appVersion}</p>
+      <p>Remote version: {newVersion}</p>
+      <p>Check interval: {versionCheckInterval / 1000} seconds</p>
+      <p>Last checked: {lastChecked?.toLocaleString()}</p>
+      {showNewVersion && (
+        <div>
+          <h3>Update Available</h3>
+          <p>A new version is available. Would you like to update now?</p>
+          <p>Your version: {appVersion}</p>
+          <p>New version: {newVersion}</p>
+          <button onClick={hardReloadPage}>Update Now</button>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+Let's take a look at the whole `App.tsx`:
+
+```tsx filename="src/App.tsx"
+import { useCallback, useEffect, useState } from "react";
+import "./App.css";
+
+const appVersion = __APP_VERSION__;
+const versionCheckInterval = __VERSION_CHECK_INTERVAL__;
+
+function App() {
+  /** The remote version fetched from JSON */
+  const [newVersion, setNewVersion] = useState("");
+  const [lastChecked, setLastChecked] = useState<Date | null>(null);
+
+  /** Fetch remote version from signature.json. Add timestamp for cache busting. */
+  const fetchRemoteVersion = useCallback(
+    () =>
+      fetch(`/signature.json?${Date.now()}`, {
+        cache: "no-store",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data: { version: string }) => {
+          setNewVersion(data.version);
+          setLastChecked(new Date());
+          return data.version;
+        }),
+    []
+  );
+
+  const [showNewVersion, setShowNewVersion] = useState(false);
+
+  useEffect(() => {
+    /** initial run and update without prompt */
+    fetchRemoteVersion().then((version) => {
+      if (version !== appVersion) {
+        hardReloadPage();
+      }
+    });
+
+    /** interval run and show prompt if update is needed */
+    const timer = setInterval(() => {
+      fetchRemoteVersion().then((version) => {
+        if (version !== appVersion) {
+          setShowNewVersion(true);
+        } else {
+          console.log("version not changed");
+        }
+      });
+    }, versionCheckInterval);
+    return () => clearInterval(timer);
+  }, [fetchRemoteVersion]);
+
+  /** Use your favorite way to perform a hard reload on the current page. */
+  function hardReloadPage() {
+    window.location.reload();
+  }
+
+  return (
+    <>
+      <p>Local version: {appVersion}</p>
+      <p>Remote version: {newVersion}</p>
+      <p>Check interval: {versionCheckInterval / 1000} seconds</p>
+      <p>Last checked: {lastChecked?.toLocaleString()}</p>
+      {showNewVersion && (
+        <div>
+          <h3>Update Available</h3>
+          <p>A new version is available. Would you like to update now?</p>
+          <p>Your version: {appVersion}</p>
+          <p>New version: {newVersion}</p>
+          <button onClick={hardReloadPage}>Update Now</button>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default App;
+```
+
+To test the effect, run `yarn dev` to start the dev server, which automatically opens the app in a browser to see the "normal" state:
+
+<img src="/images/SCR-20231019-kkvw.png" />
+
+Then, you can change the value in `signature.json` from an editor, and save the file to see the "update available" state.
+
+<img src="/images/SCR-20231019-klaw.png" />
+
+## Source Code
+
+All the code above can be found in my GitHub:
+
+https://github.com/calvincchan/react-version-checker

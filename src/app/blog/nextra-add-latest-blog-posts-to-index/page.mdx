@@ -1,0 +1,156 @@
+---
+title: Adding Latest Blog Posts to the Home Page of Your Nextra Site
+date: 2023/10/20
+description: How to add the latest 3 blog posts to the home page of your Nextra site.
+tags:
+  - react
+  - nextra
+  - javascript
+author: Calvin
+---
+
+I am using Nextra (https://nextra.site/) as my static site generator. To improve the page freshness and search engine optimization, I decided to automatically add the latest 3 blog posts to the home page of my site at build time. I found a way to do this, inspired by https://the-guild.dev/.
+
+The idea is simple: while building the site, there is a script called `gen-rss.js` that generates an RSS feed for the blog posts. I modified this script to generate a JSON file that contains the latest 3 blog posts. Then, we can use this JSON file to render the blog posts on the home page.
+
+If you just want to see the code directly, you can check out the this diff in GitHub: [Comparing f3823fb22...9c39d435c](https://github.com/calvincchan/personal-site/compare/f3823fb22f5d5f42b8d3a94bb6b0f2b268af36c1...9c39d435cf525d8bad34d4e4f1eae980ce85eb04?diff=split).
+
+## Step 1: Generate the JSON file with the latest 3 blog posts, alongside the RSS feed
+
+```js filename="scripts/gen-rss.js"
+import "dotenv/config";
+import { promises as fs } from "fs";
+import matter from "gray-matter";
+import path, { join } from "path";
+import RSS from "rss";
+import { fileURLToPath } from "url";
+
+/** Import SITE_URL from env */
+const SITE_URL = process.env.SITE_URL;
+
+async function generate() {
+  const feed = new RSS({
+    title: "Calvin Chun-yu Chan",
+    site_url: SITE_URL,
+    feed_url: SITE_URL + "/feed.xml",
+  });
+
+  /** For blogs.json */
+  const articles = [];
+
+  /** Reference: https://byby.dev/node-dirname-not-defined */
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const posts = await fs.readdir(join(__dirname, "..", "pages", "blog"));
+
+  await Promise.all(
+    posts.map(async (name) => {
+      if (name.startsWith("index.")) return;
+
+      const content = await fs.readFile(
+        join(__dirname, "..", "pages", "blog", name)
+      );
+      const frontmatter = matter(content);
+
+      const item = {
+        title: frontmatter.data.title,
+        url: "/blog/" + name.replace(/\.mdx?/, ""),
+        date: frontmatter.data.date,
+        description: frontmatter.data.description,
+        categories: frontmatter.data.tag.split(", "),
+        author: frontmatter.data.author,
+      };
+
+      /** Add to RSS feed */
+      feed.item(item);
+
+      /** Also add to articles array */
+      articles.push(item);
+    })
+  );
+
+  await fs.writeFile("./public/feed.xml", feed.xml({ indent: true }));
+
+  /** Sort articles array in descending order and write to blogs.json */
+  const latestArticles = articles
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .splice(0, 3);
+  await fs.writeFile("./ui/blogs.json", JSON.stringify(latestArticles));
+}
+
+generate();
+```
+
+## Step 2: Add a component to render the latest blog posts
+
+Import the generated JSON file and render the post preview.
+
+```jsx filename="pages/index.mdx"
+import blogs from "../ui/blogs.json";
+import { RecommendedReadingSection } from "../ui/recommended-reading-section";
+
+...
+<RecommendedReadingSection articles={blogs} />;
+...
+```
+
+And the component itself:
+
+```tsx filename="ui/recommended-reading-section.tsx"
+import Link from "next/link";
+import { ReactElement } from "react";
+
+export type Meta = {
+  title: string;
+  url: string;
+  date: string;
+  categories: string | string[];
+  author: string;
+  description: string;
+};
+
+export const RecommendedReadingSection = ({
+  articles = [],
+}: {
+  articles: Meta[];
+}): ReactElement => {
+  return (
+    <>
+      {articles.map((article) => (
+        <div key={article.url} className="post-item">
+          <h3>
+            <Link href={article.url}>{article.title}</Link>
+          </h3>
+          <p>
+            {article.description} <Link href={article.url}>Read ➔</Link>
+          </p>
+          <time>{article.date}</time>
+        </div>
+      ))}
+      <div>
+        <Link href="/blog">View all blog posts ➔</Link>
+      </div>
+    </>
+  );
+};
+```
+
+## Step 3: Add to dev script and git-ignore the generated JSON file
+
+To make sure the JSON file is generated every time we run `yarn dev`, we need to add it to the dev script in `package.json`:
+
+```json filename="package.json"
+  "scripts": {
+    "dev": "node ./scripts/gen-rss.js && next",
+  },
+```
+
+And we also need to git-ignore the generated JSON file:
+
+```gitignore filename=".gitignore"
+ui/blogs.json
+```
+
+## Conclusion
+
+That's it! Originally I was expecting to have to write a custom plugin for Nextra, but it turns out that I can just modify the existing RSS feed generation script to generate the JSON file as well. I hope this helps you if you are also using Nextra and want to add the latest blog posts to your home page.

@@ -1,0 +1,57 @@
+---
+title: Using AI to Summarize and Recap the BC Election Debate
+date: 2024-10-09
+description: Discover how I used AnythingLLM to summarize a 2.5-hour BC Election debate and interact with the transcript using AI-powered insights.
+tags:
+  - ai
+  - rag
+  - youtube transcript
+  - bc election
+  - anythingllm
+  - llm video summarization
+author: Calvin
+image: /assets/241009-using-ai-to-summarize-and-recap-the-bc-election-debate.jpg
+video: https://www.youtube.com/watch?v=LgoOHch3PKM
+---
+
+import Image from "next/image";
+import { YouTube } from "src/_components/YouTube"
+
+## Introduction
+
+As the BC Election approaches, I wanted to catch up on the Party Leaders' televised debate. But with the full video stretching over 2.5 hours, I was more interested in cutting through the noise and getting straight to the key points. Instead of manually sifting through it, I decided to use AnythingLLM, a local large language model (LLM) platform with a built-in YouTube transcript importer. My goal was to use the debate transcript as a knowledge base, summarize it, and ask follow-up questions using Retrieval-Augmented Generation (RAG).
+
+Here is the screen recording of the process:
+
+<YouTube id="LgoOHch3PKM" />
+
+## What is AnythingLLM
+
+[AnythingLLM](https://anythingllm.com/) is a local LLM software that supports YouTube transcript importing, making it easy to convert video content into searchable text. Its flexible configurations, including customizable models and embedders, make it a powerful tool for summarizing and interacting with data, all processed on your own machine.
+
+## Summarizing the BC Election Debate
+
+To experiment, I imported the transcript of the BC Election debate directly into AnythingLLM. Within minutes, the tool processed the entire 2.5-hour video. From there, I was able to generate a summary of the key issues the leaders discussed, from healthcare and housing affordability to economic reforms and environmental policies. The summarization helped condense the debate into digestible chunks, giving me quick insights without needing to watch the whole video.
+
+Original debate video: https://www.youtube.com/watch?v=tJ_5TWte6is
+
+## Asking Questions and Digging Deeper
+
+Using AnythingLLM's RAG capabilities, I explored specific topics by asking questions such as:
+
+- “What are the candidates' positions on healthcare reforms?”
+- “How do they plan to address climate change?”
+
+The model pulled relevant answers from the transcript, providing concise responses on these topics. This interactive approach allowed me to quickly focus on what I found most important without watching the debate in real-time.
+
+## Weaknesses of Using AnythingLLM
+
+While the experience was efficient, there are a few drawbacks to using AnythingLLM for this type of task:
+
+- Transcript Accuracy: YouTube's auto-generated transcripts aren't perfect. Any inaccuracies in the original transcript can lead to slightly misleading summaries.
+- Context Sensitivity: Sometimes, the LLM struggled to provide nuanced responses, especially with complex or multi-faceted answers from the candidates.
+- Manual Setup: While the local setup offers privacy and flexibility, the initial configuration process can be challenging for users unfamiliar with LLMs or local machine learning environments.
+
+## Conclusion
+
+Using AnythingLLM to summarize and explore the BC Election debate was a productive way to quickly digest long-form content. It provided a clear summary and allowed me to interact with the transcript through targeted questions. However, some limitations—like transcript accuracy and the need for manual setup—show that there's room for improvement. Despite these weaknesses, the experiment saved me hours and made the debate far more accessible.

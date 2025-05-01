@@ -1,0 +1,49 @@
+---
+title: Attendance Taking AI Chatbot with React Frontend
+date: 2024/1/5
+description: Building an interactive OpenAI chatbot that takes student attendance with Fastify, SQLite and React.
+tags:
+  - langchain
+  - ai
+  - chatbot
+  - openai
+  - react
+  - fastify
+  - sqlite
+  - function-calling
+author: Calvin
+draft: false
+image: /assets/attendance-taking-ai-chatbot-with-react-frontend.jpg
+---
+
+import { Callout } from "nextra/components";
+
+<img src="/assets/attendance-taking-ai-chatbot-with-react-frontend.jpg" />
+
+In the previous [post #1](/blog/student-attendance-chatbot) and [post #2](/blog/student-attendance-chatbot-with-parallel-function-calling), I built a student attendance chatbot using _OpenAI_ and _LangChainJS_. The code runs on the server side and features an interactive prompt in the terminal. However, it wasn't very convenient for users to quickly test the chatbot and see the results. In this post, I'll demonstrate how I added a minimal _ReactJS_ frontend for the chatbot.
+
+The approach involves (1) converting the original terminal prompt into a RESTful API and (2) integrating a _ReactJS_ frontend to call the API.
+
+I accomplished (1) effortlessly with [Fastify](https://fastify.dev/), aggregating all `console.log` outputs into a structured JSON response and setting up the server in _CodeSandbox_.
+
+The frontend development also progressed quickly, thanks to code snippets from [Zeshanshakil](https://medium.com/@zeshanshakil0/lets-create-ai-chatbot-from-scratch-in-reactjs-223ff435f740) with some modifications.
+
+<img
+  src="/assets/attendance-taking-ai-chatbot-screen.gif"
+  alt="screen capture of the chatbot frontend with reactjs"
+/>
+
+I successfully ran both frontend and backend projects locally in two separate docker containers, using `docker-compose` to orchestrate them. The frontend would call the backend API at `http://localhost:3001` and display the result.
+
+However, when attempting to run them in _CodeSandbox_, I encountered some issues. I couldn't run the server/client as two separate containers since the client didn't know the hostname of the temporary instantiated API server. I could not find an easy way to obtain the server hostname and pass it to the client container.
+
+As a workaround, I merged the frontend and backend into a single project, running them in a single container. The frontend is served statically by _Fastify_, and the API is available at `/chat` on the same host. CORS is not a concern since both the frontend and backend are served from the same host and port.
+
+The latest update is tagged **version-5**. Please make sure to add OPENAI_API_KEY to the environment variables in the CodeSandbox project settings:
+
+- Run Version-5 in CodeSandbox: https://githubbox.com/calvincchan/student-attendance-chatbot/tree/version-5
+- Version-5 Source Code on GitHub: https://github.com/calvincchan/student-attendance-chatbot/tree/version-5
+
+## After thoughts
+
+In this demo project, I chose to utilize a server/client design. My intention is to store attendance data in the server-side database, allowing the chatbot to be used across multiple sessions and by different user roles. However, it is also possible to implement the chatbot as a pure frontend application, utilizing [Web SQL Database](https://www.w3.org/TR/webdatabase/) or [IndexedDB](https://www.w3.org/TR/IndexedDB/) to store attendance data locally in the browser.
