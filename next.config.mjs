@@ -5,7 +5,6 @@ const withNextra = nextra({
   // themeConfig: "./theme.config.jsx",
   defaultShowCopyCode: true,
   readingTime: true,
-  // contentDirBasePath: "/blog2",
 });
 
 export default withNextra({
@@ -16,8 +15,8 @@ export default withNextra({
       {
         protocol: "https",
         hostname: "calvincchan.com",
-        // port: '',
-        // pathname: '/account123/**',
+        port: '',
+        pathname: '/**',
       },
     ],
   },
