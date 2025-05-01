@@ -12,4 +12,4 @@ export const DateOnly: React.FC<Props> = ({ date }) => {
       {dateStringFormatted}
     </time>
   );
-}
+};

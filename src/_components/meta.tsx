@@ -1,7 +1,6 @@
 import { Link } from 'next-view-transitions'
 import type { FC, ReactNode } from 'react'
 import type { BlogMetadata } from '../types'
-import { GoBack } from './go-back'
 
 export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
   author,
@@ -11,7 +10,7 @@ export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
   children
 }) => {
   const tagsEl = tags?.map(t => (
-    <Link key={t} href={`/tags/${t}`} className="nextra-tag">
+    <Link key={t} href={`/tags/${t}`} className="x-tag">
       {t}
     </Link>
   ))
@@ -22,11 +21,11 @@ export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
     <aside
       role="meta"
       className={
-        'mb-8 flex gap-3 ' +
+        'x-meta-block mb-8 flex gap-3 ' +
         (readingTimeText ? 'items-start' : 'items-center')
       }
     >
-      <div className="grow dark:text-gray-400 text-gray-600">
+      <div className="grow">
         <div className="flex flex-wrap items-center gap-1">
           {author}
           {author && date && ','}

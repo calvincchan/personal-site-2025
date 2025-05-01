@@ -1,26 +1,26 @@
 // throws TypeError: Cannot read properties of null (reading 'useMemo')
-'use no memo'
+'use no memo';
 
 /* eslint sort-keys: error */
+import Link from 'next/link';
 import {
   Callout,
   Code,
   Details,
+  Image,
   Pre,
   Summary,
   Table,
   withGitHubAlert,
-  withIcons,
-  Image
-} from 'nextra/components'
-import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-components'
-import type { MDXComponents } from 'nextra/mdx-components'
-import type { ComponentProps, FC } from 'react'
-import { Meta } from './_components/meta'
-import { isValidDate } from './is-valid-date'
-import type { BlogMetadata } from './types'
-import { DateOnly } from './_components/date-only'
-import Link from 'next/link'
+  withIcons
+} from 'nextra/components';
+import type { MDXComponents } from 'nextra/mdx-components';
+import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-components';
+import type { FC } from 'react';
+import { DateOnly } from './_components/date-only';
+import { Meta } from './_components/meta';
+import { isValidDate } from './is-valid-date';
+import type { BlogMetadata } from './types';
 
 // const createHeading = (
 //   Tag: `h${2 | 3 | 4 | 5 | 6}`
@@ -54,14 +54,10 @@ const CALLOUT_TYPE = Object.freeze({
   note: 'info',
   tip: 'default',
   warning: 'warning'
-})
+});
 const Blockquote = withGitHubAlert(({ type, ...props }) => (
   <Callout type={CALLOUT_TYPE[type]} {...props} />
-))
-
-type BlogMDXComponents = MDXComponents & {
-  DateFormatter?: FC<{ date: Date }>
-}
+));
 
 const DEFAULT_COMPONENTS = getNextraMDXComponents({
   blockquote: Blockquote,
@@ -78,37 +74,37 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
   td: Table.Td,
   th: Table.Th,
   tr: Table.Tr
-})
+});
 
 interface WrapperProps {
-  children: React.ReactNode
-  metadata: BlogMetadata
+  children: React.ReactNode;
+  metadata: BlogMetadata;
 }
 
 interface UseMDXComponentsProps {
-  DateFormatter?: FC<{ date: Date }>
+  DateFormatter?: FC<{ date: Date; }>;
 }
 
 export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents => {
-  const { DateFormatter, ...components } = comp ?? {}
+  const { DateFormatter, ...components } = comp ?? {};
   return {
     ...DEFAULT_COMPONENTS,
     wrapper({ children, metadata }: WrapperProps) {
-      console.log('metadata', metadata)
+      console.log('metadata', metadata);
 
       if (!metadata) {
-        throw new Error('No metadata provided')
+        throw new Error('No metadata provided');
       }
 
-      const date = metadata.date as string
+      const date = metadata.date as string;
       if (date && !isValidDate(date)) {
         throw new Error(
           `Invalid date "${date}". Provide date in "YYYY/M/D", "YYYY/M/D H:m", "YYYY-MM-DD", "[YYYY-MM-DD]T[HH:mm]" or "[YYYY-MM-DD]T[HH:mm:ss.SSS]Z" format.`
-        )
+        );
       }
-      const dateObj = date && new Date(date)
+      const dateObj = date && new Date(date);
       return (
-        <article className="xprose">
+        <article className="x-prose">
           <header>
             <nav role="navigation" className="mb-4 text-gray-500"><Link href=".">← Back to Blog</Link></nav>
             {metadata.image && <Image src={metadata.image} alt={metadata.title}
@@ -128,10 +124,23 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
               )}
             </Meta>
           </header>
-          {children}
-        </article>
-      )
+          <main>
+            {children}
+          </main>
+          <aside role="bio" className="x-bio my-24">
+            <h3>About the Author</h3>
+            <div className="flex flex-row items-center gap-4">
+              <div className="flex">
+                <Image src="/images/calvincchan-portrait.jpg" alt="Calvin Chun-Yu Chan" width={100} height={100} className="rounded-full" />
+              </div>
+              <div className="flex">
+                <p>{process.env.SITE_BIO}</p>
+              </div>
+            </div>
+          </aside>
+        </article >
+      );
     },
     ...components
-  }
-}
+  };
+};

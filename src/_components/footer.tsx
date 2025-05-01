@@ -2,9 +2,9 @@ import type { FC } from 'react'
 
 export const Footer: FC = () => {
   return (
-    <footer className="p-2 my-24 flex items-center justify-between flex-col sm:flex-row">
+    <footer className="bg-neutral-10 p-2 my-24 flex items-center justify-between flex-col sm:flex-row">
       <div>
-        <strong>{new Date().getFullYear()} © Calvin Chun-Yu Chan.</strong>{' '}
+        <strong>{new Date().getFullYear()} © {process.env.SITE_AUTHOR}.</strong>{' '}
         All rights reserved.
       </div>
       <div className="flex flex-row items-center gap-4">

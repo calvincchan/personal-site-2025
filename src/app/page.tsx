@@ -1,12 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Page() {
-  return (<div className="xtop-page">
+  return (<div className="x-top-page">
     <section role="hero" className="xhero my-36">
-      <h1 className="mb-10">Hi, I'm Calvin C. Chan 👋</h1>
-      <h3>I'm a freelance developer offering to build AI-powered solutions, web apps and websites.</h3>
-      <p><Link href="/contact" className="xbutton">Let's Talk ✨</Link></p>
+      <h1 className="mb-10">Hi, I&quot;m Calvin C. Chan 👋</h1>
+      <h3>I&quot;m a freelance developer offering to build AI-powered solutions, web apps and websites.</h3>
+      <p><Link href="/contact" className="x-button">Let&quot;s Talk ✨</Link></p>
     </section>
 
 
@@ -27,10 +26,10 @@ export default function Page() {
         I am available for freelance work. If you have a project in mind, feel free to reach out!
       </p>
       <p className="flex gap-4">
-        <Link href="/contact" className="xbutton">Schedule a Call</Link>
-        <Link href="/portfolio.pdf" className="xbutton">Download Resume</Link>
+        <Link href="/contact" className="x-button">Schedule a Call</Link>
+        <Link href="/portfolio.pdf" className="x-button">Download Resume</Link>
       </p>
     </section>
   </div>
-  )
+  );
 }  

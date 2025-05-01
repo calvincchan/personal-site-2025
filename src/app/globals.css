@@ -4,17 +4,17 @@
 @import "../styles/code-block.css";
 
 
-.xbackground {
+.x-background {
   @apply h-screen bg-stone-50 overflow-y-scroll;
 }
 
-.xbutton {
+.x-button {
   @apply bg-black text-white hover:bg-black/60 transition-colors rounded p-2 inline-block;
 }
 
 main {}
 
-.xtop-page {
+.x-top-page {
   h1 {
     @apply text-5xl font-medium my-2;
   }
@@ -28,7 +28,7 @@ main {}
   }
 }
 
-.xblog-top {
+.x-blog-top {
   h1 {
     @apply text-5xl font-medium my-2;
   }
@@ -45,54 +45,68 @@ main {}
     @apply block text-sm text-gray-500;
   }
 
-  .xblog-card {
+  .x-post-card {
     @apply my-10;
   }
 }
 
 
-.xprose {
+.x-prose {
   header {
     @apply mt-36 mb-20;
+
+    h1 {
+      @apply text-4xl font-medium mt-5 mb-3;
+    }
+
+    .x-meta-block {
+      @apply text-sm text-gray-500 dark:text-gray-400;
+    }
   }
 
-  h1 {
-    @apply text-4xl font-medium mt-5 mb-3;
+  main {
+    h1 {
+      @apply text-4xl font-medium mt-5 mb-3;
+    }
+
+    h2 {
+      @apply text-2xl font-medium mt-5 mb-3;
+    }
+
+    h3 {
+      @apply text-xl font-medium mt-5 mb-3;
+    }
+
+    h4 {
+      @apply font-medium mt-5 mb-3;
+    }
+
+    ul {
+      @apply list-disc list-outside ml-5;
+    }
+
+    li {
+      @apply my-2;
+    }
+
+    ol {
+      @apply list-decimal list-outside ml-5;
+    }
+
+    a {
+      @apply underline;
+
+      svg {
+        @apply inline-block;
+      }
+    }
   }
 
-  h2 {
-    @apply text-3xl font-medium mt-5 mb-3;
-  }
+  aside {
+    @apply bg-neutral-100 dark:bg-neutral-800 p-4;
 
-  h3 {
-    @apply text-2xl font-medium mt-5 mb-3;
-  }
-
-  h4 {
-    @apply text-xl font-medium mt-5 mb-3;
-  }
-
-  ul {
-    @apply list-disc list-outside ml-5;
-  }
-
-  li {
-    @apply my-2;
-  }
-
-  ol {
-    @apply list-decimal list-outside ml-5;
-  }
-
-  .xprose-meta {
-    @apply text-sm text-gray-500;
-  }
-
-  a {
-    @apply underline;
-
-    svg {
-      @apply inline-block;
+    h3 {
+      @apply text-xl font-medium my-2;
     }
   }
 }
@@ -101,13 +115,13 @@ p {
   @apply my-2;
 }
 
-.nextra-tag {
-  @apply px-2.5 py-0.5 text-sm font-semibold rounded-md transition-colors shadow-sm;
+.x-tag {
+  @apply px-2.5 py-0.5 text-sm font-semibold rounded-md transition-colors;
   @apply bg-neutral-900 text-white;
   @apply dark:bg-gray-50 dark:text-black;
 
   &:hover {
-    @apply bg-neutral-700;
+    @apply bg-neutral-500;
     @apply dark:bg-gray-200;
   }
 }
