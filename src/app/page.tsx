@@ -1,5 +1,33 @@
 import Link from "next/link";
 
+// export const metadata: Metadata & FrontMatter = {
+//   title: process.env.SITE_AUTHOR,
+//   description: process.env.SITE_DESCRIPTION,
+//   priority: 1,
+// };
+
+export function generateMetadata() {
+  return {
+    title: process.env.SITE_AUTHOR,
+    description: process.env.SITE_DESCRIPTION,
+    lastmod: "2025-05-01",
+    openGraph: {
+      title: process.env.SITE_AUTHOR,
+      description: process.env.SITE_DESCRIPTION,
+      url: process.env.SITE_URL,
+      siteName: process.env.SITE_AUTHOR,
+      type: "website",
+      images: [
+        {
+          url: `${process.env.SITE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+};
+
 export default function Page() {
   return (<div className="x-top-page">
     <section role="hero" className="x:my-36">
@@ -15,9 +43,9 @@ export default function Page() {
     </section>
 
     <section className="x:my-24">
-      <h2>Blog ✏️</h2>
-      <p>Check out my latest articles and insights!</p>
-      <Link href="/blog">View my blog posts →</Link>
+      <h2>Blog Posts ✏️</h2>
+      <p>Check out my latest articles and insights on AI, automation, and software development.</p>
+      <Link href="/blog">View my Blog Posts →</Link>
     </section>
 
     <section className="x:my-24">
