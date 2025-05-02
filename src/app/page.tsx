@@ -19,7 +19,7 @@ export function generateMetadata() {
       type: "website",
       images: [
         {
-          url: `${process.env.SITE_URL}/og-image.png`,
+          url: process.env.SITE_OG_IMAGE,
           width: 1200,
           height: 630,
         },

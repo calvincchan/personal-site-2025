@@ -1,7 +1,13 @@
+import { Metadata } from "next";
 import { normalizePages } from 'nextra/normalize-pages';
 import { getPageMap } from 'nextra/page-map';
 import { PostCard } from "src/app/blog/post-card";
 import { sorter } from "./utils";
+
+export const metadata: Metadata = {
+  title: "Blog Posts",
+  description: "My articles and insights on AI, automation, and web app development.",
+};
 
 export default async function Page() {
   const pageMap = await getPageMap("/blog/");
@@ -14,8 +20,8 @@ export default async function Page() {
   return (
     <div className="x-blog-top">
       <section>
-        <h1>Blog Posts ✏️</h1>
-        <p>My articles and insights on various topics.</p>
+        <h1>Calvin&apos;s Blog Posts</h1>
+        <p>{metadata.description}</p>
       </section>
 
       <section role="feed">
