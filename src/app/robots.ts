@@ -5,8 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      // disallow: '/private/',
     },
+    host: process.env.SITE_URL,
     sitemap: process.env.SITE_URL + '/sitemap.xml',
   };
 }
