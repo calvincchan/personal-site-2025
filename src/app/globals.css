@@ -1,127 +1,145 @@
-@import "tailwindcss";
+@import "tailwindcss" prefix(x);
 @import "../styles/default.css";
-/* @import "../styles/cards.css"; */
+@import "../styles/cards.css";
 @import "../styles/code-block.css";
 
-
 .x-background {
-  @apply h-screen bg-stone-50 overflow-y-scroll;
+  @apply x:h-screen x:overflow-y-scroll;
 }
 
 .x-button {
-  @apply bg-black text-white hover:bg-black/60 transition-colors rounded p-2 inline-block;
+  @apply x:bg-black x:text-white x:hover:bg-black/60 x:transition-colors x:rounded x:p-2 x:inline-block;
 }
-
-main {}
 
 .x-top-page {
   h1 {
-    @apply text-5xl font-medium my-2;
+    @apply x:text-5xl x:font-medium x:my-2;
   }
 
   h2 {
-    @apply text-3xl font-medium my-2;
+    @apply x:text-3xl x:font-medium x:my-2;
   }
 
   h3 {
-    @apply text-2xl font-light my-2;
+    @apply x:text-2xl x:font-light x:my-2;
   }
 }
 
 .x-blog-top {
   h1 {
-    @apply text-5xl font-medium my-2;
+    @apply x:text-5xl x:font-medium x:my-2;
   }
 
   h2 {
-    @apply text-2xl font-medium;
-  }
-
-  p {
-    @apply my-0;
+    @apply x:text-2xl x:font-medium;
   }
 
   time {
-    @apply block text-sm text-gray-500;
+    @apply x:block x:text-sm x:text-gray-500;
+  }
+
+  section {
+    @apply x:my-36;
   }
 
   .x-post-card {
-    @apply my-10;
+    @apply x:my-10;
+    @apply x:clear-both;
+
+  }
+
+  a {
+    @apply x:underline;
   }
 }
 
-
 .x-prose {
   header {
-    @apply mt-36 mb-20;
+    @apply x:mt-36 x:mb-20;
 
     h1 {
-      @apply text-4xl font-medium mt-5 mb-3;
+      @apply x:text-4xl x:font-medium x:mt-5 x:mb-3;
     }
 
     .x-meta-block {
-      @apply text-sm text-gray-500 dark:text-gray-400;
+      @apply x:text-sm x:text-gray-500 x:dark:text-gray-400;
     }
   }
 
   main {
     h1 {
-      @apply text-4xl font-medium mt-5 mb-3;
+      @apply x:text-4xl x:font-medium x:mt-5 x:mb-3;
     }
 
     h2 {
-      @apply text-2xl font-medium mt-5 mb-3;
+      @apply x:text-2xl x:font-medium x:mt-20 x:mb-3;
     }
 
     h3 {
-      @apply text-xl font-medium mt-5 mb-3;
+      @apply x:text-xl x:font-medium x:mt-5 x:mb-3;
     }
 
     h4 {
-      @apply font-medium mt-5 mb-3;
+      @apply x:font-medium x:mt-5 x:mb-3;
     }
 
     ul {
-      @apply list-disc list-outside ml-5;
+      @apply x:list-disc x:list-outside x:ml-5;
     }
 
     li {
-      @apply my-2;
+      @apply x:my-2;
     }
 
     ol {
-      @apply list-decimal list-outside ml-5;
+      @apply x:list-decimal x:list-outside x:ml-5;
     }
 
     a {
-      @apply underline;
+      @apply x:underline;
 
       svg {
-        @apply inline-block;
+        @apply x:inline-block;
       }
+    }
+
+    p {
+      @apply x:my-4;
+    }
+
+    code {
+      @apply x:font-bold;
+    }
+
+    hr {
+      @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-700;
     }
   }
 
   aside {
-    @apply bg-neutral-100 dark:bg-neutral-800 p-4;
+    @apply x:bg-neutral-200 x:dark:bg-neutral-800 x:p-4;
 
     h3 {
-      @apply text-xl font-medium my-2;
+      @apply x:text-xl x:font-medium x:my-2;
+    }
+
+    h4 {
+      @apply x:font-light;
     }
   }
 }
 
 p {
-  @apply my-2;
+  @apply x:my-2;
 }
 
 .x-tag {
-  @apply px-2.5 py-0.5 text-sm font-semibold rounded-md transition-colors;
-  @apply bg-neutral-900 text-white;
-  @apply dark:bg-gray-50 dark:text-black;
+  @apply x:px-2.5 x:py-0.5 x:text-sm x:font-semibold x:rounded-md x:transition-colors;
+  @apply x:bg-neutral-900 x:text-white;
+  @apply x:dark:bg-gray-50 x:dark:text-black;
 
   &:hover {
-    @apply bg-neutral-500;
-    @apply dark:bg-gray-200;
+    @apply x:bg-neutral-500;
+    @apply x:dark:bg-gray-200;
   }
 }

@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <div className="x-blog-top">
-      <section className="my-36">
+      <section>
         <h1>Blog Posts ✏️</h1>
         <p>My articles and insights on various topics.</p>
       </section>

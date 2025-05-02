@@ -22,17 +22,14 @@ export const viewport: Viewport = {
 const mainFont = Geist({
   subsets: ['latin'],
   variable: '--font-geist',
-  // display: 'swap',
-  // fallback: ['system-ui', 'sans-serif'],
   preload: true,
-  // weight: ["300", "500"],
 });
 
 const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
   const pageMap = await getPageMap();
   return (
     <html lang="en" className={mainFont.className}>
-      <Head faviconGlyph="😆" backgroundColor={{ dark: "#0f172a", light: "#FFFBF4" }} />
+      <Head faviconGlyph="😆" backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
       <body>
         <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
       </body>

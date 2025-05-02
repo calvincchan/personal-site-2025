@@ -19,12 +19,11 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const posts = await getPosts();
   return (
     <div className="x-blog-top">
-      <section className="my-36">
+      <section>
         <h1>{title}</h1>
       </section>
 
       <section role="feed">
-
         {posts
           .filter(post =>
             post.frontMatter.tags?.includes(decodeURIComponent(tag))
@@ -33,6 +32,6 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
             <PostCard key={post.route} post={post} />
           ))}
       </section>
-    </div>
+    </div >
   );
 }

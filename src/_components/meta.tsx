@@ -1,8 +1,8 @@
-import { Link } from 'next-view-transitions'
-import type { FC, ReactNode } from 'react'
-import type { BlogMetadata } from '../types'
+import { Link } from 'next-view-transitions';
+import type { FC, ReactNode } from 'react';
+import type { BlogMetadata } from '../types';
 
-export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
+export const Meta: FC<BlogMetadata & { children: ReactNode; }> = ({
   author,
   tags,
   date,
@@ -13,9 +13,9 @@ export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
     <Link key={t} href={`/tags/${t}`} className="x-tag">
       {t}
     </Link>
-  ))
+  ));
 
-  const readingTimeText = readingTime?.text
+  const readingTimeText = readingTime?.text;
 
   return (
     <aside
@@ -26,7 +26,7 @@ export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
       }
     >
       <div className="grow">
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="x:flex x:flex-wrap x:items-center x:gap-1">
           {author}
           {author && date && ','}
 
@@ -35,17 +35,17 @@ export const Meta: FC<BlogMetadata & { children: ReactNode }> = ({
           {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- fixme
             (author || date) && (readingTime || tags?.length) && (
-              <span className="px-1">•</span>
+              <span className="x:px-1">•</span>
             )
           }
           {readingTimeText || tagsEl}
         </div>
         {readingTime && (
-          <div className="mt-1 flex flex-wrap items-center gap-1">
+          <div className="x:mt-1 x:flex x:flex-wrap x:items-center x:gap-1">
             {tagsEl}
           </div>
         )}
       </div>
     </aside>
-  )
-}
+  );
+};

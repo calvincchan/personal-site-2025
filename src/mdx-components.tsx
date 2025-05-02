@@ -16,6 +16,7 @@ import {
 } from 'nextra/components';
 import type { MDXComponents } from 'nextra/mdx-components';
 import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-components';
+import profilePic from 'public/images/calvincchan-portrait.jpg';
 import type { FC } from 'react';
 import { DateOnly } from './_components/date-only';
 import { Meta } from './_components/meta';
@@ -90,7 +91,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
   return {
     ...DEFAULT_COMPONENTS,
     wrapper({ children, metadata }: WrapperProps) {
-      console.log('metadata', metadata);
+      // console.log('metadata', metadata);
 
       if (!metadata) {
         throw new Error('No metadata provided');
@@ -106,11 +107,11 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       return (
         <article className="x-prose">
           <header>
-            <nav role="navigation" className="mb-4 text-gray-500"><Link href=".">← Back to Blog</Link></nav>
+            <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href=".">← Back to Blog</Link></nav>
             {metadata.image && <Image src={metadata.image} alt={metadata.title}
               width={800}
-              height={200}
-              placeholder="blur" />}
+              height={0}
+            />}
             <h1>{metadata.title}</h1>
             <Meta {...(metadata as BlogMetadata)}>
               {dateObj && (
@@ -127,18 +128,20 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
           <main>
             {children}
           </main>
-          <aside role="bio" className="x-bio my-24">
-            <h3>About the Author</h3>
-            <div className="flex flex-row items-center gap-4">
-              <div className="flex">
-                <Image src="/images/calvincchan-portrait.jpg" alt="Calvin Chun-Yu Chan" width={100} height={100} className="rounded-full" />
+          <aside role="bio" className="x-bio x:my-24">
+            <div className="x:flex x:flex-row x:items-center x:gap-4">
+              <div>
+                <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={100} height={100} className="x:rounded-full" />
               </div>
-              <div className="flex">
+              <div>
+                <h4>About the Author</h4>
+                <h3>{process.env.SITE_AUTHOR}</h3>
                 <p>{process.env.SITE_BIO}</p>
+                <p><Link href="/contact" className="x-button">Hire Me</Link></p>
               </div>
             </div>
           </aside>
-        </article >
+        </article>
       );
     },
     ...components

@@ -11,14 +11,14 @@ export const Navbar: FC = () => {
   ];
 
   return (
-    <nav role="menu" className="px-2 py-5 flex items-center justify-between flex-col sm:flex-row">
-      <Anchor role="menuitem" href="/" className="font-medium hover:underline" rel="author">Calvin C. Chan</Anchor>
-      <ul role="menu" className="flex flex-row list-none gap-5 m-0">
+    <nav role="menu" className="x:px-2 x:py-5 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row">
+      <Anchor role="menuitem" href="/" className="x:font-medium x:hover:underline" rel="author">Calvin C. Chan</Anchor>
+      <ul role="menu" className="x:flex x:flex-row x:list-none x:gap-4 x:m-0">
         {topLevelNavbarItems.map(item => {
           const route = item.route;
           return (
             <li key={route}>
-              <Anchor href={route} role="menuitem" className="hover:underline">
+              <Anchor href={route} role="menuitem" className="x:hover:underline">
                 {item.title}
               </Anchor>
             </li>
