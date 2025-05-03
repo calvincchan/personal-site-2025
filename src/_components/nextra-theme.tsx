@@ -9,7 +9,7 @@ export const NextraTheme: FC<{
 }> = ({ children }) => {
   return (
     <div role="background" className="x-background">
-      <div role="container" className="x:max-w-3xl x:mx-auto x:p-2">
+      <div role="container" className="x-container">
         <Navbar />
         <main>
           {children}

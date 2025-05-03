@@ -5,6 +5,12 @@
 
 .x-background {
   @apply x:h-screen x:overflow-y-scroll;
+  /* background-image: url('/images/tatewaku.svg');
+  background-repeat: repeat; */
+}
+
+.x-container {
+  @apply x:max-w-3xl x:mx-auto x:px-4 x:py-10 x:bg-white/40;
 }
 
 .x-button {

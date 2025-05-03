@@ -7,7 +7,7 @@ export const Navbar: FC = () => {
   const topLevelNavbarItems: { title: string, route: string, cta?: boolean; }[] = [
     { title: 'Work', route: '/work' },
     { title: 'Blog', route: '/blog' },
-    { title: 'Contact', route: '/contact', cta: true },
+    { title: 'Contact ✨', route: '/contact', cta: true },
   ];
 
   return (
