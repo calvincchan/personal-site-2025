@@ -22,7 +22,6 @@ export async function getPosts() {
   return directories
     .filter(post => post.name !== 'index')
     .sort(sorter) as PostItem[];
-  // .sort((a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date));
 }
 
 export async function getTags() {

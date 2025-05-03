@@ -1,44 +1,51 @@
-console.log(process.env.SITE_URL)
-const CONFIG = {
-  title: 'My Blog',
-  siteUrl: process.env.SITE_URL,
-  description: 'Latest blog posts',
-  lang: 'en-us'
-}
-
-function getPosts() {
-  return [
-    { title: 'Post 1', frontMatter: { description: 'Description 1', date: '2023-01-01' }, route: '/post-1' },
-    { title: 'Post 2', frontMatter: { description: 'Description 2', date: '2023-02-01' }, route: '/post-2' },
-  ]
-}
+import RSS from "rss";
+import { getPosts } from "../blog/utils";
 
 export async function GET() {
-  const allPosts = await getPosts()
-  const posts = allPosts
-    .map(
-      post => `    <item>
-        <title>${post.title}</title>
-        <description>${post.frontMatter.description}</description>
-        <link>${CONFIG.siteUrl}${post.route}</link>
-        <pubDate>${new Date(post.frontMatter.date).toUTCString()}</pubDate>
-    </item>`
-    )
-    .join('\n')
-  const xml = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
-  <channel>
-    <title>${CONFIG.title}</title>
-    <link>${CONFIG.siteUrl}</link>
-    <description>${CONFIG.description}</description>
-    <language>${CONFIG.lang}</language>
-${posts}
-  </channel>
-</rss>`
+  const allPosts = await getPosts();
+  const feed = new RSS({
+    title: process.env.SITE_AUTHOR,
+    description: process.env.SITE_DESCRIPTION,
+    site_url: process.env.SITE_URL,
+    feed_url: `${process.env.SITE_URL}/feed.xml`,
+    image_url: process.env.SITE_OG_IMAGE,
+  });
+
+  allPosts.forEach((post) => {
+    const { title, date, description, slug } = post.frontMatter;
+    const url = `${process.env.SITE_URL}/blog/${slug}`;
+    const image = post.frontMatter.image || process.env.SITE_OG_IMAGE;
+    const author = post.frontMatter.author || process.env.SITE_AUTHOR;
+    const categories = post.frontMatter.tags || [];
+    const pubDate = new Date(date).toUTCString();
+    const guid = `${url}#${date}`;
+    feed.item({
+      title,
+      description,
+      url,
+      guid,
+      author,
+      date: pubDate,
+      categories,
+      enclosure: {
+        url: image,
+        type: "image/jpeg",
+      },
+      custom_elements: [
+        { "media:content": { _attr: { url: image } } },
+        { "media:thumbnail": { _attr: { url: image } } },
+        { "media:description": description },
+      ],
+    });
+  });
+
+  const xml = feed.xml({
+    indent: true,
+  });
 
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/rss+xml'
     }
-  })
+  });
 }

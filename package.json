@@ -8,7 +8,8 @@
     "nextra": "^4.2.17",
     "nextra-theme-blog": "^4.2.17",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "rss": "^1.2.2"
   },
   "scripts": {
     "dev": "next dev",
@@ -20,6 +21,7 @@
     "@tailwindcss/postcss": "^4.1.4",
     "@types/node": "22.15.2",
     "@types/react": "19.1.2",
+    "@types/rss": "^0.0.32",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "eslint": "^9.25.1",
     "eslint-plugin-react": "^7.37.5",
