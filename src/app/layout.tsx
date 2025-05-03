@@ -1,4 +1,5 @@
 // import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Metadata, Viewport } from 'next';
 import { Geist } from 'next/font/google';
 import { Head } from 'nextra/components';
@@ -81,6 +82,7 @@ const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
       <body>
         <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
       </body>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
     </html>
   );
 };
