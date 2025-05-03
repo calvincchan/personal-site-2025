@@ -1,6 +1,14 @@
 import RSS from "rss";
 import { getPosts } from "../blog/utils";
 
+const normalizeUrl = (url: string): string => {
+  const baseUrl = process.env.SITE_URL;
+  if (!baseUrl) {
+    throw new Error("SITE_URL is not defined");
+  }
+  return new URL(url, baseUrl).toString();
+};
+
 export async function GET() {
   const allPosts = await getPosts();
   const feed = new RSS({
@@ -12,13 +20,17 @@ export async function GET() {
   });
 
   allPosts.forEach((post) => {
-    const { title, date, description, slug } = post.frontMatter;
-    const url = `${process.env.SITE_URL}/blog/${slug}`;
-    const image = post.frontMatter.image || process.env.SITE_OG_IMAGE;
+    const { title, date, description } = post.frontMatter;
+    const url = normalizeUrl(post.route);
+    const image = post.frontMatter.image ? normalizeUrl(post.frontMatter.image) : process.env.SITE_OG_IMAGE;
     const author = post.frontMatter.author || process.env.SITE_AUTHOR;
     const categories = post.frontMatter.tags || [];
-    const pubDate = new Date(date).toUTCString();
-    const guid = `${url}#${date}`;
+    const pubDate = post.frontMatter.lastmod ?
+      new Date(post.frontMatter.lastmod).toUTCString() :
+      post.frontMatter.date ?
+        new Date(post.frontMatter.date).toUTCString() :
+        new Date(date).toUTCString();
+    const guid = post.route;
     feed.item({
       title,
       description,
