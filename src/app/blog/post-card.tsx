@@ -22,7 +22,7 @@ export const PostCard: React.FC<{ post: PostItem; }> = ({ post }) => {
       </Link>
       <p>
         {description}{" "}
-        <Link href={route}>Read More →</Link>
+        <Link href={route} className="x-read-more-link">Read More →</Link>
       </p>
 
       <DateOnly date={date} />

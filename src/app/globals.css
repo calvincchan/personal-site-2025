@@ -10,7 +10,7 @@
 }
 
 .x-container {
-  @apply x:max-w-3xl x:mx-auto x:px-4 x:py-10 x:bg-white/40;
+  @apply x:max-w-3xl x:mx-auto x:px-4 x:py-10;
 }
 
 .x-button {
@@ -37,8 +37,7 @@
   }
 }
 
-.x-top-page,
-.x-contact-page {
+.x-top-page {
   h1 {
     @apply x:text-5xl x:font-medium x:my-2;
   }
@@ -54,6 +53,11 @@
   a {
     @apply x:underline;
   }
+
+  hr {
+    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-700;
+  }
+
 }
 
 .x-contact-page {
@@ -94,9 +98,10 @@
 .x-post-card {
   @apply x:my-10;
   @apply x:clear-both;
+  @apply x:border-l-2 x:border-l-violet-300 x:pl-2;
 
   h2 {
-    @apply x:text-2xl x:font-medium;
+    @apply x:text-xl x:font-medium;
   }
 
   time {
@@ -108,6 +113,10 @@
   }
 
   a {
+    @apply x:no-underline x:hover:underline;
+  }
+
+  .x-read-more-link {
     @apply x:underline;
   }
 }
@@ -194,6 +203,7 @@ p {
   @apply x:px-2.5 x:py-0.5 x:text-sm x:font-semibold x:rounded-md x:transition-colors;
   @apply x:bg-neutral-900 x:text-white;
   @apply x:dark:bg-gray-50 x:dark:text-black;
+  @apply x:no-underline!;
 
   &:hover {
     @apply x:bg-neutral-500;
@@ -202,7 +212,7 @@ p {
 }
 
 .x-global-footer {
-  @apply x:bg-neutral-100 x:p-2 x:my-24 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
+  @apply x:p-2 x:my-36 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
 
   a {
     @apply x:underline;
