@@ -106,7 +106,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       const dateObj = date && new Date(date);
       return (
         <article className="x-prose">
-          <header>
+          <header className="x-prose-header">
             <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href=".">← Back to Blog</Link></nav>
             {metadata.image && <Image src={metadata.image} alt={metadata.title}
               width={800}
@@ -137,7 +137,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
                 <h4>About the Author</h4>
                 <h3>{process.env.SITE_AUTHOR}</h3>
                 <p>{process.env.SITE_BIO}</p>
-                <p><Link href="/contact" className="x-button">Hire Me</Link></p>
+                <p><Link href="/contact" className="x-button">Let's Talk ✨</Link></p>
               </div>
             </div>
           </aside>
