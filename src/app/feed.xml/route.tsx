@@ -27,10 +27,6 @@ export async function GET() {
       author,
       date: pubDate,
       categories,
-      enclosure: {
-        url: image,
-        type: "image/jpeg",
-      },
       custom_elements: [
         { "media:content": { _attr: { url: image } } },
         { "media:thumbnail": { _attr: { url: image } } },
