@@ -2,6 +2,7 @@
 @import "../styles/default.css";
 @import "../styles/cards.css";
 @import "../styles/code-block.css";
+@import "../styles/react-medium-image-zoom.css";
 
 .x-background {
   @apply x:h-screen x:overflow-y-scroll;
