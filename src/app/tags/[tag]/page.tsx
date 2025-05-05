@@ -18,10 +18,10 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   const { title } = await generateMetadata({ params });
   const posts = await getPosts();
   return (
-    <div className="x-blog-page">
-      <section>
+    <div>
+      <header className="x-page-header">
         <h1>{title}</h1>
-      </section>
+      </header>
 
       <section role="feed">
         {posts
@@ -32,6 +32,6 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
             <PostCard key={post.route} post={post} />
           ))}
       </section>
-    </div >
+    </div>
   );
 }

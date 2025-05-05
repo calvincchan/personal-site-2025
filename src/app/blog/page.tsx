@@ -5,10 +5,10 @@ import { sorter } from "./utils";
 
 export function generateMetadata() {
   return {
-    title: "Blog Posts",
+    title: "My Blog",
     description: "My articles and insights on AI, automation, and web app development.",
     openGraph: {
-      title: "Blog Posts",
+      title: "My Blog",
       description: "My articles and insights on AI, automation, and web app development.",
       url: process.env.SITE_URL + "/blog",
       siteName: "Calvin C. Chan",
@@ -37,7 +37,7 @@ export default async function Page() {
     <div>
       <header className="x-page-header">
         <h1>{metadata.title}</h1>
-        <p>{metadata.description}</p>
+        <h2>{metadata.description}</h2>
       </header>
 
       <section role="feed" className="x-post-list">

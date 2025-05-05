@@ -15,14 +15,14 @@
 }
 
 .x-button {
-  @apply x:bg-black x:text-white x:hover:bg-black/60 x:transition-colors x:rounded x:p-2 x:inline-block x:no-underline!;
+  @apply x:bg-violet-700 x:text-white x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-flex x:no-underline! x:items-center x:gap-1;
 }
 
 .x-top-nav {
   @apply x:px-2 x:py-5 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
 
   .x-main-link {
-    @apply x:font-bold x:hover:underline x:flex x:items-center x:my-4;
+    @apply x:font-semibold x:hover:underline x:flex x:items-center x:my-4;
   }
 
   .x-main-link::before {
@@ -41,13 +41,13 @@
   }
 
   .x-cta-button {
-    @apply x:bg-black x:text-white x:hover:bg-violet-700 x:transition-colors x:rounded x:p-2 x:inline-block x:no-underline!;
+    /* @apply x:text-white x:bg-violet-700 x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-block x:no-underline!; */
   }
 }
 
 .x-top-page {
   h1 {
-    @apply x:text-5xl x:font-medium x:my-2;
+    @apply x:text-5xl x:font-semibold x:my-2;
   }
 
   h2 {
@@ -92,7 +92,6 @@
 
   h1 {
     @apply x:text-violet-700;
-    @apply x:flex x:items-center x:gap-4;
 
     .social-icons {
       /* @apply x:inline-block x:mr-2; */
@@ -100,20 +99,24 @@
       height: 100px;
     }
   }
+
+  p {
+    @apply x:my-8 x:text-lg;
+  }
 }
 
 .x-page-header {
   @apply x:my-24;
 
   h1 {
-    @apply x:text-5xl x:font-medium x:my-2 x:text-violet-700;
+    @apply x:text-5xl x:font-semibold x:my-2 x:text-violet-700;
   }
 }
 
 .x-post-card {
   @apply x:my-10;
   @apply x:clear-both;
-  @apply x:border-l-2 x:border-l-violet-300 x:pl-2;
+  @apply x:border-l-2 x:border-l-violet-500 x:pl-2;
 
   h2 {
     @apply x:text-xl x:font-medium;
@@ -132,9 +135,48 @@
   }
 
   .x-read-more-link {
-    @apply x:underline;
+    @apply x:block x:mt-2 x:underline x:text-violet-700;
   }
 }
+
+.x-project-list {
+  /* @apply x:flex x:flex-col x:sm:flex-row; */
+  @apply x:grid x:grid-cols-1 x:sm:grid-cols-2 x:gap-4;
+}
+
+.x-project-card {
+  @apply x:my-4;
+  @apply x:border x:rounded-xl x:overflow-clip x:border-neutral-300;
+
+  .x-project-content {
+    @apply x:p-2;
+  }
+
+  h2 {
+    @apply x:text-2xl x:font-semibold;
+  }
+
+  p {
+    @apply x:text-neutral-500;
+  }
+
+  time {
+    @apply x:block x:text-sm x:text-gray-500;
+  }
+
+  section {
+    @apply x:my-36;
+  }
+
+  a {
+    @apply x:no-underline x:hover:underline;
+  }
+
+  .x-read-more-link {
+    @apply x:block x:mt-2 x:underline x:text-violet-700;
+  }
+}
+
 
 .x-prose-header {
   @apply x:mt-36 x:mb-20;

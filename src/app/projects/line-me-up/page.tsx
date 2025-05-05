@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ImageZoom } from "nextra/components";
+import { BioCard } from "src/_components/BioCard";
 import { YouTube } from "src/_components/YouTube";
 import { GitHubIcon } from "src/_icons";
 import KioskModeImage from "./240924-kiosk-mode.png";
@@ -92,7 +93,20 @@ export default function Page() {
 
         <p>Being an open-source project, Line Me Up is available for customization and further development by businesses and developers. The goal is to provide a flexible, adaptable tool that can be tailored to fit different use cases and contribute to ongoing improvements in queue management.</p>
 
+        <h3>Customization Options</h3>
+        <p>
+          If you're interested in having a customized version of this queue management solution tailored to your specific needs, feel free to <Link href="/contact">Contact Me</Link> for a free consultation. I'd be happy to discuss how we can adapt this project to suit your requirements.
+        </p>
       </main>
+
+      <footer className="x-footer">
+        <BioCard />
+        <p>
+          <Link href="/projects" className="x-button">
+            ← Back to Projects
+          </Link>
+        </p>
+      </footer>
     </div>
   );
 }

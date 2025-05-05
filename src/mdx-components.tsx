@@ -16,8 +16,8 @@ import {
 } from 'nextra/components';
 import type { MDXComponents } from 'nextra/mdx-components';
 import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-components';
-import profilePic from 'public/images/calvincchan-portrait.jpg';
 import type { FC } from 'react';
+import { BioCard } from './_components/BioCard';
 import { DateOnly } from './_components/date-only';
 import { Meta } from './_components/meta';
 import { isValidDate } from './is-valid-date';
@@ -107,7 +107,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       return (
         <article className="x-prose">
           <header className="x-prose-header">
-            <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href=".">← Back to Blog</Link></nav>
+            <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href="/blog">← Back to Blog</Link></nav>
             {metadata.image && <Image src={metadata.image} alt={metadata.title}
               width={800}
               height={0}
@@ -128,19 +128,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
           <main>
             {children}
           </main>
-          <aside role="bio" className="x-bio x:my-24">
-            <div className="x:flex x:flex-row x:items-center x:gap-4">
-              <div>
-                <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={100} height={100} className="x:rounded-full" />
-              </div>
-              <div>
-                <h4>About the Author</h4>
-                <h3>{process.env.SITE_AUTHOR}</h3>
-                <p>{process.env.SITE_BIO}</p>
-                <p><Link href="/contact" className="x-button">Let's Talk ✨</Link></p>
-              </div>
-            </div>
-          </aside>
+          <BioCard />
         </article>
       );
     },

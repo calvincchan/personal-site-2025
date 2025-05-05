@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import profilePic from 'public/images/calvincchan-profile.png';
 import { GitHubIcon, LinkedInIcon, YouTubeIcon } from "src/_icons";
 
 export function generateMetadata() {
-  return {
+  const result: Metadata = {
     title: "Contact Me",
     description: "Get in touch to discuss projects and opportunities.",
     openGraph: {
@@ -20,6 +23,7 @@ export function generateMetadata() {
       ],
     },
   };
+  return result;
 };
 
 export default async function Page() {
@@ -27,8 +31,9 @@ export default async function Page() {
   return (
     <div>
       <header className="x-page-header">
-        <h1>{metadata.title}</h1>
-        <p>{metadata.description}</p>
+        <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={180} height={180} className="x:rounded-full x:bg-violet-600" />
+        <h1>{metadata.title as string}</h1>
+        <h2>{metadata.description as string}</h2>
       </header>
 
       <section role="main" className="x-contact-page">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import profilePic from 'public/images/calvincchan-portrait.jpg';
+import profilePic from 'public/images/calvincchan-profile.png';
 import { PostCard } from "./blog/post-card";
 import { getPosts } from "./blog/utils";
 
@@ -55,23 +55,30 @@ export default function Page() {
   return (
     <div className="x-top-page">
       <section role="hero" className="x-hero">
-        <h1><Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full" /> Hi, I&apos;m Calvin C. Chan 👋</h1>
-        <h3>I am a freelance developer offering to build AI-powered solutions, web apps and websites.</h3>
-        <p><Link href="/contact" className="x-button">Let&apos;s Talk ✨</Link></p>
+        <div className="">
+          <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
+          <h1>Hi, I&apos;m Calvin C. Chan 👋</h1>
+          <h2>Full-Stack Dev | AI Workflow Automation | Next.js, Supabase, n8n, LLMs</h2>
+          <p>
+            I am a full-stack developer specializing in AI workflow automation and web development.
+            I create custom solutions to help businesses streamline their processes and improve efficiency.
+          </p>
+          <p>Want to discuss your project?<br /><Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk ✨</Link></p>
+        </div>
       </section>
 
       <hr />
 
       <section className="x:my-18">
-        <h2>My Works ⚙️</h2>
+        <h2>My Projects ⚙️</h2>
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
-        <Link href="/work">View My Work →</Link>
+        <Link href="/projects">View My Projects →</Link>
       </section>
 
       <hr />
 
       <section className="x:my-18">
-        <h2>Blog Posts ✏️</h2>
+        <h2>My Blog ✏️</h2>
         <p>Check out my latest articles and insights on AI, automation, and software development.</p>
         <LatestPosts limit={3} />
         <Link href="/blog">View All Blog Posts →</Link>

@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 export const Navbar: FC = () => {
   const topLevelNavbarItems: { title: string, route: string, cta?: boolean; }[] = [
-    { title: 'Work', route: '/work' },
+    { title: 'Projects', route: '/projects' },
     { title: 'Blog', route: '/blog' },
     { title: 'Contact ✨', route: '/contact', cta: true },
   ];
@@ -18,7 +18,7 @@ export const Navbar: FC = () => {
           const route = item.route;
           return (
             <li key={route}>
-              <Anchor href={route} role="menuitem" className={item.cta ? 'x-cta-button' : ''}>
+              <Anchor href={route} role="menuitem" className={item.cta ? 'x-button' : ''}>
                 {item.title}
               </Anchor>
             </li>

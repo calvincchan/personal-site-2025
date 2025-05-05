@@ -7,7 +7,7 @@ const SiteLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
       className="site-logo"
       fill="currentColor"
       stroke="none"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       viewBox="0 0 540 540"
       width="540px"
       height="540px"

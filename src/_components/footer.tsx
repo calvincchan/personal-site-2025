@@ -14,6 +14,12 @@ export const Footer: FC = () => {
           <Link href="/" title="Home">
             Home
           </Link>
+          <Link href="/blog" title="Blog">
+            Blog
+          </Link>
+          <Link href="/projects" title="Projects">
+            Projects
+          </Link>
           <Link href="/contact">
             Contact
           </Link>
@@ -22,7 +28,7 @@ export const Footer: FC = () => {
           </Link>
         </div>
       </div>
-      <div className="x:flex x:justify-center x:mt-8">
+      <div className="x:flex x:justify-center x:mt-8 x:text-neutral-400">
         <SiteLogoIcon width={100} height={100} />
       </div>
     </footer >
