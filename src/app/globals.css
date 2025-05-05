@@ -22,7 +22,7 @@
   @apply x:px-2 x:py-5 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
 
   .x-main-link {
-    @apply x:font-bold x:hover:underline x:flex x:items-center;
+    @apply x:font-bold x:hover:underline x:flex x:items-center x:my-4;
   }
 
   .x-main-link::before {
@@ -37,7 +37,7 @@
   }
 
   a {
-    @apply x:hover:underline;
+    @apply x:hover:underline x:my-4;
   }
 
   .x-cta-button {
