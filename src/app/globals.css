@@ -22,15 +22,22 @@
   @apply x:px-2 x:py-5 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
 
   .x-main-link {
-    @apply x:font-bold x:hover:underline
+    @apply x:font-bold x:hover:underline x:flex x:items-center;
+  }
+
+  .x-main-link::before {
+    @apply x:inline-block x:mr-2;
+    content: url('/logo.svg');
+    width: 36px;
+    height: 36px;
   }
 
   .x-menu {
     @apply x:flex x:flex-row x:list-none x:gap-4 x:m-0 x:items-center x:font-medium;
+  }
 
-    a {
-      @apply x:hover:underline;
-    }
+  a {
+    @apply x:hover:underline;
   }
 
   .x-cta-button {
@@ -85,6 +92,13 @@
 
   h1 {
     @apply x:text-violet-700;
+    @apply x:flex x:items-center x:gap-4;
+
+    .social-icons {
+      /* @apply x:inline-block x:mr-2; */
+      width: 100px;
+      height: 100px;
+    }
   }
 }
 
@@ -213,7 +227,15 @@ p {
 }
 
 .x-global-footer {
-  @apply x:p-2 x:my-36 x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
+  @apply x:my-36;
+
+  .x-row {
+    @apply x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
+  }
+  
+  .x-col1, .x-col2 {
+    @apply x:my-5;
+  }
 
   a {
     @apply x:underline;

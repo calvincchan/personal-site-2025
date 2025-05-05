@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import profilePic from 'public/images/calvincchan-portrait.jpg';
 import { PostCard } from "./blog/post-card";
 import { getPosts } from "./blog/utils";
 
@@ -12,7 +14,6 @@ export function generateMetadata() {
   return {
     title: process.env.SITE_AUTHOR,
     description: process.env.SITE_DESCRIPTION,
-    lastmod: "2025-05-01",
     priority: 1,
     openGraph: {
       title: process.env.SITE_AUTHOR,
@@ -54,7 +55,7 @@ export default function Page() {
   return (
     <div className="x-top-page">
       <section role="hero" className="x-hero">
-        <h1>Hi, I&apos;m Calvin C. Chan 👋</h1>
+        <h1><Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full" /> Hi, I&apos;m Calvin C. Chan 👋</h1>
         <h3>I am a freelance developer offering to build AI-powered solutions, web apps and websites.</h3>
         <p><Link href="/contact" className="x-button">Let&apos;s Talk ✨</Link></p>
       </section>
