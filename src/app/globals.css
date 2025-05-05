@@ -5,7 +5,7 @@
 @import "../styles/react-medium-image-zoom.css";
 
 .x-background {
-  @apply x:h-screen x:overflow-y-scroll;
+  /* @apply x:h-screen x:overflow-y-scroll; */
   /* background-image: url('/images/tatewaku.svg');
   background-repeat: repeat; */
 }
@@ -15,7 +15,7 @@
 }
 
 .x-button {
-  @apply x:bg-violet-700 x:text-white x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-flex x:no-underline! x:items-center x:gap-1;
+  @apply x:bg-violet-600 x:text-white x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-flex x:no-underline! x:items-center x:gap-1;
 }
 
 .x-top-nav {
@@ -41,7 +41,7 @@
   }
 
   .x-cta-button {
-    /* @apply x:text-white x:bg-violet-700 x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-block x:no-underline!; */
+    /* @apply x:text-white x:bg-violet-600 x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-block x:no-underline!; */
   }
 }
 
@@ -63,7 +63,7 @@
   }
 
   hr {
-    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-700;
+    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-600;
   }
 
 }
@@ -91,7 +91,7 @@
   @apply x:my-36;
 
   h1 {
-    @apply x:text-violet-700;
+    @apply x:text-violet-600;
 
     .social-icons {
       /* @apply x:inline-block x:mr-2; */
@@ -109,7 +109,7 @@
   @apply x:my-24;
 
   h1 {
-    @apply x:text-5xl x:font-semibold x:my-2 x:text-violet-700;
+    @apply x:text-5xl x:font-semibold x:my-2 x:text-violet-600;
   }
 }
 
@@ -118,7 +118,7 @@
   @apply x:clear-both;
   @apply x:border-l-2 x:border-l-violet-500 x:pl-2;
 
-  h2 {
+  h3 {
     @apply x:text-xl x:font-medium;
   }
 
@@ -135,7 +135,7 @@
   }
 
   .x-read-more-link {
-    @apply x:block x:mt-2 x:underline x:text-violet-700;
+    @apply x:block x:mt-2 x:underline x:text-violet-600;
   }
 }
 
@@ -152,8 +152,8 @@
     @apply x:p-2;
   }
 
-  h2 {
-    @apply x:text-2xl x:font-semibold;
+  h3 {
+    @apply x:text-2xl x:font-medium;
   }
 
   p {
@@ -173,7 +173,7 @@
   }
 
   .x-read-more-link {
-    @apply x:block x:mt-2 x:underline x:text-violet-700;
+    @apply x:block x:mt-2 x:underline x:text-violet-600;
   }
 }
 
@@ -236,7 +236,7 @@
   }
 
   hr {
-    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-700;
+    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-600;
   }
 }
 

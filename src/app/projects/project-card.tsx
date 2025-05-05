@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PostItem } from "./utils";
 
 export const ProjectCard: React.FC<{ post: PostItem; }> = ({ post }) => {
-  const { route, title, frontMatter: { description, date, image } } = post;
+  const { route, title, frontMatter: { description, image } } = post;
   return (
     <div key={route} role="listitem" className="x-project-card">
       {image && (
@@ -18,7 +18,7 @@ export const ProjectCard: React.FC<{ post: PostItem; }> = ({ post }) => {
       )}
       <div className="x-project-content">
         <Link href={route}>
-          <h2>{title}</h2>
+          <h3>{title}</h3>
         </Link>
         <p>
           {description}{" "}

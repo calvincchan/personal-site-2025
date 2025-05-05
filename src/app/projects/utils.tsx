@@ -14,7 +14,7 @@ export type PostItem = Item & {
   frontMatter: BlogMetadata;
 };
 
-export async function getPosts() {
+export async function getProjects() {
   const { directories } = normalizePages({
     list: await getPageMap('/projects'),
     route: '/projects'
@@ -22,12 +22,6 @@ export async function getPosts() {
   return directories
     .filter(post => post.name !== 'index')
     .sort(sorter) as PostItem[];
-}
-
-export async function getTags() {
-  const posts = await getPosts();
-  const tags = posts.flatMap(post => post.frontMatter.tags);
-  return tags;
 }
 
 export function sorter(a: MdxFile, b: MdxFile) {

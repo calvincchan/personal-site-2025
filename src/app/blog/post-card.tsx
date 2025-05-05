@@ -18,7 +18,7 @@ export const PostCard: React.FC<{ post: PostItem; }> = ({ post }) => {
         </div>
       )}
       <Link href={route}>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
       </Link>
       <p>
         {description}{" "}

@@ -3,6 +3,8 @@ import Link from "next/link";
 import profilePic from 'public/images/calvincchan-profile.png';
 import { PostCard } from "./blog/post-card";
 import { getPosts } from "./blog/utils";
+import { ProjectCard } from "./projects/project-card";
+import { getProjects } from "./projects/utils";
 
 // export const metadata: Metadata & FrontMatter = {
 //   title: process.env.SITE_AUTHOR,
@@ -38,13 +40,28 @@ export function generateMetadata() {
 const LatestPosts: React.FC<{ limit: number; }> = async ({ limit }) => {
   const posts = await getPosts();
   const latestPosts = posts.slice(0, limit);
-  console.log('Latest Posts:', latestPosts);
   return (
     <div className="x-latest-posts">
       {latestPosts.map((post) => (
         <PostCard
           key={post.route}
           post={post}
+        />
+      ))}
+    </div>
+  );
+};
+
+const LatestProjects: React.FC<{ limit: number; }> = async ({ limit }) => {
+  const projects = await getProjects();
+  const latestProjects = projects.slice(0, limit);
+  console.dir(latestProjects, { depth: 2 });
+  return (
+    <div className="x-project-list">
+      {latestProjects.map((project) => (
+        <ProjectCard
+          key={project.route}
+          post={project}
         />
       ))}
     </div>
@@ -72,6 +89,7 @@ export default function Page() {
       <section className="x:my-18">
         <h2>My Projects ⚙️</h2>
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
+        <LatestProjects limit={3} />
         <Link href="/projects">View My Projects →</Link>
       </section>
 

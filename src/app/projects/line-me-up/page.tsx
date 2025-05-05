@@ -99,14 +99,7 @@ export default function Page() {
         </p>
       </main>
 
-      <footer className="x-footer">
-        <BioCard />
-        <p>
-          <Link href="/projects" className="x-button">
-            ← Back to Projects
-          </Link>
-        </p>
-      </footer>
+      <BioCard />
     </div>
   );
 }
