@@ -21,22 +21,16 @@ export const metadata: Metadata = {
     },
   ],
   creator: process.env.SITE_AUTHOR,
+  publisher: process.env.SITE_AUTHOR,
   keywords: [
     'Calvin C. Chan',
     'Freelance Developer',
     'Web Developer',
-    'AI Developer',
+    'Workflow Automation',
     'Software Engineer',
-    'Freelance Web Developer',
+    'Freelance Web App Developer',
     'Freelance Software Engineer',
     'Freelance AI Developer',
-    'Freelance Software Developer',
-    'Freelance Web App Developer',
-    'Freelance Web App Engineer',
-    'Freelance Web App Designer',
-    'Freelance Web App Creator',
-    'Freelance Web App Builder',
-    'Freelance Web App Specialist',
   ],
   openGraph: {
     title: process.env.SITE_AUTHOR,
@@ -78,7 +72,7 @@ const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
   const pageMap = await getPageMap();
   return (
     <html lang="en" className={mainFont.className}>
-      <Head faviconGlyph="😆" backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
+      <Head faviconGlyph="✨" backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
       <body>
         <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
       </body>
