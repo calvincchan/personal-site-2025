@@ -105,29 +105,31 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       }
       const dateObj = date && new Date(date);
       return (
-        <article className="x:prose x:dark:prose-invert">
-          <header className="x-blog-header">
-            <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href="/blog">← Back to Blog</Link></nav>
-            {metadata.image && <Image src={metadata.image} alt={metadata.title}
-              width={800}
-              height={0}
-            />}
-            <h1>{metadata.title}</h1>
-            <Meta {...(metadata as BlogMetadata)}>
-              {dateObj && (
-                <time dateTime={dateObj.toISOString()}>
-                  {DateFormatter ? (
-                    <DateFormatter date={dateObj} />
-                  ) : (
-                    <DateOnly date={dateObj} />
-                  )}
-                </time>
-              )}
-            </Meta>
-          </header>
-          {children}
+        <>
+          <article className="x:prose x:dark:prose-invert">
+            <header className="x-blog-header">
+              <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href="/blog">← Back to Blog</Link></nav>
+              {metadata.image && <Image src={metadata.image} alt={metadata.title}
+                width={800}
+                height={0}
+              />}
+              <h1>{metadata.title}</h1>
+              <Meta {...(metadata as BlogMetadata)}>
+                {dateObj && (
+                  <time dateTime={dateObj.toISOString()}>
+                    {DateFormatter ? (
+                      <DateFormatter date={dateObj} />
+                    ) : (
+                      <DateOnly date={dateObj} />
+                    )}
+                  </time>
+                )}
+              </Meta>
+            </header>
+            {children}
+          </article>
           <BioCard />
-        </article>
+        </>
       );
     },
     ...components

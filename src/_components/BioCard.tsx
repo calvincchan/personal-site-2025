@@ -7,7 +7,7 @@ const BioCard: React.FC = () => {
   const bio = process.env.SITE_BIO || '';
   return (
     <aside role="bio" className="x-bio x:my-24">
-      <div className="x:flex x:flex-row x:items-center x:gap-4">
+      <div className="x:flex x:flex-col x:sm:flex-row x:sm:items-center x:gap-4">
         <div>
           <Image
             src={profilePic}
@@ -18,9 +18,8 @@ const BioCard: React.FC = () => {
           />
         </div>
         <div>
-          <h4>About the Author</h4>
           <h3>{author}</h3>
-          <p>{bio}</p>
+          <h4>{bio}</h4>
           <p>
             <Link href="/contact" className="x-button">
               Let's Talk ✨
