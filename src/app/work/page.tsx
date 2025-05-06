@@ -1,3 +1,4 @@
+import { permanentRedirect } from "next/navigation";
 import { Callout } from "nextra/components";
 
 export function generateMetadata() {
@@ -22,6 +23,8 @@ export function generateMetadata() {
 };
 
 export default async function Page() {
+  permanentRedirect("/projects");
+  return;
   const metadata = generateMetadata();
   return (
     <div>
