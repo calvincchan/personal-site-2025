@@ -1,11 +1,12 @@
 @import "tailwindcss" prefix(x);
+@source "../node_modules/nextra/**/*.{ts,tsx}";
 @plugin "@tailwindcss/typography";
-@import "./styles/default.css";
-@import "./styles/code-block.css";
-@import './styles/scrollbar.css';
-@import './styles/steps.css';
-@import "./styles/cards.css";
-@import "./styles/react-medium-image-zoom.css";
+@import "../node_modules/nextra/styles/default.css";
+@import "../node_modules/nextra/styles/code-block.css";
+@import "../node_modules/nextra/styles/scrollbar.css";
+@import "../node_modules/nextra/styles/steps.css";
+@import "../node_modules/nextra/styles/cards.css";
+@import "../node_modules/nextra/styles/react-medium-image-zoom.css";
 
 .x-container {
   @apply x:max-w-3xl x:mx-auto x:px-4 x:py-10;
