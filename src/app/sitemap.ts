@@ -42,7 +42,7 @@ const toSitemapEntry = (item: Item): SitemapEntry => {
     url: normalizeUrl(item.route),
     lastModified: lastModified.toISOString(),
     changeFrequency: frontMatter?.changeFrequency,
-    priority: frontMatter?.priority || 0.5,
+    priority: frontMatter?.priority,
     // images: frontMatter?.image,
   };
 };
