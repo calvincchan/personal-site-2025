@@ -21,6 +21,12 @@ export function generateMetadata() {
         },
       ],
     },
+    alternates: {
+      canonical: process.env.SITE_URL + "/blog",
+      types: {
+        "application/rss+xml": "/feed.xml",
+      },
+    },
   };
 };
 

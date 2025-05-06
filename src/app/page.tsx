@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import profilePic from 'public/images/calvincchan-profile.png';
@@ -12,26 +13,29 @@ import { getProjects } from "./projects/utils";
 //   priority: 1,
 // };
 
-export function generateMetadata() {
-  return {
+export const metadata: Metadata = {
+  title: process.env.SITE_AUTHOR,
+  description: process.env.SITE_DESCRIPTION,
+  openGraph: {
     title: process.env.SITE_AUTHOR,
     description: process.env.SITE_DESCRIPTION,
-    priority: 1,
-    openGraph: {
-      title: process.env.SITE_AUTHOR,
-      description: process.env.SITE_DESCRIPTION,
-      url: process.env.SITE_URL,
-      siteName: process.env.SITE_AUTHOR,
-      type: "website",
-      images: [
-        {
-          url: process.env.SITE_OG_IMAGE,
-          width: 1200,
-          height: 630,
-        },
-      ],
+    url: process.env.SITE_URL,
+    siteName: process.env.SITE_AUTHOR,
+    type: "website",
+    images: [
+      {
+        url: process.env.SITE_OG_IMAGE,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  alternates: {
+    canonical: process.env.SITE_URL,
+    types: {
+      "application/rss+xml": "/feed.xml",
     },
-  };
+  },
 };
 
 // This component fetches the latest posts and displays them
