@@ -35,7 +35,7 @@ export default async function Page() {
         <p>{metadata.description}</p>
       </header>
 
-      <section role="main" className="x-prose">
+      <section role="main" className="x:prose">
         <Callout>
           To see all my public projects, please visit my GitHub at
           <a href="https://github.com/calvincchan" target="_blank" rel="noopener noreferrer">https://github.com/calvincchan</a>

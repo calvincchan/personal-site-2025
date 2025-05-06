@@ -8,14 +8,10 @@ export const NextraTheme: FC<{
   pageMap: PageMapItem[];
 }> = ({ children }) => {
   return (
-    <div role="background" className="x-background">
-      <div role="container" className="x-container">
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <Footer />
-      </div>
+    <div role="container" className="x-container">
+      <Navbar />
+      {children}
+      <Footer />
     </div>
   );
 };

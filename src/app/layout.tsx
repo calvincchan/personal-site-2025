@@ -6,7 +6,7 @@ import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
 import { FC, ReactNode } from 'react';
 import { NextraTheme } from '../_components/nextra-theme';
-import './globals.css';
+import '../globals.css';
 
 export const metadata: Metadata = {
   title: {

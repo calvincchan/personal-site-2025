@@ -39,7 +39,7 @@ export default function Page() {
         <h2>{metadata.description}</h2>
       </header>
 
-      <main className="x-prose">
+      <main className="x:prose">
         <p>
           <Link href="https://github.com/calvincchan/line-me-up" className="x-button" target="_blank">
             <GitHubIcon /> View on GitHub

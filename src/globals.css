@@ -1,8 +1,11 @@
 @import "tailwindcss" prefix(x);
-@import "../styles/default.css";
-@import "../styles/cards.css";
-@import "../styles/code-block.css";
-@import "../styles/react-medium-image-zoom.css";
+@plugin "@tailwindcss/typography";
+@import "./styles/default.css";
+@import "./styles/code-block.css";
+@import './styles/scrollbar.css';
+@import './styles/steps.css';
+@import "./styles/cards.css";
+@import "./styles/react-medium-image-zoom.css";
 
 .x-container {
   @apply x:max-w-3xl x:mx-auto x:px-4 x:py-10;
@@ -168,7 +171,7 @@
 }
 
 
-.x-prose-header {
+.x-blog-header {
   @apply x:mt-36 x:mb-20;
 
   h1 {
@@ -177,56 +180,6 @@
 
   .x-meta-block {
     @apply x:text-sm x:text-gray-500 x:dark:text-gray-400;
-  }
-}
-
-.x-prose {
-  h1 {
-    @apply x:text-4xl x:font-medium x:mt-5 x:mb-3;
-  }
-
-  h2 {
-    @apply x:text-2xl x:font-medium x:mt-20 x:mb-3;
-  }
-
-  h3 {
-    @apply x:text-xl x:font-medium x:mt-5 x:mb-3;
-  }
-
-  h4 {
-    @apply x:font-medium x:mt-5 x:mb-3;
-  }
-
-  ul {
-    @apply x:list-disc x:list-outside x:ml-5;
-  }
-
-  li {
-    @apply x:my-2;
-  }
-
-  ol {
-    @apply x:list-decimal x:list-outside x:ml-5;
-  }
-
-  a {
-    @apply x:underline;
-
-    svg {
-      @apply x:inline-block;
-    }
-  }
-
-  p {
-    @apply x:my-3;
-  }
-
-  code {
-    @apply x:font-bold;
-  }
-
-  hr {
-    @apply x:my-10 x:border-neutral-200 x:dark:border-neutral-700;
   }
 }
 
@@ -289,4 +242,22 @@ p {
 
 .social-icons {
   @apply x:inline-block;
+}
+
+.x\:prose code {
+  &:before,
+  &:after {
+    @apply x:hidden;
+  }
+  .line {
+    @apply x:font-normal;
+  }
+}
+
+.x\:prose a svg {
+  @apply x:inline-block;
+}
+
+.x\:prose .nextra-callout p {
+  @apply x:m-0;
 }
