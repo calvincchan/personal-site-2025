@@ -86,7 +86,7 @@ export default function Page() {
 
       <hr />
 
-      <section className="x:my-18">
+      <section>
         <h2>My Projects ⚙️</h2>
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
         <LatestProjects limit={3} />
@@ -95,7 +95,7 @@ export default function Page() {
 
       <hr />
 
-      <section className="x:my-18">
+      <section>
         <h2>My Blog ✏️</h2>
         <p>Check out my latest articles and insights on AI, automation, and software development.</p>
         <LatestPosts limit={3} />
@@ -104,7 +104,7 @@ export default function Page() {
 
       <hr />
 
-      <section className="x:my-18">
+      <section>
         <h2>Hire Me</h2>
         <p>
           I am available for freelance work. If you have a project in mind, feel free to reach out!
