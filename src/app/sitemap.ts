@@ -1,15 +1,10 @@
 import { MetadataRoute } from "next";
+import { MdxFile } from "nextra";
 import { Item, normalizePages } from "nextra/normalize-pages";
 import { getPageMap } from "nextra/page-map";
 import { sorter } from "./blog/utils";
 
 export const dynamic = "force-static";
-
-interface PageType {
-  title: string;
-  type?: "page";
-  display?: "hidden" | "normal" | string;
-}
 
 interface SitemapEntry {
   url: string;
@@ -41,7 +36,7 @@ const toSitemapEntry = (item: Item): SitemapEntry => {
   return {
     url: normalizeUrl(item.route),
     lastModified: lastModified.toISOString(),
-    changeFrequency: frontMatter?.changeFrequency,
+    // changeFrequency: frontMatter?.changeFrequency,
     priority: frontMatter?.priority,
     // images: frontMatter?.image,
   };
@@ -54,7 +49,12 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
     list: await getPageMap('/'),
     route: '/',
   });
-  const siteMapEntries = flatDocsDirectories.sort(sorter).map(toSitemapEntry);
+  const siteMapEntries = flatDocsDirectories
+    .filter((item: MdxFile) => {
+      const { frontMatter } = item;
+      return frontMatter?.other?.displayInSitemap !== "hidden";
+    })
+    .sort(sorter).map(toSitemapEntry);
   return siteMapEntries;
 };
 

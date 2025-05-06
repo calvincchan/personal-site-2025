@@ -1,35 +1,37 @@
+import { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 import { Callout } from "nextra/components";
 
-export function generateMetadata() {
-  return {
+export const metadata: Metadata = {
+  title: "Calvin's Works",
+  description: "Showcasing my projects and work experience.",
+  other: {
+    displayInSitemap: "hidden",
+  },
+  openGraph: {
     title: "Calvin's Works",
     description: "Showcasing my projects and work experience.",
-    openGraph: {
-      title: "Calvin's Works",
-      description: "Showcasing my projects and work experience.",
-      url: process.env.SITE_URL + "/work",
-      siteName: "Calvin C. Chan",
-      type: "website",
-      images: [
-        {
-          url: process.env.SITE_OG_IMAGE,
-          width: 1200,
-          height: 630,
-        },
-      ],
-    },
-  };
+    url: process.env.SITE_URL + "/work",
+    siteName: "Calvin C. Chan",
+    type: "website",
+    images: [
+      {
+        url: process.env.SITE_OG_IMAGE,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 export default async function Page() {
   permanentRedirect("/projects");
   return;
-  const metadata = generateMetadata();
+
   return (
     <div>
       <header className="x-page-header">
-        <h1>{metadata.title}</h1>
+        <h1>{metadata.title as string}</h1>
         <p>{metadata.description}</p>
       </header>
 
