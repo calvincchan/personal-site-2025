@@ -22,6 +22,9 @@ export function generateMetadata() {
         },
       ],
     },
+    alternates: {
+      canonical: process.env.SITE_URL + "/contact",
+    },
   };
   return result;
 };
