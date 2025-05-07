@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ImageZoom } from "nextra/components";
 import { BioCard } from "src/_components/BioCard";
 import { YouTube } from "src/_components/YouTube";
-import { GitHubIcon } from "src/_icons";
+import { GitHubIcon, NextJsIcon, ReactIcon, RefineJsIcon, SupabaseIcon } from "src/_icons";
 import KioskModeImage from "./240924-kiosk-mode.png";
 import PublicScreenImage from "./240924-public-screen.png";
 import StationModeImage from "./240924-station-mode.png";
@@ -12,6 +12,16 @@ export function generateMetadata() {
     title: "Line Me Up",
     description: "The Line Me Up project is an open-source waitlist management software designed for restaurants and retail stores. It aims to simplify the process of handling customer queues by offering a self-service approach for both customers and staff.",
     image: "/projects/line-me-up.jpg",
+    keywords: [
+      "Line Me Up",
+      "waitlist management",
+      "queue management",
+      "restaurant software",
+      "retail software",
+      "open-source software",
+      "self-service kiosk",
+      "customer experience",
+    ],
     openGraph: {
       title: "Line Me Up",
       description: "The Line Me Up project is an open-source waitlist management software designed for restaurants and retail stores. It aims to simplify the process of handling customer queues by offering a self-service approach for both customers and staff.",
@@ -37,21 +47,20 @@ export default function Page() {
       <header className="x-page-header">
         <h1>{metadata.title}</h1>
         <h2>{metadata.description}</h2>
-      </header>
-
-      <main className="x:prose">
         <p>
           <Link href="https://github.com/calvincchan/line-me-up" className="x-button" target="_blank">
             <GitHubIcon /> View on GitHub
           </Link>
         </p>
+      </header>
 
+      <main className="x:prose">
         <h3>Tech Stack</h3>
         <ul>
-          <li>React</li>
-          <li>Next.js</li>
-          <li>Refine.js</li>
-          <li>Supabase</li>
+          <li><ReactIcon className="not-prose x:inline-block x:mr-4" /> React</li>
+          <li><NextJsIcon className="not-prose x:inline-block x:mr-4" /> Next.js</li>
+          <li><RefineJsIcon className="not-prose x:inline-block x:mr-4" /> Refine.js</li>
+          <li><SupabaseIcon className="not-prose x:inline-block x:mr-4" /> Supabase</li>
         </ul>
 
         <p>Quick video intro:</p>
