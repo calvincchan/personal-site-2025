@@ -276,18 +276,15 @@ p {
   @apply x:my-4;
   @apply x:items-center;
 
-  .x-tech-stack-item {
-    @apply x:rounded-lg x:bg-neutral-50 x:dark:bg-neutral-800 x:px-4 x:py-2;
+  a {
+    @apply x:rounded-lg x:bg-neutral-200 x:dark:bg-neutral-800 x:px-4 x:py-2;
     @apply x:text-sm x:font-semibold;
     @apply x:text-neutral-900 x:dark:text-neutral-100;
     @apply x:transition-colors x:duration-200;
     @apply x:flex x:items-center;
     height: 60px;
   }
-  .x-tech-stack-item:hover {
+  a:hover {
     @apply x:bg-neutral-300 x:dark:bg-neutral-700;
-  }
-  .x-tech-stack-item span {
-    @apply x:hidden;
   }
 }
