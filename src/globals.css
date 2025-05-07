@@ -173,10 +173,10 @@
 
 
 .x-blog-header {
-  @apply x:mt-36 x:mb-20;
+  /* @apply x:sm:my-8; */
 
   h1 {
-    @apply x:text-4xl x:font-medium x:mt-5 x:mb-3;
+    @apply x:text-4xl x:font-medium;
   }
 
   .x-meta-block {
