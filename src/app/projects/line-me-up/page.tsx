@@ -52,17 +52,28 @@ export default function Page() {
             <GitHubIcon /> View on GitHub
           </Link>
         </p>
+        <h3>Tech Stack</h3>
+        <div className="x-tech-stack">
+          <div className="x-tech-stack-item">
+            <span>React</span>
+            <ReactIcon className="x:mr-2" />
+          </div>
+          <div className="x-tech-stack-item">
+            <span>Next.js</span>
+            <NextJsIcon className="x:mr-2" />
+          </div>
+          <div className="x-tech-stack-item">
+            <span>Refine.js</span>
+            <RefineJsIcon className="x:mr-2" />
+          </div>
+          <div className="x-tech-stack-item">
+            <span>Supabase</span>
+            <SupabaseIcon className="x:mr-2" />
+          </div>
+        </div>
       </header>
 
       <main className="x:prose">
-        <h3>Tech Stack</h3>
-        <ul>
-          <li><ReactIcon className="not-prose x:inline-block x:mr-4" /> React</li>
-          <li><NextJsIcon className="not-prose x:inline-block x:mr-4" /> Next.js</li>
-          <li><RefineJsIcon className="not-prose x:inline-block x:mr-4" /> Refine.js</li>
-          <li><SupabaseIcon className="not-prose x:inline-block x:mr-4" /> Supabase</li>
-        </ul>
-
         <p>Quick video intro:</p>
 
         <YouTube id="p1OwccZgKsA" />
