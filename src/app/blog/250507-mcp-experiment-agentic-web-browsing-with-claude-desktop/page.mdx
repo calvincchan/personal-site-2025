@@ -1,0 +1,80 @@
+---
+title: MCP Experiment - Agentic Web Browsing with Claude Desktop
+date: 2025/05/07
+description: Testing the power of MCP for agentic web browsing using Claude Desktop.
+tags:
+  - mcp
+  - claude
+  - web browsing
+  - browser automation
+  - puppeteer
+  - agentic
+  - ai
+author: Calvin
+image: /assets/250507-mcp-experiment-agentic-web-browsing-with-claude-desktop.png
+---
+
+import image1 from "./SCR-20250507-qctk.png";
+import Image from "next/image";
+
+The Model Context Protocol (MCP) has gained significant traction in the AI community recently, providing a standardized way for language models to interact with external tools and data sources. I've been particularly intrigued by its potential for enabling autonomous web browsing capabilities, so I decided to put it to the test using Claude Desktop.
+
+## Setup and Tools
+
+For this experiment, I integrated two MCP servers from the [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) repository:
+
+1. [Puppeteer Server](https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer) - For browser automation and web scraping
+2. [Fetch Server](https://github.com/modelcontextprotocol/servers/tree/main/src/fetch) - For fetching webpage content in markdown format
+
+The integration was surprisingly straightforward, and the results were impressive. By simply giving Claude access to these web browsing tools, it could autonomously plan and execute research tasks without further intervention.
+
+## Experiment: Finding Information About a YouTube Creator
+
+For my first test, I wanted to see if Claude could navigate from a YouTube channel URL to find specific information about the creator. I provided the following prompt:
+
+```txt
+using fetch and puppeteer, dig from https://www.youtube.com/@CodexCommunity and find the creator's full name and personal website
+```
+
+### What Happened Next
+
+What impressed me most was Claude's methodical approach. Without any additional guidance, it:
+
+1. Navigated to the YouTube channel
+2. Examined the channel's About page
+3. Extracted links to external websites
+4. Followed those links to gather the requested information
+5. Synthesized the findings into a comprehensive report
+
+<Image
+  src={image1}
+  alt="Claude's web browsing results"
+/>
+
+The model correctly identified that the Codex Community channel is run by Adrian Twarog, and located his personal website at [adriantwarog.com](https://adriantwarog.com). All of this happened autonomously, with Claude making decisions about which pages to visit and what information to extract.
+
+## Why This Matters
+
+This experiment highlights several important developments in AI capabilities:
+
+- **Autonomous Planning**: Claude broke down the task into logical steps without being explicitly told how to approach the problem
+- **Tool Integration**: The model effectively used both the Puppeteer and Fetch tools as needed, switching between them based on the specific requirements of each subtask
+- **Information Synthesis**: Beyond just scraping data, Claude analyzed the information to determine what was relevant to my query
+
+## Limitations and Future Work
+
+Despite the impressive results, I did notice some limitations:
+
+- Occasionally, the model would struggle with dynamic elements that loaded after the initial page render
+- Some websites with aggressive anti-bot measures presented challenges for automated browsing
+- The process was slower than manual browsing, as Claude had to take screenshot and interpret each page before deciding on next steps
+
+For future experiments, I plan to explore more complex multi-step tasks that require reasoning across multiple websites and data sources. I'm also interested in testing how well this approach works for tasks that require deeper domain knowledge.
+
+## Conclusion
+
+The Model Context Protocol represents a significant step forward in making language models more useful for real-world tasks. By providing standardized interfaces to external tools and data, MCP enables models to interact with the digital world in ways that were previously impossible.
+
+As these capabilities continue to develop, we can expect to see increasingly sophisticated AI assistants that can perform complex research and information gathering tasks with minimal human supervision. The potential applications span domains from academic research to business intelligence and personal productivity.
+
+If you're interested in exploring MCP capabilities yourself, I highly recommend checking out the [Model Context Protocol repository](https://github.com/modelcontextprotocol/protocol) and the various server implementations available.
