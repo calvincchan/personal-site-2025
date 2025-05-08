@@ -21,7 +21,7 @@ export const Meta: FC<BlogMetadata & { children: ReactNode; }> = ({
     <aside
       role="meta"
       className={
-        'x-meta-block mb-8 flex gap-3 ' +
+        'x-meta-block flex gap-3 ' +
         (readingTimeText ? 'items-start' : 'items-center')
       }
     >
