@@ -29,7 +29,7 @@ export const Footer: FC = () => {
         </div>
       </div>
       <div className="x:flex x:justify-center x:mt-8 x:text-neutral-400">
-        <SiteLogoIcon width={100} height={100} />
+        <SiteLogoIcon size={60} />
       </div>
     </footer >
   );
