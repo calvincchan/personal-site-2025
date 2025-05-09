@@ -1,0 +1,122 @@
+---
+title: "Enhance Your VSCode AI Code Agent For Free: Context7 Meets VSCode-Insider"
+date: 2025-05-09
+lastmod: 2025-05-09
+description: Discover how integrating Context7 with VSCode-Insider's Agent Mode revolutionizes coding by providing real-time, accurate documentation, reducing errors, and enhancing productivity.
+tags:
+  - ai
+  - Context7
+  - VSCode-Insider
+  - code agent
+  - AI coding assistant
+  - real-time code documentation
+author: Calvin
+image: /assets/250509-context7-vscode-insider.png
+---
+
+import image1 from "./SCR-20250509-nluc-2.png";
+import image2 from "./SCR-20250509-noig.png";
+import Image from "next/image";
+import { FileTree } from 'nextra/components'
+
+## Introduction
+
+Modern development teams increasingly rely on AI-powered tools to streamline workflows, write cleaner code, and debug faster. Yet, one persistent challenge remains: unreliable, outdated, or hallucinated documentation from code agents. Enter **[context7.com](https://context7.com)** ([Github](https://github.com/upstash/context7)), a solution designed to enrich your coding environment with real-time, accurate, and version-specific documentation—and it pairs seamlessly with VSCode-Insider's Agent Mode. This blog explores how the two can significantly boost your efficiency and code quality.
+
+## Understanding Context7
+
+Context7 is a next-gen tool purpose-built for developers using AI agents in their IDEs. Its core functionality lies in providing up-to-date documentation on-demand—eliminating the confusion caused by stale or incorrect data. With Context7:
+- Documentation is aligned with the exact version of your software stack.
+- Code agents gain access to a centralized, real-time knowledge hub.
+- Developers experience smoother debugging and development processes.
+
+In short, Context7 supercharges your code agent, transforming it from a guesswork machine into a precision-guided assistant.
+
+## Exploring VSCode-Insider's Agent Mode
+
+[VSCode-Insider](https://code.visualstudio.com/insiders), the experimental preview version of Visual Studio Code, includes "Agent Mode", a cutting-edge feature enabling advanced AI-assisted development.
+
+Key highlights include:
+- Conversational prompts directly in the editor.
+- Context-aware suggestions that evolve with your workflow.
+- Integrated terminal, git support, and debugging tools fine-tuned for AI enhancements.
+- Most importantly, it supports **Model Context Protocol** a.k.a. "MCP", allowing for seamless integration with external tools and knowledge bases.
+
+When combined with Context7, the agent becomes not just smart — but contextually intelligent.
+
+## Integrating Context7 with VSCode-Insider via MCP
+
+Getting started with this powerful combo is easier than you might think. Here's how to integrate:
+	1.	Install [VSCode-Insider](https://code.visualstudio.com/insiders) if you haven't already.
+	2.	Launch your existing project or create a new project in VSCode-Insider.
+	3.	Add the following MCP config file at `.vscode/mcp.json` in your project root:
+```json filename=".vscode/mcp.json"
+{
+  "servers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
+    }
+  }
+}
+```
+  4. Click the "Update tool" button in the chat box to enable the MCP server.
+     <Image src={image1} alt="VSCode-Insider Update Tool" />
+  5.  To instruct the code agent to use the Context7 MCP, provide an "instruction" file at `.github/copilot-instructions.md`:
+```md filename=".github/copilot-instructions.md"
+## Code Reference
+- Always use the context7 MCP to reference documentation for libraries like nextjs, supabase, react.
+- Always use 5000 tokens.
+- Only search three times maximum for any specific piece of documentation.
+```
+  5.  Click the "🛠️" in the chat box and make sure "MCP Server: context7" is enabled.
+      <Image src={image2} alt="VSCode-Insider enable MCP server context7" />
+
+#### Project Structure
+<FileTree title="Project Structure">
+  <FileTree.Folder name=".github" defaultOpen>
+    <FileTree.File name="copilot-instructions.md" />
+  </FileTree.Folder>
+  <FileTree.Folder name=".vscode" defaultOpen>
+    <FileTree.File name="mcp.json" />
+  </FileTree.Folder>
+  <FileTree.File name="(your_code)" />
+  <FileTree.File name="(your_code)" />
+  <FileTree.File name="(your_code)" />
+</FileTree>
+
+## Real-World Applications and Benefits
+
+Consider this: A frontend developer struggles with React's latest changes. By integrating Context7, their AI agent now references the correct version of React docs, preventing deprecated methods from being suggested. The result?
+- Error reduction
+- Improvement in development speed
+- Happier developers with reduced anxiety of not knowing the latest changes
+
+## Conclusion
+
+As AI becomes more central to the developer experience, tools like Context7 will define the new standard of “intelligent development environments.”
+
+---
+
+## FAQs
+
+Q1: What is the cost of using Context7 with VSCode-Insider?
+-  Currently, Context7 is free and it is maintained by the community.
+
+Q2: Is Context7 compatible with other code editors?
+- Yes, basically many popular code agents and IDEs (Windsurf, Cursor, Claude Code) that support MCP are compatible with Context7. See https://github.com/upstash/context7 for more details.
+
+Q3: How does Context7 ensure documentation accuracy?
+- According to the Context7 github readme, "Context7 MCP pulls up-to-date, version-specific documentation and code examples straight from the source".
+
+Q4: What documentations are currently provided by Context7?
+- You can visit https://context7.com to search for the latest documentations and code examples of your libraries. At the time of writing, it already supports 9912 libraries.
+
+Q4: Can I customize Context7's behavior in VSCode-Insider?
+- You can influence the behavior of your code agent by modifying the `.github/copilot-instructions.md` file.
+
+Q5: Where can I find support for integration issues?
+- Visit Context7.com for documentation and community forums.
