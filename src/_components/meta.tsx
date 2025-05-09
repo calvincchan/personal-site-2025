@@ -26,7 +26,7 @@ export const Meta: FC<BlogMetadata & { children: ReactNode; }> = ({
       }
     >
       <div className="grow">
-        <div className="x:flex x:flex-wrap x:items-center x:gap-1">
+        <div className="x:my-2 x:flex x:flex-wrap x:items-center x:gap-1">
           {author}
           {author && date && ','}
 
@@ -41,7 +41,7 @@ export const Meta: FC<BlogMetadata & { children: ReactNode; }> = ({
           {readingTimeText || tagsEl}
         </div>
         {readingTime && (
-          <div className="x:mt-1 x:flex x:flex-wrap x:items-center x:gap-1">
+          <div className="x:my-2 x:flex x:flex-wrap x:items-center x:gap-1">
             {tagsEl}
           </div>
         )}
