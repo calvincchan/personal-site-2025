@@ -15,7 +15,7 @@ import { getProjects } from "./projects/utils";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Freelance Web App and AI Developer | Calvin C. Chan',
+    default: 'Calvin C. Chan: Freelance Web App and AI Developer',
     template: '%s | Calvin C. Chan'
   },
   description: process.env.SITE_DESCRIPTION,
