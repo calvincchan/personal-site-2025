@@ -1,8 +1,5 @@
 // import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
-import { GoogleAnalytics } from '@next/third-parties/google';
-import { Metadata, Viewport } from 'next';
-import { Geist } from 'next/font/google';
-import { Head } from 'nextra/components';
+import { Metadata } from 'next';
 import { getPageMap } from 'nextra/page-map';
 import { FC, ReactNode } from 'react';
 import { NextraTheme } from '../_components/nextra-theme';
@@ -32,6 +29,7 @@ export const metadata: Metadata = {
     'Freelance Software Engineer',
     'Freelance AI Developer',
   ],
+  metadataBase: new URL(process.env.SITE_URL),
   openGraph: {
     title: process.env.SITE_AUTHOR,
     description: process.env.SITE_DESCRIPTION,
@@ -58,26 +56,10 @@ export const metadata: Metadata = {
   }
 };
 
-export const viewport: Viewport = {
-  initialScale: 1,
-};
-
-const mainFont = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist',
-  preload: true,
-});
-
 const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
   const pageMap = await getPageMap();
   return (
-    <html lang="en" className={mainFont.className}>
-      <Head color={{ hue: 265.48, saturation: 99, lightness: 56 }} backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
-      <body>
-        <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
-      </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-    </html>
+    <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
   );
 };
 
