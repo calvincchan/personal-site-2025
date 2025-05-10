@@ -1,5 +1,5 @@
 ---
-title: "Enhance Your VSCode AI Code Agent For Free: Context7 Meets VSCode-Insider"
+title: "Enhance Your VSCode AI Code Agent For Free: How To Integrate Context7 With VSCode"
 date: 2025-05-09
 lastmod: 2025-05-09
 description: Discover how integrating Context7 with VSCode-Insider's Agent Mode revolutionizes coding by providing real-time, accurate documentation, reducing errors, and enhancing productivity.
@@ -9,9 +9,17 @@ tags:
   - VSCode-Insider
   - code agent
   - AI coding assistant
-  - real-time code documentation
+keywords:
+  - Context7 VSCode integration
+  - VSCode-Insider Agent Mode
+  - AI code documentation
+  - Code agent enhancement
+  - AI coding assistant
 author: Calvin
+canonical_url: https://www.upstash.com/blog/250509-context7-vscode-insider
 image: /assets/250509-context7-vscode-insider.png
+alternates:
+  canonical: /blog/250509-context7-vscode-insider
 ---
 
 import image1 from "./SCR-20250509-nluc-2.png";
@@ -72,10 +80,11 @@ Getting started with this powerful combo is easier than you might think. Here's 
 - Always use 5000 tokens.
 - Only search three times maximum for any specific piece of documentation.
 ```
-  5.  Click the "🛠️" in the chat box and make sure "MCP Server: context7" is enabled.
+  6.  Click the "🛠️" in the chat box and make sure "MCP Server: context7" is enabled.
       <Image src={image2} alt="VSCode-Insider enable MCP server context7" />
+  7.  At the time of writing, only "Claude 3.x" copilot models in VSCode-Insider can reliably use the MCP server. You can check the model version in the chat box.
 
-#### Project Structure
+### Resulting Project Structure
 <FileTree title="Project Structure">
   <FileTree.Folder name=".github" defaultOpen>
     <FileTree.File name="copilot-instructions.md" />
@@ -103,20 +112,20 @@ As AI becomes more central to the developer experience, tools like Context7 will
 
 ## FAQs
 
-Q1: What is the cost of using Context7 with VSCode-Insider?
--  Currently, Context7 is free and it is maintained by the community.
+#### Q1: What is the cost of using Context7 with VSCode-Insider?
+Currently, Context7 is free and it is maintained by the community.
 
-Q2: Is Context7 compatible with other code editors?
-- Yes, basically many popular code agents and IDEs (Windsurf, Cursor, Claude Code) that support MCP are compatible with Context7. See https://github.com/upstash/context7 for more details.
+#### Q2: Is Context7 compatible with other code editors?
+Yes, basically many popular code agents and IDEs (Windsurf, Cursor, Claude Code) that support MCP are compatible with Context7. See https://github.com/upstash/context7 for more details.
 
-Q3: How does Context7 ensure documentation accuracy?
-- According to the Context7 github readme, "Context7 MCP pulls up-to-date, version-specific documentation and code examples straight from the source".
+#### Q3: How does Context7 ensure documentation accuracy?
+According to the Context7 github readme, "Context7 MCP pulls up-to-date, version-specific documentation and code examples straight from the source".
 
-Q4: What documentations are currently provided by Context7?
-- You can visit https://context7.com to search for the latest documentations and code examples of your libraries. At the time of writing, it already supports 9912 libraries.
+#### Q4: What documentations are currently provided by Context7?
+You can visit https://context7.com to search for the latest documentations and code examples of your libraries. At the time of writing, it already supports 9912 libraries.
 
-Q4: Can I customize Context7's behavior in VSCode-Insider?
-- You can influence the behavior of your code agent by modifying the `.github/copilot-instructions.md` file.
+#### Q4: Can I customize Context7's behavior in VSCode-Insider?
+You can influence the behavior of your code agent by modifying the `.github/copilot-instructions.md` file.
 
-Q5: Where can I find support for integration issues?
-- Visit Context7.com for documentation and community forums.
+#### Q5: Where can I find support for integration issues?
+Visit Context7.com for documentation and community forums.
