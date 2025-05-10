@@ -99,13 +99,13 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       const jsonLd = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": metadata.title,
-        "datePublished": metadata.date,
-        "image": metadata.image,
         "author": {
           "@type": "Person",
           "name": metadata.author || "Calvin C. Chan"
-        }
+        },
+        "datePublished": metadata.date,
+        "headline": metadata.title,
+        "image": metadata.image,
       };
 
       const date = metadata.date as string;
