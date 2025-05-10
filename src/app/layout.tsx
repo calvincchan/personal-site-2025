@@ -10,7 +10,6 @@ export const metadata: Metadata = {
     default: 'Freelance Web App and AI Developer | Calvin C. Chan',
     template: '%s | Calvin C. Chan'
   },
-  description: process.env.SITE_DESCRIPTION,
   authors: [
     {
       name: process.env.SITE_AUTHOR,
@@ -19,40 +18,14 @@ export const metadata: Metadata = {
   ],
   creator: process.env.SITE_AUTHOR,
   publisher: process.env.SITE_AUTHOR,
-  keywords: [
-    'Calvin C. Chan',
-    'Freelance Developer',
-    'Web Developer',
-    'Workflow Automation',
-    'Software Engineer',
-    'Freelance Web App Developer',
-    'Freelance Software Engineer',
-    'Freelance AI Developer',
-  ],
   metadataBase: new URL(process.env.SITE_URL),
-  openGraph: {
-    title: process.env.SITE_AUTHOR,
-    description: process.env.SITE_DESCRIPTION,
-    url: process.env.SITE_URL,
-    siteName: process.env.SITE_AUTHOR,
-    type: 'website',
-    images: [
-      {
-        url: process.env.SITE_OG_IMAGE,
-        width: 640,
-        height: 640,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: process.env.SITE_AUTHOR,
-    description: process.env.SITE_DESCRIPTION,
-    images: process.env.SITE_OG_IMAGE,
-    creator: process.env.SITE_AUTHOR,
-  },
   icons: {
     icon: '/favicon.ico',
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
   }
 };
 

@@ -14,28 +14,46 @@ import { getProjects } from "./projects/utils";
 // };
 
 export const metadata: Metadata = {
-  title: process.env.SITE_AUTHOR,
+  title: {
+    default: 'Freelance Web App and AI Developer | Calvin C. Chan',
+    template: '%s | Calvin C. Chan'
+  },
   description: process.env.SITE_DESCRIPTION,
+  keywords: [
+    'Calvin C. Chan',
+    'Freelance Developer',
+    'Web Developer',
+    'Workflow Automation',
+    'Software Engineer',
+    'Freelance Web App Developer',
+    'Freelance Software Engineer',
+    'Freelance AI Developer',
+  ],
   openGraph: {
     title: process.env.SITE_AUTHOR,
     description: process.env.SITE_DESCRIPTION,
     url: process.env.SITE_URL,
     siteName: process.env.SITE_AUTHOR,
-    type: "website",
+    type: 'website',
     images: [
       {
         url: process.env.SITE_OG_IMAGE,
-        width: 1200,
-        height: 630,
+        width: 640,
+        height: 640,
       },
     ],
   },
+  twitter: {
+    card: 'summary',
+    title: process.env.SITE_AUTHOR,
+    description: process.env.SITE_DESCRIPTION,
+    images: process.env.SITE_OG_IMAGE,
+    creator: process.env.SITE_AUTHOR,
+  },
   alternates: {
     canonical: process.env.SITE_URL,
-    types: {
-      "application/rss+xml": "/feed.xml",
-    },
   },
+
 };
 
 // This component fetches the latest posts and displays them
