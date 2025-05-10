@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PostItem } from "./utils";
 
 export const ProjectCard: React.FC<{ post: PostItem; }> = ({ post }) => {
-  const { route, title, frontMatter: { description, image } } = post;
+  const { route, title, frontMatter: { description, other: { image } } } = post;
   return (
     <div key={route} role="listitem" className="x-project-card">
       {image && (

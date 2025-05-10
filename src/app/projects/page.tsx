@@ -7,25 +7,8 @@ import { sorter } from "./utils";
 export const metadata: Metadata = {
   title: "My Projects",
   description: "Showcasing my projects and work experience.",
-  openGraph: {
-    title: "My Projects",
-    description: "Showcasing my projects and work experience.",
-    url: process.env.SITE_URL + "/projects",
-    siteName: "Calvin C. Chan",
-    type: "website",
-    images: [
-      {
-        url: process.env.SITE_OG_IMAGE,
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
   alternates: {
     canonical: process.env.SITE_URL + "/projects",
-    types: {
-      "application/rss+xml": "/feed.xml",
-    },
   },
 };
 

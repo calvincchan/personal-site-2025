@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import { ImageZoom } from "nextra/components";
 import { BioCard } from "src/_components/BioCard";
@@ -7,45 +8,32 @@ import KioskModeImage from "./240924-kiosk-mode.png";
 import PublicScreenImage from "./240924-public-screen.png";
 import StationModeImage from "./240924-station-mode.png";
 
-export function generateMetadata() {
-  return {
-    title: "Line Me Up",
-    description: "The Line Me Up project is an open-source waitlist management software designed for restaurants and retail stores. It aims to simplify the process of handling customer queues by offering a self-service approach for both customers and staff.",
+export const metadata: Metadata = {
+  title: "Line Me Up",
+  description: "The Line Me Up project is an open-source waitlist management software designed for restaurants and retail stores. It aims to simplify the process of handling customer queues by offering a self-service approach for both customers and staff.",
+  keywords: [
+    "Line Me Up",
+    "waitlist management",
+    "queue management",
+    "restaurant software",
+    "retail software",
+    "open-source software",
+    "self-service kiosk",
+    "customer experience",
+  ],
+  alternates: {
+    canonical: process.env.SITE_URL + "/projects/line-me-up",
+  },
+  other: {
     image: "/projects/line-me-up.jpg",
-    keywords: [
-      "Line Me Up",
-      "waitlist management",
-      "queue management",
-      "restaurant software",
-      "retail software",
-      "open-source software",
-      "self-service kiosk",
-      "customer experience",
-    ],
-    openGraph: {
-      title: "Line Me Up",
-      description: "The Line Me Up project is an open-source waitlist management software designed for restaurants and retail stores. It aims to simplify the process of handling customer queues by offering a self-service approach for both customers and staff.",
-      url: process.env.SITE_URL + "/projects/line-me-up",
-      siteName: "Calvin C. Chan",
-      type: "website",
-      images: [
-        {
-          url: "/projects/line-me-up.jpg",
-          width: 1920,
-          height: 1080,
-        },
-      ],
-    },
-  };
+  }
 };
 
 export default function Page() {
-  const metadata = generateMetadata();
-
   return (
     <div>
       <header className="x-page-header">
-        <h1>{metadata.title}</h1>
+        <h1>{metadata.title as string}</h1>
         <h2>{metadata.description}</h2>
         <p>
           <Link href="https://github.com/calvincchan/line-me-up" className="x-button" target="_blank">
