@@ -91,11 +91,22 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
   return {
     ...DEFAULT_COMPONENTS,
     wrapper({ children, metadata }: WrapperProps) {
-      // console.log('metadata', metadata);
-
       if (!metadata) {
         throw new Error('No metadata provided');
       }
+
+      // Create JSON-LD schema for the blog post
+      const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": metadata.title,
+        "datePublished": metadata.date,
+        "image": metadata.image,
+        "author": {
+          "@type": "Person",
+          "name": metadata.author || "Calvin C. Chan"
+        }
+      };
 
       const date = metadata.date as string;
       if (date && !isValidDate(date)) {
@@ -106,12 +117,19 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       const dateObj = date && new Date(date);
       return (
         <>
+          {/* Add JSON-LD to your page */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          {/* ... */}
           <article className="x:prose x:dark:prose-invert">
             <header className="x-blog-header">
               <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href="/blog">← Back to Blog</Link></nav>
               {metadata.image && <Image src={metadata.image} alt={metadata.title}
                 width={800}
                 height={0}
+                priority
               />}
               <h1>{metadata.title}</h1>
               <Meta {...(metadata as BlogMetadata)}>
