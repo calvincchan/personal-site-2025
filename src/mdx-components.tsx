@@ -2,12 +2,12 @@
 'use no memo';
 
 /* eslint sort-keys: error */
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   Callout,
   Code,
   Details,
-  Image,
   Pre,
   Summary,
   Table,
