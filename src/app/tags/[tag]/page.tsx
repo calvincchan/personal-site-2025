@@ -1,7 +1,7 @@
 import { PostCard } from "src/app/blog/post-card";
 import { getPosts, getTags } from '../../blog/utils';
 
-export async function generateMetadata(props) {
+export async function generateMetadata(props: { params: Promise<{ tag: string; }>; }) {
   const params = await props.params;
   return {
     title: `Posts Tagged with “${decodeURIComponent(params.tag)}”`
