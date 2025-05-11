@@ -1,13 +1,27 @@
 ---
-title: Self-hosted Supabase - Adding Custom Claims Using Auth Hook
-date: 2024/03/21
+title: "Self-hosted Supabase: Adding Custom Claims Using Auth Hook"
+date: 2024-03-21
+lastmod: 2024-03-21
 description: Notes on how to add custom claims to JWT token using the auth hook in self-hosted Supabase.
 tags:
   - supabase
   - auth
   - jwt
   - saml
+keywords:
+  - Supabase auth hook
+  - JWT custom claims
+  - SAML authentication
+  - Self-hosted Supabase
+  - Auth token customization
+  - PostgreSQL auth hooks
+  - GoTrue configuration
 author: Calvin
+draft: false
+alternates:
+  canonical: /blog/240321_supabase_custom_claim
+openGraph:
+  type: article
 ---
 
 I have been using self-hosted Supabase with SAML authentication to accept login from a third-party identity provider. The SAML authentication is working fine out of the box, but I need a robust way to pass user roles from my database to the client application. I found an official guide on how to add custom claims to the JWT token:
