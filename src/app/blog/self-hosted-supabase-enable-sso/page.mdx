@@ -1,6 +1,7 @@
 ---
-title: Enabling custom SAML SSO on Your Self-hosted Supabase
-date: 2023/12/07
+title: "Enabling custom SAML SSO on Your Self-hosted Supabase"
+date: 2023-12-07
+lastmod: 2025-05-10
 description: Steps to connect a self-hosted Supabase to a custom SAML identity provider and enable SSO. This is the first part of a two-part article. The second part will show how to integrate the SSO feature with refine.js.
 tags:
   - supabase
@@ -8,8 +9,22 @@ tags:
   - sso
   - single-sign-on
   - refinejs
+keywords:
+  - Supabase SSO integration
+  - SAML identity provider setup
+  - self-hosted Supabase authentication
+  - custom SSO configuration
+  - Supabase Auth0 integration
 author: Calvin
 image: /assets/self-hosted-supabase-enable-sso.jpg
+alternates:
+  canonical: /blog/self-hosted-supabase-enable-sso
+openGraph:
+  type: article
+  images:
+    - url: /assets/self-hosted-supabase-enable-sso.jpg
+      width: 1600
+      height: 900
 ---
 
 I use Supabase and refine.js for my latest client project. Supabase is a very well designed and easy to use backend suite, with a very active development team. As required by the client, I need to run the software suite on-premise. While developing with Supabase for authentication and data management is a walk in the park, one tricky issue is that SSO (Single Sign On) with custom SAML Identify Provider is not enabled by default. Although Supabase supports SSO feature for their hosted service, it is not clearly documented how to enable SSO when it comes to self-hosted deployment. This article is to document the steps I took to enable SSO for Supabase. I will also write another article later to show how to integrate the SSO feature with refine.js.
