@@ -5,6 +5,7 @@ import type { FC } from 'react';
 
 export const Navbar: FC = () => {
   const topLevelNavbarItems: { title: string, route: string, cta?: boolean; }[] = [
+    { title: 'About', route: '/about' },
     { title: 'Projects', route: '/projects' },
     { title: 'Blog', route: '/blog' },
     { title: 'Contact ✨', route: '/contact', cta: true },
