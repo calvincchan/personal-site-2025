@@ -32,6 +32,7 @@ openGraph:
 ---
 
 import { Callout } from "nextra/components";
+import { Audio } from "@components/audio";
 
 Demonstrate how to generate a Japanese voiceover mp3 file using the Google Text-to-Speech (TTS) API in the Google Cloud Platform (GCP).
 
@@ -105,10 +106,7 @@ Here is an example of the SSML I used:
 
 Below is the generated audio output for the SSML sample above:
 
-<audio controls>
-  <source src="/assets/241125-sample.mp3" type="audio/mpeg" />
-  Your browser does not support the audio element.
-</audio>
+<Audio src="/assets/241125-sample.mp3" />
 
 ## Observations and Next Steps
 

@@ -13,12 +13,6 @@ tags:
   - VSCode-Insider
   - code agent
   - AI coding assistant
-keywords:
-  - Context7 VSCode integration
-  - VSCode-Insider Agent Mode
-  - AI code documentation
-  - Code agent enhancement
-  - AI coding assistant
 author: Calvin
 image: /assets/250509-context7-vscode-insider.png
 alternates:

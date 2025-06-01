@@ -24,6 +24,14 @@
       }
     ],
     "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/_components/*"
+      ],
+    },
   },
   "include": [
     "**/*.ts",
