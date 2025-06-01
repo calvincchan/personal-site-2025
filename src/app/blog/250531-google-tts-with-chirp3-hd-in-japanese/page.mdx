@@ -22,17 +22,17 @@ import Image from 'next/image';
 import image1 from "./SCR-20250531-pzvc.png"
 import { Audio } from '@components/audio';
 
-If you've ever tried to generate natural-sounding Japanese speech from text, you know it's not as straightforward as it might seem. Japanese has unique pronunciation patterns, intonation, and pause structures that make text-to-speech particularly challenging. I've been [experimenting with Google's TTS services for Japanese content](/blog/241125-google-tts-japanese), and the release of their new **Chirp3 HD** model has been a game-changer.
+If you've ever tried to generate natural-sounding **Japanese text-to-speech**, you know it's not as straightforward as it might seem. Japanese has unique pronunciation patterns, intonation, and pause structures that make text-to-speech particularly challenging. I've been [experimenting with Google's TTS services for Japanese content](/blog/241125-google-tts-japanese), and the release of their new **Chirp3 HD voice synthesis** model has been a game-changer for creating high-quality audio content.
 
 In my previous TTS projects, I'd been using the **WaveNet** model, and as I've shared before, the results were quite unpredictable when it came to pause control and natural intonation. I had to rely heavily on SSML to control pauses, but it was time-consuming, energy-draining for audio verification, and not always effective.
 
-Recently, I've been testing the new Chirp3 HD model, available since March 2025 [(release note)](https://cloud.google.com/text-to-speech/docs/release-notes), and it's given me a fresh perspective on text-to-speech in Japanese.
+Recently, I've been testing the new **Chirp3 HD** model, available since March 2025 [(release note)](https://cloud.google.com/text-to-speech/docs/release-notes), and it's given me a fresh perspective on **Japanese text-to-speech** quality and efficiency.
 
-## Pros
+## Pros of Chirp3 HD Voice Synthesis
 
 ### Natural Intonation and Pauses
 
-The **Chirp3 HD** model is designed to produce much more natural-sounding speech right out of the box. You don't need extensive SSML control to get decent results anymore. It also handles punctuation and line breaks much better for pause control.
+The **Chirp3 HD voice synthesis** model is designed to produce much more natural-sounding speech right out of the box. You don't need extensive SSML control to get decent results anymore. It also handles punctuation and line breaks much better for pause control in **Japanese text-to-speech** applications.
 
 ## Cons
 
@@ -42,15 +42,15 @@ The trade-off for better quality is a higher price tag compared to **WaveNet**. 
 
 ### No SSML Support
 
-This one's a bit of a mixed bag. Chirp3 HD doesn't support SSML for precise control, relying instead on basic punctuation, line breaks, and a few pause markups for [pause control](https://cloud.google.com/text-to-speech/docs/chirp3-hd#pause_control). While this simplifies things, it also means less fine-grained control.
+This one's a bit of a mixed bag. **Chirp3 HD** doesn't support SSML for precise control, relying instead on basic punctuation, line breaks, and a few pause markups for [pause control](https://cloud.google.com/text-to-speech/docs/chirp3-hd#pause_control). While this simplifies things, it also means less fine-grained control over your **Japanese text-to-speech** output.
 
 ### Struggles with Long Sentences
 
 Here's where things get tricky. The model has difficulties with very long sentences. I'm not sure if this is specific to Japanese or a general limitation, but I've found that if the text is too long, even with proper punctuation (Japanese uses full-width punctuation), the model will return an error. I had to split long sentences into smaller chunks, adding line breaks to make it work.
 
-## Example
+## Google TTS Japanese Example
 
-Here's a sample of how to work with the Chirp3 HD model in Japanese. This example uses a simple text input:
+Here's a **Google TTS Japanese example** of how to work with the **Chirp3 HD** model. This example uses a simple text input about Van Gogh's biography:
 
 ```md
 1876年4月、ゴッホは23歳になり、英国テムズ河河口にあるラムズゲイトで、ストークス氏の経営する寄宿学校の無給教師の募集を新聞広告で見つけ、子ども達に初歩のフランス語、算術、書き取りなどを教えました。
@@ -66,7 +66,7 @@ Try to enter this into the [Google Text-to-Speech Synthesizer](https://console.c
 
 <Image src={image1} alt="Chirp3 HD Error" />
 
-However, if you add line breaks after commas or periods, keeping each line under 80-100 characters, it should work fine. Here's the edited version:
+However, if you add line breaks after commas or periods, keeping each line under 80-100 characters, it should work fine. Here's the edited version for better **Chirp3 HD voice synthesis** results:
 
 ```md
 1876年4月、ゴッホは23歳になり、英国テムズ河河口にあるラムズゲイトで、⏎
@@ -88,12 +88,12 @@ However, if you add line breaks after commas or periods, keeping each line under
 Output 1 (voice: ja-JP-Chirp3-HD-Enceladus):
 <Audio src="/assets/250531-ja-JP-Chirp3-HD-Enceladus-test.txt.mp3" />
 
-This result is much better than what I got with the **WaveNet** model. Here is a sample of the same text, without SSML, using the **WaveNet** model:
+This **Google TTS Japanese example** result is much better than what I got with the **WaveNet** model. Here is a sample of the same text, without SSML, using the **WaveNet** model:
 
 Output 2 (voice: ja-JP-Wavenet-D):
 <Audio src="/assets/250531-ja-JP-Wavenet-D-test.txt.mp3" />
 
-As you can hear, the **Chirp3 HD** model produces a more natural-sounding voice with better pauses. I would give it a 8/10. Now let me edit the text to make it more polished:
+As you can hear, the **Chirp3 HD voice synthesis** model produces a more natural-sounding voice with better pauses. I would give it a 8/10. Now let me edit the text to make it more polished:
 
 ```md
 1876年4月、ゴッホは[pause]23歳になり、英国テムズ河河口にあるラムズゲイトで、
@@ -119,9 +119,9 @@ Output 3 (voice: ja-JP-Chirp3-HD-Enceladus, edited):
 
 This version sounds even better, with proper pauses after "ゴッホは" and between sentences.
 
-As you can see, even with the more advanced **Chirp3 HD** model, you still need to do some manual editing to get the best results.
+As you can see from this **Google TTS Japanese example**, even with the more advanced **Chirp3 HD** model, you still need to do some manual editing to get the best results for **Japanese text-to-speech** projects.
 
-## Pricing Comparison
+## Pricing Comparison for Japanese Text-to-Speech
 
 Here's what you need to know about the cost difference:
 
@@ -130,15 +130,15 @@ Here's what you need to know about the cost difference:
 
 Pricing details: https://cloud.google.com/text-to-speech/pricing?hl=en
 
-Chirp3 HD costs almost double what **WaveNet** does, so you'll want to consider whether the improved quality justifies the extra expense for your use case.
+**Chirp3 HD voice synthesis** costs almost double what **WaveNet** does, so you'll want to consider whether the improved quality justifies the extra expense for your **Japanese text-to-speech** use case.
 
 ## Conclusion
 
-After testing both models extensively, I'd say Chirp3 HD is definitely worth considering if you're working with Japanese text-to-speech and natural sound quality is a priority. The improved intonation and pause handling make it much easier to get good results without diving deep into SSML tweaking.
+After testing both models extensively, I'd say **Chirp3 HD** is definitely worth considering if you're working with **Japanese text-to-speech** and natural sound quality is a priority. The improved intonation and pause handling make it much easier to get good results without diving deep into SSML tweaking.
 
-However, the higher cost and lack of SSML support might be deal-breakers depending on your specific needs. If you're on a tight budget or need precise control over every aspect of the speech output, **WaveNet** might still be your best bet.
+However, the higher cost and lack of SSML support might be deal-breakers depending on your specific needs. If you're on a tight budget or need precise control over every aspect of the speech output, **WaveNet** might still be your best bet for **Japanese text-to-speech** projects.
 
-For most casual users or projects where natural-sounding speech is more important than cost optimization, Chirp3 HD feels like a solid upgrade. Just be prepared to work around its quirks with long sentences and manual punctuation adjustments.
+For most casual users or projects where natural-sounding speech is more important than cost optimization, **Chirp3 HD voice synthesis** feels like a solid upgrade. Just be prepared to work around its quirks with long sentences and manual punctuation adjustments.
 
 ## Further Reading
 
