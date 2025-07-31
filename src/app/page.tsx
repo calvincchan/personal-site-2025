@@ -109,7 +109,7 @@ export default function Page() {
       <section>
         <h2>My Blog Posts ✏️</h2>
         <p>Check out my latest articles and insights on AI, automation, and software development.</p>
-        <LatestPosts limit={3} />
+        <LatestPosts limit={5} />
         <Link href="/blog">View All Blog Posts →</Link>
       </section>
 
