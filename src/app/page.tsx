@@ -94,16 +94,23 @@ export default function Page() {
   return (
     <div className="x-top-page">
       <section role="hero" className="x-hero">
-        <div className="">
-          <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
-          <h1>Hi, I&apos;m Calvin C. Chan 👋</h1>
-          <h2>Full-Stack Dev | AI Workflow Automation | Next.js, Supabase, n8n, LLMs</h2>
-          <p>
-            I am a full-stack developer specializing in AI workflow automation and web development.
-            I create custom solutions to help businesses streamline their processes and improve efficiency.
-          </p>
-          <p>Want to discuss your project?<br /><Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk ✨</Link></p>
-        </div>
+        <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
+        <h1>Hi, I&apos;m Calvin C. Chan 👋</h1>
+        <h2>Full-Stack Dev | AI Workflow Automation | Next.js, Supabase, n8n, LLMs</h2>
+        <p>
+          I am a full-stack developer specializing in AI workflow automation and web development.
+          I create custom solutions to help businesses streamline their processes and improve efficiency.
+        </p>
+        <p>Want to discuss your project?<br /><Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk ✨</Link></p>
+      </section>
+
+      <hr />
+
+      <section>
+        <h2>My Blog Posts ✏️</h2>
+        <p>Check out my latest articles and insights on AI, automation, and software development.</p>
+        <LatestPosts limit={3} />
+        <Link href="/blog">View All Blog Posts →</Link>
       </section>
 
       <hr />
@@ -113,15 +120,6 @@ export default function Page() {
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
         <LatestProjects limit={3} />
         <Link href="/projects">View My Projects →</Link>
-      </section>
-
-      <hr />
-
-      <section>
-        <h2>My Blog ✏️</h2>
-        <p>Check out my latest articles and insights on AI, automation, and software development.</p>
-        <LatestPosts limit={3} />
-        <Link href="/blog">View All Blog Posts →</Link>
       </section>
 
       <hr />
@@ -138,4 +136,4 @@ export default function Page() {
       </section>
     </div >
   );
-}  
+}
