@@ -89,13 +89,11 @@ export default function Page() {
         <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
         <h1>Hi, I&apos;m {siteConfig.author} 👋</h1>
         <h2>{siteConfig.siteDescription}</h2>
-        <p>
-          I’ve spent more than a decade building software that makes life easier, from creating web and mobile apps to designing the back‑end systems that power them. Working in startups taught me to move fast, listen to feedback, and solve problems as they come up. Now I’m bringing that same energy to AI and machine learning, exploring how language models, speech technologies and automation can improve user experiences and simplify complex workflows. I’m committed to blending my full‑stack skills with these emerging AI tools to build useful, human‑centric products.
-        </p>
+        <p>{siteConfig.intro}</p>
         <p>Want to discuss your project or just say hi?</p>
         <div className="x:flex x:gap-4">
-          <Link href="/contact" className="x-button x:mt-4">Schedule a Call</Link>
-          <Link href="/resume" className="x-button x:mt-4">Download Resume</Link>
+          <Link href="/contact" className="x-button x:mt-4">Contact Me ✨</Link>
+          <Link href={siteConfig.resumeUrl} className="x-button x:mt-4">Download My Resume</Link>
         </div>
       </section>
 
@@ -116,6 +114,6 @@ export default function Page() {
         <LatestProjects limit={3} />
         <Link href="/projects">View My Projects →</Link>
       </section>
-    </div >
+    </div>
   );
 }

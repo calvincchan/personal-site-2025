@@ -34,7 +34,7 @@ export default async function Page() {
 
       <div role="main" className="x:prose">
         <h2>Introduction</h2>
-        <p>Full-stack developer with 10 years building JavaScript/TypeScript back-end APIs and React front-ends. Now pivoting into AI engineering, applying production software skills to LLM integration, evaluation, and cost optimization.</p>
+        <p>{siteConfig.intro}</p>
 
         <h2>Recent activities related to language learning and AI integration.</h2>
         <section>
