@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,53 +9,44 @@ import { ProjectCard } from "./projects/project-card";
 import { getProjects } from "./projects/utils";
 
 // export const metadata: Metadata & FrontMatter = {
-//   title: process.env.SITE_AUTHOR,
-//   description: process.env.SITE_DESCRIPTION,
+//   title: siteConfig.author,
+//   description: siteConfig.siteDescription,
 //   priority: 1,
 // };
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Calvin C. Chan: Freelance Web App and AI Developer',
-    template: '%s | Calvin C. Chan'
-  },
-  description: process.env.SITE_DESCRIPTION,
-  keywords: [
-    'Calvin C. Chan',
-    'Freelance Developer',
-    'Web Developer',
-    'Workflow Automation',
-    'Software Engineer',
-    'Freelance Web App Developer',
-    'Freelance Software Engineer',
-    'Freelance AI Developer',
-  ],
-  openGraph: {
-    title: process.env.SITE_AUTHOR,
-    description: process.env.SITE_DESCRIPTION,
-    url: process.env.SITE_URL,
-    siteName: process.env.SITE_AUTHOR,
-    type: 'website',
-    images: [
-      {
-        url: process.env.SITE_OG_IMAGE,
-        width: 640,
-        height: 640,
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary',
-    title: process.env.SITE_AUTHOR,
-    description: process.env.SITE_DESCRIPTION,
-    images: process.env.SITE_OG_IMAGE,
-    creator: process.env.SITE_AUTHOR,
-  },
-  alternates: {
-    canonical: process.env.SITE_URL,
-  },
-
-};
+export function generateMetadata(): Metadata {
+  return {
+    title: {
+      default: siteConfig.siteTitle,
+      template: `%s | ${siteConfig.author}`
+    },
+    description: siteConfig.siteDescription,
+    openGraph: {
+      title: siteConfig.author,
+      description: siteConfig.siteDescription,
+      url: siteConfig.siteUrl,
+      siteName: siteConfig.author,
+      type: 'website',
+      images: [
+        {
+          url: siteConfig.siteOgImage,
+          width: 640,
+          height: 640,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary',
+      title: siteConfig.author,
+      description: siteConfig.siteDescription,
+      images: siteConfig.siteOgImage,
+      creator: siteConfig.author,
+    },
+    alternates: {
+      canonical: siteConfig.siteUrl,
+    },
+  };
+}
 
 // This component fetches the latest posts and displays them
 // It is a server component, so it can use async/await
@@ -94,14 +86,17 @@ export default function Page() {
   return (
     <div className="x-top-page">
       <section role="hero" className="x-hero">
-        <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
-        <h1>Hi, I&apos;m Calvin C. Chan 👋</h1>
-        <h2>Full-Stack Dev | AI Workflow Automation | Next.js, Supabase, n8n, LLMs</h2>
+        <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
+        <h1>Hi, I&apos;m {siteConfig.author} 👋</h1>
+        <h2>{siteConfig.siteDescription}</h2>
         <p>
-          I am a full-stack developer specializing in AI workflow automation and web development.
-          I create custom solutions to help businesses streamline their processes and improve efficiency.
+          I’ve spent more than a decade building software that makes life easier, from creating web and mobile apps to designing the back‑end systems that power them. Working in startups taught me to move fast, listen to feedback, and solve problems as they come up. Now I’m bringing that same energy to AI and machine learning, exploring how language models, speech technologies and automation can improve user experiences and simplify complex workflows. I’m committed to blending my full‑stack skills with these emerging AI tools to build useful, human‑centric products.
         </p>
-        <p>Want to discuss your project?<br /><Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk ✨</Link></p>
+        <p>Want to discuss your project or just say hi?</p>
+        <div className="x:flex x:gap-4">
+          <Link href="/contact" className="x-button x:mt-4">Schedule a Call</Link>
+          <Link href="/resume" className="x-button x:mt-4">Download Resume</Link>
+        </div>
       </section>
 
       <hr />
@@ -120,19 +115,6 @@ export default function Page() {
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
         <LatestProjects limit={3} />
         <Link href="/projects">View My Projects →</Link>
-      </section>
-
-      <hr />
-
-      <section>
-        <h2>Hire Me</h2>
-        <p>
-          I am available for freelance work. If you have a project in mind, feel free to reach out!
-        </p>
-        <p className="x:flex x:gap-4">
-          <Link href="/contact" className="x-button">Schedule a Call</Link>
-          <Link href="https://github.com/calvincchan/calvincchan/blob/master/Resume-Calvin-C-Chan.pdf" className="x-button">Download Resume</Link>
-        </p>
       </section>
     </div >
   );

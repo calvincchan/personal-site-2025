@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -7,19 +8,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Me",
     description: "A brief introduction about my background and interests, including my recent activities related to AI and language learning.",
-    url: process.env.SITE_URL + "/about",
+    url: siteConfig.siteUrl + "/about",
     siteName: "Calvin C. Chan",
     type: "website",
     images: [
       {
-        url: process.env.SITE_OG_IMAGE,
+        url: siteConfig.siteOgImage,
         width: 1200,
         height: 630,
       },
     ],
   },
   alternates: {
-    canonical: process.env.SITE_URL + "/about",
+    canonical: siteConfig.siteUrl + "/about",
   },
 };
 

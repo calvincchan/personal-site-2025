@@ -1,6 +1,6 @@
+import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import type { FC } from 'react';
-import { SiteLogoIcon } from "src/_icons";
 
 export const Footer: FC = () => {
   const topLevelNavbarItems: { title: string, route: string, cta?: boolean; }[] = [
@@ -16,7 +16,7 @@ export const Footer: FC = () => {
     <footer className="x-global-footer">
       <div className="x-row">
         <div className="x-col1">
-          <span className="x-author">{new Date().getFullYear()} © {process.env.SITE_AUTHOR}.</span>{' '}
+          <span className="x-author">{new Date().getFullYear()} © {siteConfig.author}.</span>{' '}
           All rights reserved.
         </div>
         <div className="x-col2">
@@ -26,9 +26,6 @@ export const Footer: FC = () => {
             </Link>
           ))}
         </div>
-      </div>
-      <div className="x:flex x:justify-center x:mt-8 x:text-neutral-400">
-        <SiteLogoIcon size={60} />
       </div>
     </footer >
   );

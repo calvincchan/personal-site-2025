@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ImageZoom } from "nextra/components";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     "customer experience",
   ],
   alternates: {
-    canonical: process.env.SITE_URL + "/projects/line-me-up",
+    canonical: siteConfig.siteUrl + "/projects/line-me-up",
   },
   other: {
     image: "/projects/line-me-up.jpg",

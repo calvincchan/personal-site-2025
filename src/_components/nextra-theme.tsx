@@ -19,6 +19,11 @@ const mainFont = Geist({
   preload: true,
 });
 
+// Verify process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID is defined
+if (!process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) {
+  console.warn('NEXT_PUBLIC_GA_MEASUREMENT_ID is not defined');
+}
+
 export const NextraTheme: FC<{
   children: ReactNode;
   pageMap: PageMapItem[];

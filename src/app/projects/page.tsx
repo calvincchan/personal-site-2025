@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import { normalizePages } from 'nextra/normalize-pages';
 import { getPageMap } from 'nextra/page-map';
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   title: "My Projects",
   description: "Showcasing my projects and work experience.",
   alternates: {
-    canonical: process.env.SITE_URL + "/projects",
+    canonical: siteConfig.siteUrl + "/projects",
   },
 };
 

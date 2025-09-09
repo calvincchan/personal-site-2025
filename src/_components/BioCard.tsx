@@ -1,10 +1,11 @@
+import { siteConfig } from "@/lib/site-config";
 import Image from 'next/image';
 import Link from 'next/link';
 import profilePic from 'public/images/calvincchan-profile.png';
 
 const BioCard: React.FC = () => {
-  const author = process.env.SITE_AUTHOR || '';
-  const bio = process.env.SITE_BIO || '';
+  const author = siteConfig.author || '';
+  const bio = siteConfig.siteBio || '';
   return (
     <aside role="bio" className="x-bio x:my-24">
       <div className="x:flex x:flex-col x:sm:flex-row x:sm:items-center x:gap-4">

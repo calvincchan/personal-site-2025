@@ -23,13 +23,6 @@
     @apply x:font-semibold x:hover:underline x:flex x:items-center x:my-4;
   }
 
-  .x-main-link::before {
-    @apply x:inline-block x:mr-2;
-    content: url('/logo.svg');
-    width: 36px;
-    height: 36px;
-  }
-
   .x-menu {
     @apply x:flex x:flex-row x:list-none x:gap-4 x:m-0 x:items-center x:font-medium;
   }
@@ -226,7 +219,7 @@ p {
   .x-row {
     @apply x:flex x:items-center x:justify-between x:flex-col x:sm:flex-row;
   }
-  
+
   .x-col1, .x-col2 {
     @apply x:my-5;
   }

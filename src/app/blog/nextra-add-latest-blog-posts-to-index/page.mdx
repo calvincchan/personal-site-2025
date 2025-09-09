@@ -37,7 +37,7 @@ import RSS from "rss";
 import { fileURLToPath } from "url";
 
 /** Import SITE_URL from env */
-const SITE_URL = process.env.SITE_URL;
+const SITE_URL = siteConfig.siteUrl || "";
 
 async function generate() {
   const feed = new RSS({

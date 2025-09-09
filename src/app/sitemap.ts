@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { MetadataRoute } from "next";
 import { MdxFile } from "nextra";
 import { Item, normalizePages } from "nextra/normalize-pages";
@@ -19,7 +20,7 @@ interface SitemapEntry {
 }
 
 const normalizeUrl = (url: string): string => {
-  const baseUrl = process.env.SITE_URL;
+  const baseUrl = siteConfig.siteUrl;
   if (!baseUrl) {
     throw new Error("SITE_URL is not defined");
   }
@@ -43,7 +44,7 @@ const toSitemapEntry = (item: Item): SitemapEntry => {
 };
 
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const baseUrl = process.env.SITE_URL;
+  const baseUrl = siteConfig.siteUrl;
   const pageMap = await getPageMap();
   const { flatDocsDirectories } = normalizePages({
     list: await getPageMap('/'),

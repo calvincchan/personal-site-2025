@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,19 +12,19 @@ export function generateMetadata() {
     openGraph: {
       title: "Contact Me",
       description: "Get in touch to discuss projects and opportunities.",
-      url: process.env.SITE_URL + "/contact",
+      url: siteConfig.siteUrl + "/contact",
       siteName: "Calvin C. Chan",
       type: "website",
       images: [
         {
-          url: process.env.SITE_OG_IMAGE,
+          url: siteConfig.siteOgImage,
           width: 1200,
           height: 630,
         },
       ],
     },
     alternates: {
-      canonical: process.env.SITE_URL + "/contact",
+      canonical: siteConfig.siteUrl + "/contact",
     },
   };
   return result;
@@ -34,7 +35,7 @@ export default async function Page() {
   return (
     <div>
       <header className="x-page-header">
-        <Image src={profilePic} alt={process.env.SITE_AUTHOR} width={180} height={180} className="x:rounded-full x:bg-violet-600" />
+        <Image src={profilePic} alt={siteConfig.author} width={180} height={180} className="x:rounded-full x:bg-violet-600" />
         <h1>{metadata.title as string}</h1>
         <h2>{metadata.description as string}</h2>
       </header>

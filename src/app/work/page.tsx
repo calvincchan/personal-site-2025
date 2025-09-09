@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 
@@ -10,12 +11,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Calvin's Works",
     description: "Showcasing my projects and work experience.",
-    url: process.env.SITE_URL + "/work",
+    url: siteConfig.siteUrl + "/work",
     siteName: "Calvin C. Chan",
     type: "website",
     images: [
       {
-        url: process.env.SITE_OG_IMAGE,
+        url: siteConfig.siteOgImage,
         width: 1200,
         height: 630,
       },

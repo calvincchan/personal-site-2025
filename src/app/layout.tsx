@@ -1,3 +1,5 @@
+// DEBUG: layout.tsx loaded from src/app
+import { siteConfig } from "@/lib/site-config";
 // import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
 import { Metadata } from 'next';
 import { getPageMap } from 'nextra/page-map';
@@ -7,18 +9,18 @@ import '../globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Freelance Web App and AI Developer | Calvin C. Chan',
-    template: '%s | Calvin C. Chan'
+    default: `Freelance Web App and AI Developer | ${siteConfig.author}`,
+    template: `%s | ${siteConfig.author}`
   },
   authors: [
     {
-      name: process.env.SITE_AUTHOR,
-      url: process.env.SITE_URL,
+      name: siteConfig.author,
+      url: siteConfig.siteUrl,
     },
   ],
-  creator: process.env.SITE_AUTHOR,
-  publisher: process.env.SITE_AUTHOR,
-  metadataBase: new URL(process.env.SITE_URL),
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
+  metadataBase: new URL(siteConfig.siteUrl),
   icons: {
     icon: '/favicon.ico',
   },
@@ -26,6 +28,10 @@ export const metadata: Metadata = {
     types: {
       "application/rss+xml": "/feed.xml",
     },
+  },
+  robots: {
+    index: true,
+    follow: true,
   }
 };
 

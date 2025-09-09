@@ -1,8 +1,9 @@
+import { siteConfig } from "@/lib/site-config";
 import RSS from "rss";
 import { getPosts } from "../blog/utils";
 
 const normalizeUrl = (url: string): string => {
-  const baseUrl = process.env.SITE_URL;
+  const baseUrl = siteConfig.siteUrl;
   if (!baseUrl) {
     throw new Error("SITE_URL is not defined");
   }
@@ -12,18 +13,18 @@ const normalizeUrl = (url: string): string => {
 export async function GET() {
   const allPosts = await getPosts();
   const feed = new RSS({
-    title: process.env.SITE_AUTHOR,
-    description: process.env.SITE_DESCRIPTION,
-    site_url: process.env.SITE_URL,
-    feed_url: `${process.env.SITE_URL}/feed.xml`,
-    image_url: process.env.SITE_OG_IMAGE,
+    title: siteConfig.author,
+    description: siteConfig.siteDescription,
+    site_url: siteConfig.siteUrl,
+    feed_url: `${siteConfig.siteUrl}/feed.xml`,
+    image_url: siteConfig.siteOgImage,
   });
 
   allPosts.forEach((post) => {
     const { title, date, description } = post.frontMatter;
     const url = normalizeUrl(post.route);
-    const image = post.frontMatter.image ? normalizeUrl(post.frontMatter.image) : process.env.SITE_OG_IMAGE;
-    const author = post.frontMatter.author || process.env.SITE_AUTHOR;
+    const image = post.frontMatter.image ? normalizeUrl(post.frontMatter.image) : siteConfig.siteOgImage;
+    const author = post.frontMatter.author || siteConfig.author;
     const categories = post.frontMatter.tags || [];
     const pubDate = post.frontMatter.lastmod ?
       new Date(post.frontMatter.lastmod).toUTCString() :

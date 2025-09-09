@@ -1,3 +1,4 @@
+import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import { normalizePages } from 'nextra/normalize-pages';
 import { getPageMap } from 'nextra/page-map';
@@ -10,19 +11,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: "My Blog",
     description: "My articles and insights on AI, automation, and web app development.",
-    url: process.env.SITE_URL + "/blog",
+    url: siteConfig.siteUrl + "/blog",
     // siteName: "Calvin C. Chan",
     // type: "website",
     // images: [
     //   {
-    //     url: process.env.SITE_OG_IMAGE,
+    //     url: siteConfig.siteOgImage,
     //     width: 640,
     //     height: 640,
     //   },
     // ],
   },
   alternates: {
-    canonical: process.env.SITE_URL + "/blog",
+    canonical: siteConfig.siteUrl + "/blog",
     types: {
       "application/rss+xml": "/feed.xml",
     },
