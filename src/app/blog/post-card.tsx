@@ -4,7 +4,7 @@ import { DateOnly } from "src/_components/date-only";
 import { PostItem } from "./utils";
 
 export const PostCard: React.FC<{ post: PostItem; }> = ({ post }) => {
-  const { route, title, frontMatter: { description, date, image } } = post;
+  const { route, frontMatter: { title, description, date, image } } = post;
   return (
     <div key={route} role="listitem" className="x-post-card">
       {image && (
