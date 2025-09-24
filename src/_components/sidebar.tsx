@@ -1,18 +1,18 @@
-'use client'
- 
-import { usePathname } from 'next/navigation'
-import type { PageMapItem } from 'nextra'
-import { Anchor } from 'nextra/components'
-import { normalizePages } from 'nextra/normalize-pages'
-import type { FC } from 'react'
- 
-export const Sidebar: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
-  const pathname = usePathname()
+'use client';
+
+import { usePathname } from 'next/navigation';
+import type { PageMapItem } from 'nextra';
+import { Anchor } from 'nextra/components';
+import { normalizePages } from 'nextra/normalize-pages';
+import type { FC } from 'react';
+
+export const Sidebar: FC<{ pageMap: PageMapItem[]; }> = ({ pageMap }) => {
+  const pathname = usePathname();
   const { docsDirectories } = normalizePages({
     list: pageMap,
     route: pathname
-  })
- 
+  });
+
   return (
     <div
       style={{
@@ -33,8 +33,8 @@ export const Sidebar: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
       >
         {docsDirectories.map(function renderItem(item) {
           const route =
-            item.route || ('href' in item ? (item.href as string) : '')
-          const { title } = item
+            item.route || ('href' in item ? (item.href as string) : '');
+          const { title } = item;
           return (
             <li
               key={route}
@@ -51,9 +51,9 @@ export const Sidebar: FC<{ pageMap: PageMapItem[] }> = ({ pageMap }) => {
                 </Anchor>
               )}
             </li>
-          )
+          );
         })}
       </ul>
     </div>
-  )
-}
+  );
+};

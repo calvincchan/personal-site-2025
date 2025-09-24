@@ -1,7 +1,7 @@
-import type { Heading } from 'nextra'
-import type { FC } from 'react'
- 
-export const TOC: FC<{ toc: Heading[] }> = ({ toc }) => {
+import type { Heading } from 'nextra';
+import type { FC } from 'react';
+
+export const TOC: FC<{ toc: Heading[]; }> = ({ toc }) => {
   return (
     <div style={{ background: 'lightblue', padding: 20 }}>
       <h3>Table of Contents</h3>
@@ -11,5 +11,5 @@ export const TOC: FC<{ toc: Heading[] }> = ({ toc }) => {
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
