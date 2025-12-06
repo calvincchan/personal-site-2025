@@ -6,7 +6,7 @@
     "@next/third-parties": "^15.3.5",
     "@tailwindcss/typography": "^0.5.16",
     "dayjs": "^1.11.18",
-    "next": "^15.3.5",
+    "next": "^15.3.6",
     "nextra": "^4.2.17",
     "nextra-theme-blog": "^4.2.17",
     "react": "^18.3.1",
