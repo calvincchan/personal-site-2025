@@ -93,14 +93,14 @@ export default function Page() {
         <p>Want to discuss your project or just say hi?</p>
         <div className="x:flex x:gap-4">
           <Link href="/contact" className="x-button x:mt-4">Contact Me ✨</Link>
-          <Link href={siteConfig.resumeUrl} className="x-button x:mt-4">Download My Resume</Link>
+          <Link href={siteConfig.resumeUrl} className="x-button x:mt-4">Read My Resume 🍰</Link>
         </div>
       </section>
 
       <hr />
 
       <section>
-        <h2>My Blog Posts ✏️</h2>
+        <h2>Topics</h2>
         <p>Check out my latest articles and insights on AI, automation, and software development.</p>
         <LatestPosts limit={5} />
         <Link href="/blog">View All Blog Posts →</Link>
