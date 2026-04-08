@@ -13,7 +13,11 @@
 }
 
 .x-button {
-  @apply x:bg-primary-700 x:text-white x:hover:bg-black x:transition-colors x:rounded x:p-2 x:inline-flex x:no-underline! x:items-center x:gap-1;
+  @apply x:bg-primary-700 x:text-white x:hover:bg-primary-900 x:transition-colors x:rounded x:px-4 x:py-2 x:inline-flex x:no-underline! x:items-center x:gap-1.5 x:text-sm x:font-medium;
+}
+
+.x-button-ghost {
+  @apply x:border x:border-primary-700 x:text-primary-700 x:hover:bg-primary-50 x:dark:hover:bg-neutral-900 x:transition-colors x:rounded x:px-4 x:py-2 x:inline-flex x:no-underline! x:items-center x:gap-1.5 x:text-sm x:font-medium;
 }
 
 .x-top-nav {
@@ -75,7 +79,7 @@
 }
 
 .x-hero {
-  @apply x:my-8 x:sm:my-36;
+  @apply x:my-12 x:sm:my-40;
 
   h1 {
     @apply x:text-primary-700;
@@ -88,7 +92,7 @@
   }
 
   p {
-    @apply x:my-8 x:text-lg;
+    @apply x:my-6 x:text-lg x:leading-relaxed;
   }
 }
 
@@ -111,7 +115,7 @@
 .x-post-card {
   @apply x:my-10;
   @apply x:clear-both;
-  @apply x:border-l-2 x:border-l-primary-500 x:pl-2;
+  @apply x:rounded-lg x:px-4 x:py-3 x:transition-colors x:hover:bg-neutral-50 x:dark:hover:bg-neutral-900;
 
   h3 {
     @apply x:text-xl x:font-medium;
@@ -141,7 +145,8 @@
 
 .x-project-card {
   @apply x:my-4;
-  @apply x:border x:rounded-xl x:overflow-clip x:border-neutral-300;
+  @apply x:border x:rounded-xl x:overflow-clip x:border-neutral-200 x:dark:border-neutral-700;
+  @apply x:transition-shadow x:duration-200 x:hover:shadow-md;
 
   .x-project-content {
     @apply x:p-2;
@@ -269,12 +274,12 @@ p {
   @apply x:my-4;
   @apply x:items-center;
 
-  a {
+  a, .x-tech-stack-item {
     @apply x:rounded-lg x:bg-neutral-200 x:dark:bg-neutral-800 x:px-4 x:py-2;
     @apply x:text-sm x:font-semibold;
     @apply x:text-neutral-900 x:dark:text-neutral-100;
     @apply x:transition-colors x:duration-200;
-    @apply x:flex x:items-center;
+    @apply x:flex x:items-center x:gap-2;
     height: 60px;
   }
   a:hover {

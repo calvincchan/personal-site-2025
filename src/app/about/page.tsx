@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Me",
-  description: "A brief introduction about my background and interests, including my recent activities related to AI and language learning.",
+  description: "Full-stack TypeScript & AI engineer with 15+ years of experience — building web apps, agents, and automated workflows.",
   openGraph: {
     title: "About Me",
-    description: "A brief introduction about my background and interests, including my recent activities related to AI and language learning.",
+    description: "Full-stack TypeScript & AI engineer with 15+ years of experience — building web apps, agents, and automated workflows.",
     url: siteConfig.siteUrl + "/about",
     siteName: "Calvin C. Chan",
     type: "website",
@@ -34,9 +34,11 @@ export default async function Page() {
 
       <div role="main" className="x:prose">
         <h2>Introduction</h2>
-        <p>{siteConfig.intro}</p>
+        {siteConfig.intro.split('\n\n').map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
 
-        <h2>Recent activities related to language learning and AI integration.</h2>
+        <h2>Recent Projects &amp; Experiments</h2>
         <section>
           <h3>Local LLM with Ollama</h3>
           <p>I experimented with running various models locally using Ollama, testing function calling and local integration.</p>
