@@ -1,7 +1,6 @@
 import { siteConfig } from "@/lib/site-config";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import profilePic from 'public/images/calvincchan-profile.png';
 import { GitHubIcon, LinkedInIcon, YouTubeIcon } from "src/_icons";
 
@@ -41,14 +40,6 @@ export default async function Page() {
       </header>
 
       <section role="main" className="x-contact-page">
-        <section className="x:my-24">
-          <h2>Schedule a Call</h2>
-          <p>Let&apos;s discuss your project and see how I can help you.</p>
-          <p>
-            <Link href="https://calendly.com/hello-calvincchan/30min" target="_blank" rel="noopener noreferrer" className="x-button">Schedule a Call</Link>
-          </p>
-        </section>
-
         <section className="x:my-24">
           <h2>Email</h2>
           <p>
