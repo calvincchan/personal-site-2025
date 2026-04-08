@@ -9,3 +9,11 @@ export type BlogMetadata = {
   title?: string;
   image?: string;
 };
+
+export type ProjectMetadata = BlogMetadata & {
+  other?: {
+    image?: string;
+    published?: string;
+    tags?: string;
+  };
+};

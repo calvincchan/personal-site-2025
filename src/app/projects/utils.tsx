@@ -3,7 +3,7 @@
 import { MdxFile } from "nextra";
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { getPageMap } from 'nextra/page-map';
-import { BlogMetadata } from '../../types';
+import { ProjectMetadata } from '../../types';
 
 // export function parseTags(tagString: string) {
 //   const tags = tagString.split(',').map(tag => tag.trim()).sort();
@@ -11,7 +11,7 @@ import { BlogMetadata } from '../../types';
 // }
 
 export type PostItem = Item & {
-  frontMatter: BlogMetadata;
+  frontMatter: ProjectMetadata;
 };
 
 export async function getProjects() {
@@ -20,7 +20,7 @@ export async function getProjects() {
     route: '/projects'
   });
   return directories
-    .filter(post => post.name !== 'index')
+    .filter(post => post.name !== 'index' && post.frontMatter?.other?.published !== "false")
     .sort(sorter) as PostItem[];
 }
 

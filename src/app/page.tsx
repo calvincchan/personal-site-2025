@@ -89,11 +89,13 @@ export default function Page() {
         <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-primary-700" />
         <h1>Hi, I&apos;m {siteConfig.author} 👋</h1>
         <h2>{siteConfig.siteDescription}</h2>
-        <p>{siteConfig.intro}</p>
+        {siteConfig.intro.split('\n\n').map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
         <p>Want to discuss your project or just say hi?</p>
         <div className="x:flex x:gap-4">
           <Link href="/contact" className="x-button x:mt-4">Contact Me ✨</Link>
-          <Link href={siteConfig.resumeUrl} className="x-button x:mt-4">Read My Resume 🍰</Link>
+          <Link href={siteConfig.resumeUrl} className="x-button-ghost x:mt-4">Read My Resume</Link>
         </div>
       </section>
 
