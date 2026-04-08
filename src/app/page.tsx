@@ -113,7 +113,6 @@ export default function Page() {
       <section>
         <h2>My Projects ⚙️</h2>
         <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
-        <LatestProjects limit={3} />
         <Link href="/projects">View My Projects →</Link>
       </section>
     </div>
