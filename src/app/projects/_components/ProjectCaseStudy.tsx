@@ -1,5 +1,5 @@
-import { BioCard } from "src/_components/BioCard";
 import Link from "next/link";
+import { BioCard } from "src/_components/BioCard";
 
 type ProjectLink = {
   label: string;
@@ -18,7 +18,7 @@ type ProjectCaseStudyProps = {
   description?: string;
   links?: ProjectLink[];
   techStack?: TechItem[];
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export function ProjectCaseStudy({ title, description, links, techStack, children }: ProjectCaseStudyProps) {

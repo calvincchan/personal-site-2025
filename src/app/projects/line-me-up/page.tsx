@@ -2,9 +2,9 @@ import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Link from "next/link";
 import { ImageZoom } from "nextra/components";
-import { ProjectCaseStudy } from "../_components/ProjectCaseStudy";
 import { YouTube } from "src/_components/YouTube";
 import { GitHubIcon, NextJsIcon, ReactIcon, RefineJsIcon, SupabaseIcon } from "src/_icons";
+import { ProjectCaseStudy } from "../_components/ProjectCaseStudy";
 import KioskModeImage from "./240924-kiosk-mode.png";
 import PublicScreenImage from "./240924-public-screen.png";
 import StationModeImage from "./240924-station-mode.png";
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     canonical: siteConfig.siteUrl + "/projects/line-me-up",
   },
   other: {
-    image: "/projects/line-me-up.jpg",
-    tags: "React,Next.js,Refine.js,Supabase",
+    // image: "/projects/line-me-up.jpg",
+    tags: "TypeScript,React,Next.js,Refine.js,Supabase",
   }
 };
 
