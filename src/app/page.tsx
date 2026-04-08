@@ -86,7 +86,7 @@ export default function Page() {
   return (
     <div className="x-top-page">
       <section role="hero" className="x-hero">
-        <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-violet-600" />
+        <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-primary-700" />
         <h1>Hi, I&apos;m {siteConfig.author} 👋</h1>
         <h2>{siteConfig.siteDescription}</h2>
         <p>{siteConfig.intro}</p>
