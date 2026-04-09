@@ -6,11 +6,11 @@ email: hello@calvincchan.com
 website: https://calvincchan.com
 location: Vancouver, BC, Canada
 role: Full-stack TypeScript Engineer
-image: ./images/calvincchan-profile.png
+image: https://calvincchan.com/images/calvincchan-profile.png)
 lastmod: 2026-04-09
 ---
 
-<img src="./images/calvincchan-profile.png" alt="Calvin Chun-Yu Chan" style="max-width:400px" />
+![Calvin Chun-Yu Chan](https://calvincchan.com/images/calvincchan-profile.png)
 
 # Calvin Chun-Yu Chan
 
@@ -89,3 +89,7 @@ Full-stack TypeScript engineer with 20+ years building eCommerce, SaaS, and ente
 ## Education
 
 **B.Sc., Computer Science** — University of British Columbia | Sep 2000 – May 2003
+
+---
+
+Last revised: 2026-04-09
