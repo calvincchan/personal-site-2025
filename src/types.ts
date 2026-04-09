@@ -4,6 +4,8 @@ export type BlogMetadata = {
   author?: string;
   date?: string;
   description?: string;
+  keywords?: string | string[];
+  lastmod?: string;
   readingTime?: ReadingTime;
   tags?: string[];
   title?: string;

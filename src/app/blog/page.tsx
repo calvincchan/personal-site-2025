@@ -12,15 +12,15 @@ export const metadata: Metadata = {
     title: "My Blog",
     description: "My articles and insights on AI, automation, and web app development.",
     url: siteConfig.siteUrl + "/blog",
-    // siteName: "Calvin C. Chan",
-    // type: "website",
-    // images: [
-    //   {
-    //     url: siteConfig.siteOgImage,
-    //     width: 640,
-    //     height: 640,
-    //   },
-    // ],
+    siteName: siteConfig.author,
+    type: "website",
+    images: [
+      {
+        url: siteConfig.siteOgImage,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   alternates: {
     canonical: siteConfig.siteUrl + "/blog",

@@ -34,10 +34,35 @@ export const metadata: FrontMatter = {
   }
 };
 
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": siteConfig.siteTitle,
+  "url": siteConfig.siteUrl,
+  "description": siteConfig.siteDescription,
+  "author": {
+    "@type": "Person",
+    "name": siteConfig.author,
+    "url": siteConfig.siteUrl,
+    "jobTitle": "Full-Stack TypeScript Engineer",
+    "sameAs": [
+      "https://github.com/calvincchan",
+      "https://www.linkedin.com/in/calvincchan",
+    ],
+  },
+  "inLanguage": "en-CA",
+};
+
 const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
   const pageMap = await getPageMap();
   return (
-    <NextraTheme pageMap={pageMap}>{children}</NextraTheme>
+    <NextraTheme pageMap={pageMap}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      {children}
+    </NextraTheme>
   );
 };
 

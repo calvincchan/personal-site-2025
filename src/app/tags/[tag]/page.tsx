@@ -1,10 +1,25 @@
+import { siteConfig } from "@/lib/site-config";
 import { PostCard } from "src/app/blog/post-card";
 import { getPosts, getTags } from '../../blog/utils';
 
 export async function generateMetadata(props: { params: Promise<{ tag: string; }>; }) {
   const params = await props.params;
+  const tag = decodeURIComponent(params.tag);
+  const title = `Posts Tagged with "${tag}"`;
+  const description = `Browse all articles tagged with "${tag}" by ${siteConfig.author}.`;
   return {
-    title: `Posts Tagged with “${decodeURIComponent(params.tag)}”`
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${siteConfig.siteUrl}/tags/${params.tag}`,
+      siteName: siteConfig.author,
+      type: "website",
+    },
+    alternates: {
+      canonical: `${siteConfig.siteUrl}/tags/${params.tag}`,
+    },
   };
 }
 
