@@ -100,12 +100,24 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       const imageUrl = metadata.image?.startsWith("http")
         ? metadata.image
         : metadata.image ? `${siteConfig.siteUrl}${metadata.image}` : undefined;
+      const rawMeta = metadata as Record<string, unknown>;
+      const canonicalPath = typeof (rawMeta.alternates as Record<string, unknown> | undefined)?.canonical === "string"
+        ? (rawMeta.alternates as Record<string, string>).canonical
+        : undefined;
+      const postUrl = canonicalPath ? `${siteConfig.siteUrl}${canonicalPath}` : undefined;
       const jsonLd = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
+        ...(postUrl && {
+          "mainEntityOfPage": {
+            "@id": postUrl,
+            "@type": "WebPage",
+          },
+        }),
         "author": {
           "@type": "Person",
           "name": metadata.author || siteConfig.author,
+          "sameAs": siteConfig.sameAs,
           "url": siteConfig.siteUrl,
         },
         "datePublished": metadata.date,

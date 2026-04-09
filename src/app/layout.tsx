@@ -45,10 +45,7 @@ const websiteJsonLd = {
     "name": siteConfig.author,
     "url": siteConfig.siteUrl,
     "jobTitle": "Full-Stack TypeScript Engineer",
-    "sameAs": [
-      "https://github.com/calvincchan",
-      "https://www.linkedin.com/in/calvincchan",
-    ],
+    "sameAs": siteConfig.sameAs,
   },
   "inLanguage": "en-CA",
 };

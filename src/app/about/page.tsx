@@ -2,6 +2,23 @@ import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Link from "next/link";
 
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": `${siteConfig.siteUrl}/about`,
+  "name": `About ${siteConfig.author}`,
+  "mainEntity": {
+    "@type": "Person",
+    "name": siteConfig.author,
+    "url": siteConfig.siteUrl,
+    "email": siteConfig.siteEmail,
+    "jobTitle": "Full-Stack TypeScript Engineer",
+    "description": siteConfig.siteDescription,
+    "image": siteConfig.siteOgImage,
+    "sameAs": siteConfig.sameAs,
+  },
+};
+
 export const metadata: Metadata = {
   title: "About Me",
   description: siteConfig.siteDescription,
@@ -27,6 +44,10 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
+      />
       <header className="x-page-header">
         <h1>{metadata.title as string}</h1>
         <h2>{metadata.description}</h2>

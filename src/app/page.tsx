@@ -82,9 +82,25 @@ const LatestProjects: React.FC<{ limit: number; }> = async ({ limit }) => {
   );
 };
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": siteConfig.author,
+  "url": siteConfig.siteUrl,
+  "email": siteConfig.siteEmail,
+  "jobTitle": "Full-Stack TypeScript Engineer",
+  "description": siteConfig.siteDescription,
+  "image": siteConfig.siteOgImage,
+  "sameAs": siteConfig.sameAs,
+};
+
 export default function Page() {
   return (
     <div className="x-top-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <section role="hero" className="x-hero">
         <Image src={profilePic} alt={siteConfig.author} width={120} height={120} className="x:rounded-full x:bg-primary-700" />
         <h1>Hi, I&apos;m {siteConfig.author} 👋</h1>
