@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Me",
-  description: "Full-stack TypeScript & AI engineer with 15+ years of experience — building web apps, agents, and automated workflows.",
+  description: siteConfig.siteDescription,
   openGraph: {
     title: "About Me",
-    description: "Full-stack TypeScript & AI engineer with 15+ years of experience — building web apps, agents, and automated workflows.",
+    description: siteConfig.siteDescription,
     url: siteConfig.siteUrl + "/about",
     siteName: "Calvin C. Chan",
     type: "website",
