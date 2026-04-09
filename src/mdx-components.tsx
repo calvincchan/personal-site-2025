@@ -17,6 +17,7 @@ import {
 import type { MDXComponents } from 'nextra/mdx-components';
 import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-components';
 import type { FC } from 'react';
+import { siteConfig } from '@/lib/site-config';
 import { BioCard } from './_components/BioCard';
 import { DateOnly } from './_components/date-only';
 import { Meta } from './_components/meta';
@@ -96,16 +97,65 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       }
 
       // Create JSON-LD schema for the blog post
+      const imageUrl = metadata.image?.startsWith("http")
+        ? metadata.image
+        : metadata.image ? `${siteConfig.siteUrl}${metadata.image}` : undefined;
+      const canonicalPath = metadata.alternates?.canonical;
+      const postUrl = canonicalPath ? `${siteConfig.siteUrl}${canonicalPath}` : undefined;
       const jsonLd = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
+        ...(postUrl && {
+          "mainEntityOfPage": {
+            "@id": postUrl,
+            "@type": "WebPage",
+          },
+        }),
         "author": {
           "@type": "Person",
-          "name": metadata.author || "Calvin C. Chan"
+          "name": metadata.author || siteConfig.author,
+          "sameAs": siteConfig.sameAs,
+          "url": siteConfig.siteUrl,
         },
         "datePublished": metadata.date,
+        ...(metadata.lastmod && { "dateModified": metadata.lastmod }),
+        "description": metadata.description,
         "headline": metadata.title,
-        "image": metadata.image,
+        "image": imageUrl,
+        "inLanguage": "en-CA",
+        "keywords": metadata.keywords || metadata.tags,
+        "publisher": {
+          "@type": "Person",
+          "name": siteConfig.author,
+          "url": siteConfig.siteUrl,
+        },
+        ...(metadata.readingTime?.minutes && {
+          "wordCount": Math.round(metadata.readingTime.minutes * 200),
+        }),
+      };
+
+      const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "item": siteConfig.siteUrl,
+            "name": "Home",
+            "position": 1,
+          },
+          {
+            "@type": "ListItem",
+            "item": `${siteConfig.siteUrl}/blog`,
+            "name": "Blog",
+            "position": 2,
+          },
+          {
+            "@type": "ListItem",
+            "name": metadata.title,
+            "position": 3,
+          },
+        ],
       };
 
       const date = metadata.date as string;
@@ -117,12 +167,14 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
       const dateObj = date && new Date(date);
       return (
         <>
-          {/* Add JSON-LD to your page */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
-          {/* ... */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+          />
           <article className="x:prose x:dark:prose-invert">
             <header className="x-blog-header">
               <nav role="navigation" className="x:mb-4 x:text-gray-500"><Link href="/blog">← Back to Blog</Link></nav>
