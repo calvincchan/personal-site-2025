@@ -8,7 +8,7 @@ import { NextraTheme } from '../_components/nextra-theme';
 
 export const metadata: FrontMatter = {
   title: {
-    default: `Freelance Web App and AI Developer | ${siteConfig.author}`,
+    default: siteConfig.siteTitle,
     template: `%s | ${siteConfig.author}`
   },
   authors: [
