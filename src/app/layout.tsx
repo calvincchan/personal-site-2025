@@ -44,7 +44,7 @@ const websiteJsonLd = {
     "@type": "Person",
     "name": siteConfig.author,
     "url": siteConfig.siteUrl,
-    "jobTitle": "Full-Stack TypeScript Engineer",
+    "jobTitle": siteConfig.jobTitle,
     "sameAs": siteConfig.sameAs,
   },
   "inLanguage": "en-CA",

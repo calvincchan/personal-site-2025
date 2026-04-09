@@ -88,7 +88,7 @@ const personJsonLd = {
   "name": siteConfig.author,
   "url": siteConfig.siteUrl,
   "email": siteConfig.siteEmail,
-  "jobTitle": "Full-Stack TypeScript Engineer",
+  "jobTitle": siteConfig.jobTitle,
   "description": siteConfig.siteDescription,
   "image": siteConfig.siteOgImage,
   "sameAs": siteConfig.sameAs,
