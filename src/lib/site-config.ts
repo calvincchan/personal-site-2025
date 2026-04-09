@@ -6,7 +6,6 @@ type SiteConfig = {
   siteUrl: string;
   siteOgImage: string;
   siteBio: string;
-  resumeUrl: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -17,5 +16,4 @@ export const siteConfig: SiteConfig = {
   siteUrl: "https://calvinchan.com",
   siteOgImage: "https://calvincchan.com/images/calvincchan-profile.png",
   siteBio: "Full-stack TypeScript & AI engineer building deployable web apps, servers, agents, and workflows.",
-  resumeUrl: "https://github.com/calvincchan/calvincchan/blob/master/Resume-Calvin-C-Chan.pdf",
 };
