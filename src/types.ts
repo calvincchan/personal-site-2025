@@ -1,6 +1,7 @@
 import type { ReadingTime } from 'nextra';
 
 export type BlogMetadata = {
+  alternates?: { canonical?: string };
   author?: string;
   date?: string;
   description?: string;
