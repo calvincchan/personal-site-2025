@@ -50,16 +50,15 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteConfig.siteUrl + "/about",
-    types: {
-      'text/markdown': siteConfig.siteUrl + RESUME_LOCAL_PATH,
-    },
   },
 };
 
 export default async function Page() {
-  const raw = fs.readFileSync(RESUME_FILE, 'utf8');
-  // Strip YAML frontmatter block
-  const resumeContent = raw.replace(/^---[\s\S]+?---\n/, '');
+  const raw = await fs.promises.readFile(RESUME_FILE, 'utf8');
+  // Strip YAML frontmatter block and leading profile image (download artifact)
+  const resumeContent = raw
+    .replace(/^---[\s\S]+?---\n/, '')
+    .replace(/^!\[.*?\]\(.*?\)\n\n/, '');
 
   return (
     <div>
@@ -71,8 +70,7 @@ export default async function Page() {
         <h1>{metadata.title as string}</h1>
       </header>
 
-      <div role="main" className="x:prose">
-
+      <div role="main" className="x:prose x:dark:prose-invert">
         <div className="x:flex x:gap-4 x:my-4">
           <a
             href={RESUME_LOCAL_PATH}
@@ -84,7 +82,9 @@ export default async function Page() {
             ↓ Download (.md)
           </a>
         </div>
-        <ReactMarkdown>{resumeContent}</ReactMarkdown>
+        <ReactMarkdown components={{ h1: ({ children }) => <h2>{children}</h2> }}>
+          {resumeContent}
+        </ReactMarkdown>
       </div>
     </div>
   );
