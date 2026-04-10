@@ -1,6 +1,11 @@
 import { siteConfig } from "@/lib/site-config";
+import fs from 'fs';
 import { Metadata } from "next";
-import Link from "next/link";
+import path from 'path';
+import ReactMarkdown from 'react-markdown';
+
+const RESUME_LOCAL_PATH = '/calvin-c-chan-resume.md';
+const RESUME_FILE = path.join(process.cwd(), 'public', 'calvin-c-chan-resume.md');
 
 const profilePageJsonLd = {
   "@context": "https://schema.org",
@@ -16,6 +21,13 @@ const profilePageJsonLd = {
     "description": siteConfig.siteDescription,
     "image": siteConfig.siteOgImage,
     "sameAs": siteConfig.sameAs,
+    "hasCredential": {
+      "@type": "DigitalDocument",
+      "name": "Calvin C. Chan — Resume",
+      "url": siteConfig.siteUrl + RESUME_LOCAL_PATH,
+      "encodingFormat": "text/markdown",
+      "description": "Downloadable resume in Markdown format",
+    },
   },
 };
 
@@ -27,7 +39,7 @@ export const metadata: Metadata = {
     description: siteConfig.siteDescription,
     url: siteConfig.siteUrl + "/about",
     siteName: "Calvin C. Chan",
-    type: "website",
+    type: "profile",
     images: [
       {
         url: siteConfig.siteOgImage,
@@ -38,10 +50,17 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteConfig.siteUrl + "/about",
+    types: {
+      'text/markdown': siteConfig.siteUrl + RESUME_LOCAL_PATH,
+    },
   },
 };
 
 export default async function Page() {
+  const raw = fs.readFileSync(RESUME_FILE, 'utf8');
+  // Strip YAML frontmatter block
+  const resumeContent = raw.replace(/^---[\s\S]+?---\n/, '');
+
   return (
     <div>
       <script
@@ -50,52 +69,23 @@ export default async function Page() {
       />
       <header className="x-page-header">
         <h1>{metadata.title as string}</h1>
-        <h2>{metadata.description}</h2>
       </header>
 
       <div role="main" className="x:prose">
-        <h2>Introduction</h2>
-        {siteConfig.intro.split('\n\n').map((para, i) => (
-          <p key={i}>{para}</p>
-        ))}
 
-        <h2>Recent Projects &amp; Experiments</h2>
-        <section>
-          <h3>Local LLM with Ollama</h3>
-          <p>I experimented with running various models locally using Ollama, testing function calling and local integration.</p>
-          <p>Related blog posts: <Link href="/tags/function-calling">#function-calling</Link></p>
-        </section>
-        <section>
-          <h3>TTS(Text-to-Speech) for a Japanese Documentary Video</h3>
-          <p>I worked on a project to convert a PowerPoint slideshow file into a fully narrated Japanese documentary video, The skills involved are:</p>
-          <ul>
-            <li>generate voiceover audio file from a text script using the Google TTS API.</li>
-            <li>use LLM to automate SSML annotation to control the pronunciation of Japanese words, especially for names and places.</li>
-            <li>use iMovie to mix the static slide images with the audio narration.</li>
-          </ul>
-        </section>
-        <section>
-          <h3>STT (Speech-to-Text) for Webinar Transcription</h3>
-          <p>I worked on a project to transcribe spoken Cantonese language into text, The skills involved are:</p>
-          <ul>
-            <li>use <Link href="https://github.com/ggml-org/whisper.cpp">whisper.cpp</Link> to convert audio recordings into timestamped text transcripts.</li>
-            <li>fix incorrect words in the transcripts manually.</li>
-          </ul>
-          <p>The video is about Teaching Cantonese at Home by Dr. Chaak Ming Lau: <Link href="https://www.youtube.com/watch?v=TW6UiDrejVI">https://www.youtube.com/watch?v=TW6UiDrejVI</Link></p>
-          <p>Learn more about Dr. Chaak Ming Lau at <Link href="http://chaak.net/#/">chaak.net</Link></p>
-        </section>
-        <section>
-          <h3>Cantonese language preservation</h3>
-          <p>I am a native Cantonese speaker and I am passionate about preserving the Cantonese language and culture.</p>
-          <p>In 2024, I started volunteering at <Link href="https://familogue.ca">Familogue.ca</Link>, a local non-profit organization dedicated to supporting Cantonese parenting and promoting the use of the language. My responsibilities include building websites and automation, creating educational materials, and leading storytelling sessions for children.</p>
-          <p>I am also keen on using technology to aid language learning and preservation efforts. Some future projects include developing automated story generation tools for children, and exploring the use of AI in language education.</p>
-        </section>
-        <section>
-          <h3>MCP (Model Context Protocol)</h3>
-          <p>Experimenting with Model Context Protocol (MCP) to improve the productivity of LLMs in various scenarios, including accounting data analysis and document summarization.</p>
-          <p>Related blog posts: <Link href="/tags/mcp">#mcp</Link></p>
-        </section>
+        <div className="x:flex x:gap-4 x:my-4">
+          <a
+            href={RESUME_LOCAL_PATH}
+            download="calvin-c-chan-resume.md"
+            className="x-button"
+            type="text/markdown"
+            aria-label="Download resume as Markdown file"
+          >
+            ↓ Download (.md)
+          </a>
+        </div>
+        <ReactMarkdown>{resumeContent}</ReactMarkdown>
       </div>
     </div>
   );
-};
+}

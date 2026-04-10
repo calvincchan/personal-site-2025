@@ -111,7 +111,7 @@ export default function Page() {
         <p>Want to discuss your project or just say hi?</p>
         <div className="x:flex x:gap-4">
           <Link href="/contact" className="x-button x:mt-4">Contact Me ✨</Link>
-          <Link href="/resume" className="x-button-ghost x:mt-4">Read My Resume</Link>
+          <Link href="/about" className="x-button-ghost x:mt-4">More About Me 😄</Link>
         </div>
       </section>
 
