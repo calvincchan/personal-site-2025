@@ -5,6 +5,7 @@
   "dependencies": {
     "@next/third-parties": "^15.3.5",
     "@tailwindcss/typography": "^0.5.16",
+    "@vercel/analytics": "^2.0.1",
     "dayjs": "^1.11.18",
     "next": "15.3.8",
     "nextra": "^4.2.17",

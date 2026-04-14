@@ -1,6 +1,7 @@
 // DEBUG: layout.tsx loaded from src/app
 import { siteConfig } from "@/lib/site-config";
 // import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
+import { Analytics } from "@vercel/analytics/next";
 import { FrontMatter } from "nextra";
 import { getPageMap } from 'nextra/page-map';
 import { FC, ReactNode } from 'react';
@@ -59,6 +60,7 @@ const RootLayout: FC<{ children: ReactNode; }> = async ({ children }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       {children}
+      <Analytics />
     </NextraTheme>
   );
 };
