@@ -4,8 +4,8 @@ import { Metadata } from "next";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 
-const RESUME_LOCAL_PATH = '/calvin-c-chan-resume.md';
-const RESUME_FILE = path.join(process.cwd(), 'public', 'calvin-c-chan-resume.md');
+const RESUME_LOCAL_PATH = '/' + siteConfig.resumeMarkDown;
+const RESUME_FILE = path.join(process.cwd(), 'public', siteConfig.resumeMarkDown);
 
 const profilePageJsonLd = {
   "@context": "https://schema.org",
