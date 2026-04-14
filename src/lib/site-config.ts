@@ -9,6 +9,7 @@ type SiteConfig = {
   siteBio: string;
   siteEmail: string;
   sameAs: string[];
+  resumeMarkDown: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -26,4 +27,5 @@ export const siteConfig: SiteConfig = {
     "https://www.linkedin.com/in/calvincchan",
     "https://www.youtube.com/@calvincchan",
   ],
+  resumeMarkDown: "calvin-c-chan-resume.md"
 };

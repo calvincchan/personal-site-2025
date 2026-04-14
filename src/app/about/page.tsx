@@ -1,11 +1,12 @@
 import { siteConfig } from "@/lib/site-config";
 import fs from 'fs';
 import { Metadata } from "next";
+import Link from "next/link";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 
-const RESUME_LOCAL_PATH = '/calvin-c-chan-resume.md';
-const RESUME_FILE = path.join(process.cwd(), 'public', 'calvin-c-chan-resume.md');
+const RESUME_LOCAL_PATH = '/' + siteConfig.resumeMarkDown;
+const RESUME_FILE = path.join(process.cwd(), 'public', siteConfig.resumeMarkDown);
 
 const profilePageJsonLd = {
   "@context": "https://schema.org",
@@ -72,7 +73,7 @@ export default async function Page() {
 
       <div role="main" className="x:prose x:dark:prose-invert">
         <div className="x:flex x:gap-4 x:my-4">
-          <a
+          <Link
             href={RESUME_LOCAL_PATH}
             download="calvin-c-chan-resume.md"
             className="x-button"
@@ -80,7 +81,7 @@ export default async function Page() {
             aria-label="Download resume as Markdown file"
           >
             ↓ Download (.md)
-          </a>
+          </Link>
         </div>
         <ReactMarkdown components={{ h1: ({ children }) => <h2>{children}</h2> }}>
           {resumeContent}

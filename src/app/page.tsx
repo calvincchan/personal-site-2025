@@ -94,6 +94,8 @@ const personJsonLd = {
   "sameAs": siteConfig.sameAs,
 };
 
+const RESUME_LOCAL_PATH = '/' + siteConfig.resumeMarkDown;
+
 export default function Page() {
   return (
     <div className="x-top-page">
@@ -110,8 +112,17 @@ export default function Page() {
         ))}
         <p>Want to discuss your project or just say hi?</p>
         <div className="x:flex x:gap-4">
-          <Link href="/contact" className="x-button x:mt-4">Contact Me ✨</Link>
-          <Link href="/about" className="x-button-ghost x:mt-4">More About Me 😄</Link>
+          <Link href="/contact" className="x-button x:mt-4">Contact Me</Link>
+          <Link href="/about" className="x-button-ghost x:mt-4">About Me</Link>
+          <Link
+            href={RESUME_LOCAL_PATH}
+            download="calvin-c-chan-resume.md"
+            className="x-button-ghost x:mt-4"
+            type="text/markdown"
+            aria-label="Download resume as Markdown file"
+          >
+            ↓ Download (.md)
+          </Link>
         </div>
       </section>
 
