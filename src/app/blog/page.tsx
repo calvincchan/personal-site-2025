@@ -7,10 +7,10 @@ import { sorter } from "./utils";
 
 export const metadata: Metadata = {
   title: "My Blog",
-  description: "My articles and insights on AI, automation, and web app development.",
+  description: "Hands-on posts on AI tooling, TypeScript, and full-stack development — written by a practitioner, not a commentator.",
   openGraph: {
     title: "My Blog",
-    description: "My articles and insights on AI, automation, and web app development.",
+    description: "Hands-on posts on AI tooling, TypeScript, and full-stack development — written by a practitioner, not a commentator.",
     url: siteConfig.siteUrl + "/blog",
     siteName: siteConfig.author,
     type: "website",

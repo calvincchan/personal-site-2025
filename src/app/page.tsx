@@ -92,6 +92,7 @@ const personJsonLd = {
   "description": siteConfig.siteDescription,
   "image": siteConfig.siteOgImage,
   "sameAs": siteConfig.sameAs,
+  "knowsAbout": ["TypeScript", "React", "Supabase", "Next.js", "AI agents", "RAG", "MCP", "Node.js"],
 };
 
 const RESUME_LOCAL_PATH = '/' + siteConfig.resumeMarkDown;

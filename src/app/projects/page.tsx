@@ -7,7 +7,7 @@ import { sorter } from "./utils";
 
 export const metadata: Metadata = {
   title: "My Projects",
-  description: "Showcasing my projects and work experience.",
+  description: "Production-grade projects built and shipped end-to-end — SaaS tools, AI experiments, and open-source software.",
   alternates: {
     canonical: siteConfig.siteUrl + "/projects",
   },
