@@ -110,9 +110,9 @@ export default function Page() {
         {siteConfig.intro.split('\n\n').map((para, i) => (
           <p key={i}>{para}</p>
         ))}
-        <p>Want to discuss your project or just say hi?</p>
+        <p>Available for fractional and contract engagements — want to discuss your project?</p>
         <div className="x:flex x:gap-4">
-          <Link href="/contact" className="x-button x:mt-4">Contact Me</Link>
+          <Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk</Link>
           <Link href="/about" className="x-button-ghost x:mt-4">About Me</Link>
           <Link
             href={RESUME_LOCAL_PATH}
