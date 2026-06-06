@@ -92,7 +92,7 @@ export default function Page() {
 
       <h3>Customization Options</h3>
       <p>
-        If you&apos;re interested in having a customized version of this queue management solution tailored to your specific needs, feel free to <Link href="/contact">Contact Me</Link> for a free consultation. I&apos;d be happy to discuss how we can adapt this project to suit your requirements.
+        Interested in a customized version? <Link href="/contact">Contact me</Link> — I offer a free 30-minute consultation.
       </p>
     </ProjectCaseStudy>
   );

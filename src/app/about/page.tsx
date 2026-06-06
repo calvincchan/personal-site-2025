@@ -72,6 +72,7 @@ export default async function Page() {
       </header>
 
       <div role="main" className="x:prose x:dark:prose-invert">
+        <p>I&apos;m a full-stack developer with 20+ years of experience building and shipping production software end-to-end — from architecture through deployment. I work AI-fluent: using AI tooling to move faster and write better software, without cutting corners on engineering fundamentals. Available for fractional and contract engagements with SaaS founders and growing teams.</p>
         <div className="x:flex x:gap-4 x:my-4">
           <Link
             href={RESUME_LOCAL_PATH}
