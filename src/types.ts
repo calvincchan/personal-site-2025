@@ -18,5 +18,6 @@ export type ProjectMetadata = BlogMetadata & {
     image?: string;
     published?: string;
     tags?: string;
+    date?: string;
   };
 };

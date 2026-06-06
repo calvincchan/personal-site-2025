@@ -69,7 +69,6 @@ const LatestPosts: React.FC<{ limit: number; }> = async ({ limit }) => {
 const LatestProjects: React.FC<{ limit: number; }> = async ({ limit }) => {
   const projects = await getProjects();
   const latestProjects = projects.slice(0, limit);
-  console.dir(latestProjects, { depth: 2 });
   return (
     <div className="x-project-list">
       {latestProjects.map((project) => (
@@ -79,6 +78,32 @@ const LatestProjects: React.FC<{ limit: number; }> = async ({ limit }) => {
         />
       ))}
     </div>
+  );
+};
+
+const ProjectsJsonLd: React.FC = async () => {
+  const projects = await getProjects();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Projects by Calvin C. Chan",
+    "itemListElement": projects.map((project, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": project.frontMatter.title,
+        "description": project.frontMatter.description,
+        "url": `https://calvincchan.com${project.route}`,
+        "applicationCategory": "WebApplication",
+      },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
   );
 };
 
@@ -130,18 +155,20 @@ export default function Page() {
       <hr />
 
       <section>
-        <h2>Topics</h2>
-        <p>Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects.</p>
-        <LatestPosts limit={5} />
-        <Link href="/blog">View All Blog Posts →</Link>
+        <h2>My Projects ⚙️</h2>
+        <p>Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end.</p>
+        <ProjectsJsonLd />
+        <LatestProjects limit={4} />
+        <Link href="/projects">View All Projects →</Link>
       </section>
 
       <hr />
 
       <section>
-        <h2>My Projects ⚙️</h2>
-        <p>Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end.</p>
-        <Link href="/projects">View My Projects →</Link>
+        <h2>Topics</h2>
+        <p>Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects.</p>
+        <LatestPosts limit={5} />
+        <Link href="/blog">View All Blog Posts →</Link>
       </section>
     </div>
   );

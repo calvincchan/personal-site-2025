@@ -16,14 +16,33 @@ type TechItem = {
 type ProjectCaseStudyProps = {
   title: string;
   description?: string;
+  url?: string;
   links?: ProjectLink[];
   techStack?: TechItem[];
   children?: React.ReactNode;
 };
 
-export function ProjectCaseStudy({ title, description, links, techStack, children }: ProjectCaseStudyProps) {
+export function ProjectCaseStudy({ title, description, url, links, techStack, children }: ProjectCaseStudyProps) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": title,
+    ...(description && { "description": description }),
+    ...(url && { "url": url }),
+    "applicationCategory": "WebApplication",
+    "author": {
+      "@type": "Person",
+      "name": "Calvin C. Chan",
+      "url": "https://calvincchan.com",
+    },
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header className="x-page-header">
         <h1>{title}</h1>
         {description && <h2>{description}</h2>}
