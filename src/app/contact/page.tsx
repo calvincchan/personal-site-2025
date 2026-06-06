@@ -39,7 +39,7 @@ export default async function Page() {
         <h2>Available for fractional and contract engagements — let&apos;s discuss your project.</h2>
       </header>
 
-      <section role="main" className="x-contact-page">
+      <section role="main" className="x-contact-page x:prose x:dark:prose-invert">
         <section className="x:my-24">
           <h2>What I can help with</h2>
           <ul>
