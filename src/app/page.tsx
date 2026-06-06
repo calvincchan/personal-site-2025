@@ -110,9 +110,9 @@ export default function Page() {
         {siteConfig.intro.split('\n\n').map((para, i) => (
           <p key={i}>{para}</p>
         ))}
-        <p>Want to discuss your project or just say hi?</p>
+        <p>Available for fractional and contract engagements — want to discuss your project?</p>
         <div className="x:flex x:gap-4">
-          <Link href="/contact" className="x-button x:mt-4">Contact Me</Link>
+          <Link href="/contact" className="x-button x:mt-4">Let&apos;s Talk</Link>
           <Link href="/about" className="x-button-ghost x:mt-4">About Me</Link>
           <Link
             href={RESUME_LOCAL_PATH}
@@ -130,7 +130,7 @@ export default function Page() {
 
       <section>
         <h2>Topics</h2>
-        <p>Check out my latest articles and insights on AI, automation, and software development.</p>
+        <p>Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects.</p>
         <LatestPosts limit={5} />
         <Link href="/blog">View All Blog Posts →</Link>
       </section>
@@ -139,7 +139,7 @@ export default function Page() {
 
       <section>
         <h2>My Projects ⚙️</h2>
-        <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
+        <p>Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end.</p>
         <Link href="/projects">View My Projects →</Link>
       </section>
     </div>

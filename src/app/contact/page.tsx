@@ -36,10 +36,20 @@ export default async function Page() {
       <header className="x-page-header">
         <Image src={profilePic} alt={siteConfig.author} width={180} height={180} className="x:rounded-full x:bg-primary-700" />
         <h1>{metadata.title as string}</h1>
-        <h2>{metadata.description as string}</h2>
+        <h2>Available for fractional and contract engagements — let&apos;s discuss your project.</h2>
       </header>
 
       <section role="main" className="x-contact-page">
+        <section className="x:my-24">
+          <h2>What I can help with</h2>
+          <ul>
+            <li>SaaS builds — full-stack from schema to deployment</li>
+            <li>AI feature integration — agents, RAG pipelines, MCP tooling</li>
+            <li>Full-lifecycle development — architecture, build, ship, iterate</li>
+            <li>Team embed — fractional senior dev on existing product teams</li>
+          </ul>
+        </section>
+
         <section className="x:my-24">
           <h2>Email</h2>
           <p>
@@ -51,19 +61,19 @@ export default async function Page() {
           <h2>Social Media</h2>
           <h3>GitHub <GitHubIcon /></h3>
           <p>
-            Check out my GitHub for my open-source projects and contributions.<br />
+            Open-source projects and code.<br />
             <a href="https://github.com/calvincchan" target="_blank" rel="noopener noreferrer">Visit my GitHub</a>
           </p>
 
           <h3>LinkedIn <LinkedInIcon /></h3>
           <p>
-            Connect with me on LinkedIn to see my professional background and network.<br />
+            Professional background and work history.<br />
             <a href="https://www.linkedin.com/in/calvincchan/" target="_blank" rel="noopener noreferrer">Visit my LinkedIn</a>
           </p>
 
           <h3>YouTube <YouTubeIcon /></h3>
           <p>
-            Check out my YouTube channel for tutorials and insights on AI and software development.<br />
+            Tutorials and walkthroughs on AI tooling and software development.<br />
             <a href="https://www.youtube.com/@calvincchan" target="_blank" rel="noopener noreferrer">Visit my YouTube</a>
           </p>
         </section>
