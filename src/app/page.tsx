@@ -130,7 +130,7 @@ export default function Page() {
 
       <section>
         <h2>Topics</h2>
-        <p>Check out my latest articles and insights on AI, automation, and software development.</p>
+        <p>Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects.</p>
         <LatestPosts limit={5} />
         <Link href="/blog">View All Blog Posts →</Link>
       </section>
@@ -139,7 +139,7 @@ export default function Page() {
 
       <section>
         <h2>My Projects ⚙️</h2>
-        <p>Explore my portfolio to see the projects I have worked on, including web applications and AI solutions.</p>
+        <p>Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end.</p>
         <Link href="/projects">View My Projects →</Link>
       </section>
     </div>
