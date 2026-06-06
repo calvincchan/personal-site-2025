@@ -79,6 +79,52 @@ Projects section exists but is underused. Each project should answer: *what was 
 
 ---
 
+---
+
+## Optimization Backlog (for agent execution)
+
+Findings from full-site analysis. Ordered by impact.
+
+### HIGH — Contact page (`src/app/contact/page.tsx`)
+- `h2` subtitle: "Get in touch to discuss projects and opportunities." → too generic
+- Missing: engagement model statement, what types of work Calvin takes, what a client can expect
+- Suggested subtitle: "Available for fractional and contract engagements — let's discuss your project."
+- Add a short "What I can help with" section: SaaS builds, AI feature integration, full-lifecycle development, team embed
+- Add explicit note on what NOT to contact about (optional, sets expectations)
+
+### HIGH — Home page sections (`src/app/page.tsx`)
+- "Topics" section intro: "Check out my latest articles and insights on AI, automation, and software development." → weak
+  - Suggest: "Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects."
+- "My Projects" section intro: "Explore my portfolio to see the projects I have worked on, including web applications and AI solutions." → passive
+  - Suggest: "Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end."
+
+### MEDIUM — Projects index page (`src/app/projects/page.tsx`)
+- `description`: "Showcasing my projects and work experience." → generic
+  - Suggest: "Production-grade projects built and shipped end-to-end — SaaS tools, AI experiments, and open-source software."
+
+### MEDIUM — Blog index page (`src/app/blog/page.tsx`)
+- `description`: "My articles and insights on AI, automation, and web app development." → fine but passive
+  - Suggest: "Hands-on posts on AI tooling, TypeScript, and full-stack development — written by a practitioner, not a commentator."
+
+### MEDIUM — About page (`src/app/about/page.tsx`)
+- Currently just renders resume with no framing narrative
+- Missing: a short "How I Work" or positioning blurb before the resume that connects to AI-fluent positioning
+- Suggested addition: 2-3 sentence intro above the resume download that restates the mission (contract-focused, AI-fluent, full-lifecycle)
+
+### MEDIUM — Line Me Up project CTA (`src/app/projects/line-me-up/page.tsx:95`)
+- "I'd be happy to discuss" → remove filler
+  - Suggest: "Interested in a customized version? [Contact me](/contact) — I offer a free 30-minute consultation."
+
+### LOW — work/page.tsx (`src/app/work/page.tsx`)
+- Dead file: just redirects to /projects with all content commented out
+- Safe to delete; redirect can be moved to next.config or sitemap
+
+### LOW — JSON-LD on home page (`src/app/page.tsx`)
+- `jobTitle` in Person schema now correct (auto-pulls from siteConfig) — no action needed
+- Consider adding `knowsAbout` array: ["TypeScript", "React", "Supabase", "AI agents", "RAG", "MCP"] for richer structured data
+
+---
+
 ## What NOT to Change
 
 - The AI experiment blog posts — they are your strongest differentiator. Keep publishing.
