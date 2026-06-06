@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   other: {
     // image: "/projects/line-me-up.jpg",
     tags: "TypeScript,React,Next.js,Refine.js,Supabase",
+    date: "2024-09-24",
   }
 };
 

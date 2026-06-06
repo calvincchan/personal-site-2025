@@ -25,5 +25,7 @@ export async function getProjects() {
 }
 
 export function sorter(a: MdxFile, b: MdxFile) {
-  return new Date(a.frontMatter.date) > new Date(b.frontMatter.date) ? -1 : 1;
+  const dateA = a.frontMatter.date || a.frontMatter.other?.date || '1970-01-01';
+  const dateB = b.frontMatter.date || b.frontMatter.other?.date || '1970-01-01';
+  return new Date(dateA) > new Date(dateB) ? -1 : 1;
 }

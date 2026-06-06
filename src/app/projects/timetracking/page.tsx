@@ -29,6 +29,7 @@ export const metadata: Metadata = {
   other: {
     published: "true",
     tags: "TypeScript,React,Supabase,Refine.js,shadcn/ui",
+    date: "2026-05-01",
   },
 };
 
