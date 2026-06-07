@@ -33,6 +33,8 @@ openGraph:
 
 Interac has no API. No webhooks. No developer portal. For Familogue — a small local NGO I built software for — every incoming e-Transfer meant someone had to log into online banking, manually verify the deposit, and update the order record by hand. At low volume that's tedious. At higher volume it becomes a bottleneck that delays fulfilment and wastes staff time on accounting that should be automatic.
 
+I built a pipeline that handles the full cycle: Gmail ingestion via Google Apps Script, standardized email parsing, DB reconciliation, and order confirmation — with zero transaction fees and no third-party payment processor in the loop.
+
 ## Why Interac and not Stripe
 
 Stripe costs 2.9% + $0.30 per transaction in Canada. For a non-profit processing donations and product orders where customers already pay by e-Transfer by habit, that fee is real money leaving the organization on every transaction. The NGO's members weren't going to switch payment habits because the software changed.
