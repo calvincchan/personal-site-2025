@@ -58,4 +58,8 @@ Uses default label vocabulary (needs-triage, needs-info, ready-for-agent, ready-
 
 ### Domain docs
 
-Single-context repo — one `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+Single-context repo — one `CONTEXT.md` at the repo root. See `docs/agents/domain.md`.
+
+### Site strategy
+
+Before writing copy, naming things, framing blog posts, or making content/design decisions — read `docs/site-strategy.md`. It is the canonical reference for mission, positioning, voice, visitor model, and content principles for this site.
