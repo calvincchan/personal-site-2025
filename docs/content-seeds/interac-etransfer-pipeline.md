@@ -2,7 +2,7 @@
 title: "Automating Interac e-Transfer Reconciliation Without a Payment Processor"
 date: 2026-06-07
 type: blog-post
-status: ready
+status: published
 slug: interac-etransfer-automated-reconciliation
 image: /assets/interac-etransfer-automated-reconciliation.png
 ---
