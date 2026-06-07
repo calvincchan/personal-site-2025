@@ -33,8 +33,6 @@ openGraph:
 
 Interac has no API. No webhooks. No developer portal. For Familogue — a small local NGO I built software for — every incoming e-Transfer meant someone had to log into online banking, manually verify the deposit, and update the order record by hand. At low volume that's tedious. At higher volume it becomes a bottleneck that delays fulfilment and wastes staff time on accounting that should be automatic.
 
-I built a pipeline that handles the full cycle: Gmail ingestion via Google Apps Script, standardized email parsing, DB reconciliation, and order confirmation — with zero transaction fees and no third-party payment processor in the loop.
-
 ## Why Interac and not Stripe
 
 Stripe costs 2.9% + $0.30 per transaction in Canada. For a non-profit processing donations and product orders where customers already pay by e-Transfer by habit, that fee is real money leaving the organization on every transaction. The NGO's members weren't going to switch payment habits because the software changed.
@@ -119,7 +117,7 @@ Auth is a Bearer token stored in Script Properties — not hardcoded. On a succe
 
 Because all Canadian banks route through Interac's network, the notification emails are standardized. The sender is always `notify@payments.interac.ca`, and the plain-text body contains two fields that matter: `Amount` and `Message`.
 
-The `Message` field is what the sender enters as a payment reference when they initiate the transfer — for Familogue, customers are instructed to enter their order number (e.g. `FS1071`). Extracting both fields from the plain-text body is a straightforward regex pass. No multi-bank format variations to handle.
+The `Message` field is what the sender enters as a payment reference when they initiate the transfer — for Familogue, customers are instructed to enter their order number (e.g. `FS1071`). Extracting both fields is a regex pass against the plain-text body. No multi-bank format variations to handle.
 
 This is the critical design decision that makes the whole pipeline viable: because Interac's email format is consistent, parsing is reliable. If you were scraping bank-formatted HTML the problem would be much harder.
 
