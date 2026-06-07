@@ -1,13 +1,53 @@
-# Site Strategy & Mission Statement
+# Site Strategy
 
 > For Calvin C. Chan — calvincchan.com
-> Established: 2026-06-05
+> Established: 2026-06-05 · Last revised: 2026-06-07
+
+This document is the lighthouse for all content, copy, and design decisions on this site. When in doubt about a page, a post title, a CTA, or a layout choice — come here first.
 
 ---
 
 ## Mission
 
-Position Calvin as a senior full-stack developer who uses AI as a force-multiplier — available for fractional/ongoing contract work with SaaS founders and SMBs who need polished, production-grade delivery.
+Position Calvin as a senior full-stack developer who uses AI as a force-multiplier — available for fractional and ongoing contract work with SaaS founders and SMBs who need polished, production-grade delivery.
+
+The site is a conversion tool. Every page should move a potential client closer to hitting "Contact Me."
+
+---
+
+## Who's Reading This Site
+
+**Primary visitor:** A SaaS founder or SMB decision-maker evaluating whether to hire a senior contractor. They arrive via a referral, a blog post, or a search. They are time-poor and sceptical.
+
+**How they read:** They scan, not read. They look for signals — credentials, shipped work, clear pitch — before deciding whether to invest more time. If the pitch isn't visible above the fold, they leave.
+
+**What triggers contact:** Confidence that Calvin can own a problem end-to-end without hand-holding. Not the tech stack list. Not the blog archive. The sense that they've found someone senior who delivers.
+
+**Secondary visitor:** A developer or technical peer — via blog post, social, or referral. They read more deeply. They are not the conversion target, but a good post turns them into a referrer.
+
+---
+
+## The Positioning
+
+Calvin is a **full-stack developer who applies AI to make business systems smarter and ship faster** — not an AI product builder, not a junior feature-coder, not a tech blogger.
+
+The AI angle is a workflow multiplier, not a product speciality. "I use AI to move faster and build better" — not "I build AI products." Leading with tool names (RAG, MCP, agentic workflows) reads as an AI startup developer, which is the wrong signal for a contract full-stack hire. Let the blog posts prove the depth; the pitch pages stay outcome-first.
+
+The 20+ years is not about tenure — it's about pattern recognition. "I've seen enough systems to know what breaks. I design to avoid it."
+
+---
+
+## Voice & Tone
+
+**Direct.** Say the thing. Not "I strive to deliver quality" — say "I ship polished, production-grade software." Not "I'm passionate about AI" — say "I use AI to ship faster. Here's proof."
+
+**Confident, not desperate.** No "Available Now" badges. No "I'd love to help!" No filler. The pitch quality carries the availability signal. If it needs to be stated, do it in prose on the contact page.
+
+**Personal, not agency.** First person throughout. "I own the full lifecycle" — not "we deliver solutions." Calvin is a solo operator; personality builds trust that a polished agency front page cannot.
+
+**Outcome language, not tech-showcase language.** Write for the person who needs a problem solved, not the developer who wants to know the stack. The stack is context, not the headline.
+
+**Dry, not warm-fuzzy.** Approachable but not performatively enthusiastic. The tone of someone who knows their craft well enough not to over-explain it.
 
 ---
 
@@ -15,118 +55,67 @@ Position Calvin as a senior full-stack developer who uses AI as a force-multipli
 
 ### 1. Win contract work
 
-The site is a conversion tool first. Every page should move a potential client closer to hitting "Contact Me."
-
-- **Positioning**: "AI-native full-stack developer for hire" — not "engineer who blogs"
-- **Engagement model**: fractional/ongoing (ideal), project-based (acceptable)
-- **Target client**: SaaS founders, SMBs — teams that need a senior developer with AI fluency, not a junior feature-builder
-- **What to make explicit on the site**: availability, engagement model, what working with Calvin looks like
+- **Engagement model:** fractional/ongoing (ideal), project-based (acceptable)
+- **Target client:** SaaS founders, SMBs — teams that need a senior developer with AI fluency, not a junior feature-builder
+- **What to make explicit:** availability, engagement model, what working with Calvin looks like
 
 ### 2. Demonstrate competence via blog
 
-Blog posts are proof of capability, not a personal journal. Each post should function as a mini case study or technical evidence.
+Blog posts are proof of capability, not a personal journal. Each post should function as a mini case study or technical evidence — a **Proof Post**.
 
-- Reframe posts as **Proof Posts**: problem → what was built → outcome/lesson
+- Structure: problem → what was built → outcome/lesson
 - Titles like "Reflecting on Completing the Coursera…" read as personal notes — reframe toward client-relevant insight
-- AI experiments (local LLM, RAG, MCP, agents) are the strongest proof — they show early adoption + hands-on implementation, not just talk
+- AI experiments (local LLM, RAG, MCP, agents) are the strongest proof — early adoption + hands-on impl, not just talk
 - Posts about Supabase, auth, multi-tenant patterns are directly relevant to target clients
 
 ### 3. Showcase portfolio as evidence of "polished and delivered"
 
-Projects section exists but is underused. Each project should answer: *what was the problem, what did I build, what does "polished" mean here?*
+Each project should answer: *what was the problem, what did I build, what does "polished" mean here?*
 
 - Line Me Up, iconimg, iOS app — real shipped products, not toy demos
 - Frame around: "I own the full lifecycle. Here's proof."
 
 ---
 
-## Calvin's Edges (undersold, make them visible)
+## Calvin's Differentiators
 
-| Edge | Evidence in codebase | How to surface it |
-|------|---------------------|-------------------|
-| **AI-native workflow** | 15+ blog posts on local LLMs, RAG, MCP, agents — timestamped early 2024 | Lead with "I use AI to ship faster and better, not just talk about it" |
-| **Full-lifecycle solo operator** | site intro: "architecture, implementation, deployment, maintenance" + "replaced legacy systems" | Say it explicitly in hero. Add a "How I Work" section. |
-| **Real shipped products** | Line Me Up (open source), iconimg, iOS app | Project cards should show outcome + scale, not just name |
-| **20+ years breadth** | Maritime ops, health records, eCommerce, SaaS, student info | Frame as: "I've seen enough systems to know what breaks — and I design to avoid it" |
-| **Stack adaptability** | TypeScript core, but shipped across many domains | "I learn new stacks fast. My AI workflow means I'm productive in days, not months." |
+These are undersold. Make them visible.
 
----
-
-## What to Change on the Site
-
-### Hero section (`src/app/page.tsx`)
-- Current: generic bio
-- Add: explicit availability signal ("Open to contracts") + engagement model
-- Change CTA from "Contact Me" → something more specific ("Let's talk about your project")
-
-### `siteDescription` / `siteBio` (`src/lib/site-config.ts`)
-- Current: "Full-stack TypeScript engineer with 20+ years..."
-- Suggest: "AI-native full-stack developer. I design, build, and ship production-grade apps for SaaS teams and founders."
-
-### Blog post framing
-- Shift from learning-log titles → proof-post titles
-- Add a "What I built" / "Outcome" section to existing AI posts
-- Consider tagging posts: `proof-of-work`, `ai-experiment`, `tutorial`
-
-### Projects section
-- Add problem/outcome framing to each project card
-- Prioritize projects that show full-lifecycle ownership
-
-### Contact page
-- State engagement model explicitly
-- State what you do NOT do (e.g., no $500 weekend gigs)
-- Make it easy to say "I need a senior contractor for 3 months"
+| Differentiator | Evidence | How to surface it |
+|---|---|---|
+| **AI-fluent workflow** | 15+ blog posts on local LLMs, RAG, MCP, agents — timestamped early 2024 | "I use AI to ship faster and better — here's the work to prove it" |
+| **Full-lifecycle ownership** | "architecture, implementation, deployment, maintenance" + "replaced legacy systems" | Say it in the hero. Show it in project framing. |
+| **Real shipped products** | Line Me Up (open source), iconimg, iOS app | Project cards show outcome + scale, not just name |
+| **20+ years of pattern recognition** | Maritime ops, health records, eCommerce, SaaS, student info | "I've seen enough systems to know what breaks — I design to avoid it" |
+| **Stack adaptability** | TypeScript core, shipped across many domains | "I learn new stacks fast. My AI workflow means I'm productive in days, not months." |
 
 ---
 
----
+## Content Decision Test
 
-## Optimization Backlog (for agent execution)
+Before publishing a post, adding a project, or changing copy — ask:
 
-Findings from full-site analysis. Ordered by impact.
-
-### [x] HIGH — Contact page (`src/app/contact/page.tsx`)
-- `h2` subtitle: "Get in touch to discuss projects and opportunities." → too generic
-- Missing: engagement model statement, what types of work Calvin takes, what a client can expect
-- Suggested subtitle: "Available for fractional and contract engagements — let's discuss your project."
-- Add a short "What I can help with" section: SaaS builds, AI feature integration, full-lifecycle development, team embed
-- Add explicit note on what NOT to contact about (optional, sets expectations)
-
-### [x] HIGH — Home page sections (`src/app/page.tsx`)
-- "Topics" section intro: "Check out my latest articles and insights on AI, automation, and software development." → weak
-  - Suggest: "Proof-of-work posts: AI experiments, engineering decisions, and lessons from real projects."
-- "My Projects" section intro: "Explore my portfolio to see the projects I have worked on, including web applications and AI solutions." → passive
-  - Suggest: "Shipped projects — from open-source tooling to production SaaS. Each one owned end-to-end."
-
-### [x] MEDIUM — Projects index page (`src/app/projects/page.tsx`)
-- `description`: "Showcasing my projects and work experience." → generic
-  - Suggest: "Production-grade projects built and shipped end-to-end — SaaS tools, AI experiments, and open-source software."
-
-### [x] MEDIUM — Blog index page (`src/app/blog/page.tsx`)
-- `description`: "My articles and insights on AI, automation, and web app development." → fine but passive
-  - Suggest: "Hands-on posts on AI tooling, TypeScript, and full-stack development — written by a practitioner, not a commentator."
-
-### [x] MEDIUM — About page (`src/app/about/page.tsx`)
-- Currently just renders resume with no framing narrative
-- Missing: a short "How I Work" or positioning blurb before the resume that connects to AI-fluent positioning
-- Suggested addition: 2-3 sentence intro above the resume download that restates the mission (contract-focused, AI-fluent, full-lifecycle)
-
-### [x] MEDIUM — Line Me Up project CTA (`src/app/projects/line-me-up/page.tsx:95`)
-- "I'd be happy to discuss" → remove filler
-  - Suggest: "Interested in a customized version? [Contact me](/contact) — I offer a free 30-minute consultation."
-
-### LOW — work/page.tsx (`src/app/work/page.tsx`)
-- Dead file: just redirects to /projects with all content commented out
-- Safe to delete; redirect can be moved to next.config or sitemap
-
-### [x] LOW — JSON-LD on home page (`src/app/page.tsx`)
-- `jobTitle` in Person schema now correct (auto-pulls from siteConfig) — no action needed
-- Consider adding `knowsAbout` array: ["TypeScript", "React", "Supabase", "AI agents", "RAG", "MCP"] for richer structured data
+1. **Does this move a potential client toward Contact?** If no, it still might be worth publishing (secondary audience), but it should not take priority over content that does.
+2. **Is the title written for the client or for the author?** "Reflecting on X" is for the author. "How I cut X by 40% using Y" is for the client.
+3. **Does this sound like a business problem solver or an AI hobbyist?** Outcome language first. Tool names in the body, not the headline.
+4. **Would a senior developer be embarrassed by it?** Polish matters. Half-finished demos and "just playing around" framing undercut the positioning.
 
 ---
 
-## What NOT to Change
+## What This Site Is NOT
 
-- The AI experiment blog posts — they are your strongest differentiator. Keep publishing.
-- The resume download — useful for clients who want to vet you fast.
-- The personal tone — you're a solo contractor, not an agency. Personality builds trust.
+- A tech blog written for developers to impress other developers
+- A portfolio of toy demos and learning projects
+- An agency front (avoid "we", avoid cold corporate copy)
+- An AI product company ("We build AI solutions" is not the pitch)
+- A platform for broadcasting availability desperately ("Open to work", "Available Now" badges)
+
+The AI experiment posts are the strongest differentiator — keep publishing. The resume download is useful — keep it. The personal tone is a feature — protect it.
+
+---
+
+## Backlog
+
+### LOW — `src/app/work/page.tsx`
+
+Dead file: redirects to `/projects`, all content commented out. Safe to delete; move redirect to `next.config` or sitemap.
