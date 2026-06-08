@@ -31,35 +31,44 @@ Wait for user confirmation.
 
 Set `status: grilling` in the chosen seed file.
 
-Conduct a focused interview. One question at a time. Wait for each answer. Push on vague answers.
+Conduct a relentless interview. Walk down each branch of the writing brief, resolving dependencies one-by-one. One question at a time. Wait for each answer.
+
+For each question, provide your recommended answer derived from the seed dump and site-strategy.md. Let the user confirm, redirect, or override.
 
 ### Questions to resolve (in order):
 
 **Slug**
 "What should the URL slug be? Aim for keyword-rich, no date. E.g. `interac-etransfer-nodejs-pipeline`"
+→ Recommend: derive from the seed's primary keyword or most concrete outcome phrase.
 → Record as `slug:` in frontmatter.
 
 **Angle**
 "What's the ONE thing a reader should take away? Frame it as a client takeaway, not a learning log."
+→ Recommend: identify the strongest concrete outcome in the seed dump (a specific result, decision, or technique) and propose it as the spine. If the seed mentions a measurable result, lead with that.
 → This becomes the post's spine.
 
 **Target title**
 "Draft a title. Client-first, outcome language. No 'Reflecting on…' or 'My journey…'"
+→ Recommend: draft a title from the agreed angle. Offer it for the user to confirm or tweak.
 → Record as the refined `title:` in frontmatter.
 
 **Outline**
 "What are the 3–5 main sections? Just headings."
+→ Recommend: propose headings derived from the seed dump's natural structure or the problem → solution → outcome arc.
 
 **Key points**
 "For each section — what's the ONE most important concrete detail? No generalities."
-Push back on: "standard approach", "it works", "various techniques". Demand specifics.
+→ Recommend: pull the most specific detail from the dump for each proposed section. Name tools, numbers, decisions, or outcomes explicitly.
+→ Push back on: "standard approach", "it works", "various techniques". Demand specifics.
 
 **Tone notes**
 "Anything specific about voice for this post? (e.g. more technical, more narrative, code-heavy)"
-Default: follow site-strategy.md voice guidelines — direct, confident, outcome-first.
+→ Recommend: site-strategy.md defaults (direct, confident, outcome-first) unless the dump signals otherwise — note if it does.
+→ Default: follow site-strategy.md voice guidelines — direct, confident, outcome-first.
 
 **Image**
 "OG image filename? Convention: `{slug}.png`. Say 'skip' to leave blank."
+→ Recommend: `{agreed-slug}.png`.
 → Record as `image: /assets/{slug}.png` or leave blank.
 
 ## Step 3 — Update seed file
