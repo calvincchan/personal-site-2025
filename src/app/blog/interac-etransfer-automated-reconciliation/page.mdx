@@ -31,6 +31,10 @@ openGraph:
       height: 900
 ---
 
+import Image from "next/image";
+import Image1 from "./SCR-20260608-jhuq.png";
+import Image2 from "./SCR-20260608-mwkb.png";
+
 Interac has no API. No webhooks. No developer portal. For Familogue — a small local NGO I built software for — every incoming e-Transfer meant someone had to log into online banking, manually verify the deposit, and update the order record by hand. At low volume that's tedious. At higher volume it becomes a bottleneck that delays fulfilment and wastes staff time on accounting that should be automatic.
 
 I built a pipeline that handles the full cycle: Gmail ingestion via Google Apps Script, standardized email parsing, DB reconciliation, and order confirmation — with zero transaction fees and no third-party payment processor in the loop.
@@ -119,9 +123,13 @@ Auth is a Bearer token stored in Script Properties — not hardcoded. On a succe
 
 Because all Canadian banks route through Interac's network, the notification emails are standardized. The sender is always `notify@payments.interac.ca`, and the plain-text body contains two fields that matter: `Amount` and `Message`.
 
-The `Message` field is what the sender enters as a payment reference when they initiate the transfer — for Familogue, customers are instructed to enter their order number (e.g. `FS1071`). Extracting both fields is a regex pass against the plain-text body. No multi-bank format variations to handle.
+The `Message` field is what the sender enters as a payment reference when they initiate the transfer — for Familogue, customers are instructed to enter their order number (e.g. `FS1234`). Extracting both fields is a regex pass against the plain-text body. No multi-bank format variations to handle.
 
 This is the critical design decision that makes the whole pipeline viable: because Interac's email format is consistent, parsing is reliable. If you were scraping bank-formatted HTML the problem would be much harder.
+
+<figure>
+  <Image src={Image1} />
+</figure>
 
 ## DB reconciliation and order confirmation
 
@@ -136,6 +144,10 @@ Once confirmed, the standard order fulfilment flow triggers: confirmation email 
 The admin dashboard exposes a payment activity log: deposit received timestamp, matched order reference, amount, and whether confirmation succeeded. Weekly and monthly volume breakdowns give the NGO operational visibility into payment patterns — useful for cash flow forecasting and identifying any deposits that couldn't be matched automatically (wrong reference number entered by the sender).
 
 This isn't deep BI — it's the minimum reporting an organization needs to trust that the automation is working and to handle exceptions manually when they occur.
+
+<figure>
+  <Image src={Image2} />
+</figure>
 
 ## Takeaway
 
