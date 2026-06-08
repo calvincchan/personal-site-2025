@@ -128,7 +128,13 @@ The `Message` field is what the sender enters as a payment reference when they i
 This is the critical design decision that makes the whole pipeline viable: because Interac's email format is consistent, parsing is reliable. If you were scraping bank-formatted HTML the problem would be much harder.
 
 <figure>
-  <Image src={Image1} />
+  <Image
+    src={Image1}
+    alt="Interac e-Transfer deposit notification email showing the Funds Deposited message, sender name, amount, and customer order reference number in the Message field"
+  />
+  <figcaption>
+    A standard Interac e-Transfer notification email from notify@payments.interac.ca — the Message field carries the order reference used for automated reconciliation.
+  </figcaption>
 </figure>
 
 ## DB reconciliation and order confirmation
@@ -146,7 +152,13 @@ The admin dashboard exposes a payment activity log: deposit received timestamp, 
 This isn't deep BI — it's the minimum reporting an organization needs to trust that the automation is working and to handle exceptions manually when they occur.
 
 <figure>
-  <Image src={Image2} />
+  <Image
+    src={Image2}
+    alt="Familogue Admin Dashboard showing the eTransfer Payment Analytics page with a bar chart of daily deposit volume, summary cards for total deposited and deposit count, and a transaction log table"
+  />
+  <figcaption>
+    The Familogue admin dashboard's eTransfer analytics view: deposit volume chart, summary totals, and a full transaction log.
+  </figcaption>
 </figure>
 
 ## Takeaway
