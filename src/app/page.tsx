@@ -104,9 +104,9 @@ export default async function Page() {
           <Image
             src={profilePic}
             alt={siteConfig.author}
-            width={96}
-            height={96}
-            className="x:rounded-2xl x:bg-primary-700"
+            width={128}
+            height={128}
+            className="x:rounded-full x:bg-primary-700"
             priority
           />
           <div>

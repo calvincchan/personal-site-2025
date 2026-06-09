@@ -18,7 +18,7 @@ export const ProjectCard: React.FC<{ post: PostItem; }> = ({ post }) => {
           />
         </div>
       )}
-      <div className="x-project-content">
+      <div className="x-project-content prose">
         <Link href={route}>
           <h3>{title}</h3>
         </Link>
@@ -26,7 +26,7 @@ export const ProjectCard: React.FC<{ post: PostItem; }> = ({ post }) => {
         {tags.length > 0 && (
           <div className="x:flex x:flex-wrap x:gap-1.5 x:mt-2">
             {tags.map((tag) => (
-              <span key={tag} className="x:px-2 x:py-0.5 x:text-xs x:font-medium x:rounded x:bg-neutral-100 x:dark:bg-neutral-800 x:text-neutral-600 x:dark:text-neutral-400">
+              <span key={tag} className="x-tag">
                 {tag.trim()}
               </span>
             ))}
