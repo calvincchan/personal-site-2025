@@ -106,7 +106,7 @@ export default async function Page() {
             alt={siteConfig.author}
             width={128}
             height={128}
-            className="x:rounded-full x:bg-primary-700"
+            className="x:rounded-full x:bg-primary-600"
             priority
           />
           <div>
@@ -119,7 +119,7 @@ export default async function Page() {
               rel="noopener noreferrer"
               target="_blank"
               aria-label="Calvin's GitHub profile (opens in new tab)"
-              className="x:text-sm x:text-neutral-500 x:hover:text-neutral-900 x:dark:hover:text-neutral-100 x:transition-colors x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:rounded"
+              className="x:text-sm x:text-neutral-500 x:hover:text-neutral-900 x:dark:hover:text-neutral-100 x:transition-colors x:focus-visible:ring-2 x:focus-visible:ring-primary-600 x:rounded"
             >
               GitHub ↗
             </a>
@@ -128,7 +128,7 @@ export default async function Page() {
               rel="noopener noreferrer"
               target="_blank"
               aria-label="Calvin's LinkedIn profile (opens in new tab)"
-              className="x:text-sm x:text-neutral-500 x:hover:text-neutral-900 x:dark:hover:text-neutral-100 x:transition-colors x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:rounded"
+              className="x:text-sm x:text-neutral-500 x:hover:text-neutral-900 x:dark:hover:text-neutral-100 x:transition-colors x:focus-visible:ring-2 x:focus-visible:ring-primary-600 x:rounded"
             >
               LinkedIn ↗
             </a>
@@ -150,13 +150,13 @@ export default async function Page() {
           <div className="x:flex x:flex-wrap x:gap-3">
             <Link
               href="/contact"
-              className="x-button x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:focus-visible:ring-offset-2"
+              className="x-button x:focus-visible:ring-2 x:focus-visible:ring-primary-600 x:focus-visible:ring-offset-2"
             >
               Start a Conversation →
             </Link>
             <Link
               href="/about"
-              className="x-button-ghost x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:focus-visible:ring-offset-2"
+              className="x-button-ghost x:focus-visible:ring-2 x:focus-visible:ring-primary-600 x:focus-visible:ring-offset-2"
             >
               About Me
             </Link>
@@ -196,7 +196,7 @@ export default async function Page() {
               )}
               <Link
                 href={p.route}
-                className="x:text-sm x:hover:underline x:text-neutral-800 x:dark:text-neutral-200 x:min-w-0 x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:rounded"
+                className="x:text-sm x:hover:underline x:text-neutral-800 x:dark:text-neutral-200 x:min-w-0 x:focus-visible:ring-2 x:focus-visible:ring-primary-600 x:rounded"
               >
                 {p.frontMatter.title}
               </Link>

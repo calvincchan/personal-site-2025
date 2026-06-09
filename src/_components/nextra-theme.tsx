@@ -30,7 +30,7 @@ export const NextraTheme: FC<{
 }> = ({ children }) => {
   return (
     <html lang="en" className={mainFont.className}>
-      <Head color={{ hue: 268, saturation: 76, lightness: 59 }} backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
+      <Head color={{ hue: 262, saturation: 76, lightness: 59 }} backgroundColor={{ dark: "#0f172a", light: "#f5f5f5" }} />
       <body>
         <div role="container" className="x-container">
           <Navbar />

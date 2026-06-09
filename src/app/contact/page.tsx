@@ -34,7 +34,7 @@ export default async function Page() {
   return (
     <div>
       <header className="x-page-header">
-        <Image src={profilePic} alt={siteConfig.author} width={180} height={180} className="x:rounded-full x:bg-primary-700" />
+        <Image src={profilePic} alt={siteConfig.author} width={180} height={180} className="x:rounded-full x:bg-primary-600" />
         <h1>{metadata.title as string}</h1>
         <h2>Available for fractional and contract engagements — let&apos;s discuss your project.</h2>
       </header>
