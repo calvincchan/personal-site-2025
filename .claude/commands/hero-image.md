@@ -14,7 +14,7 @@ Generate a hero image prompt for a blog post.
 
 ---
 
-A 16:9 aspect ratio minimalist blog header image. The entire background is a completely solid, flat, vibrant medium-tone purple-violet with the exact hex color #8046E6. Centered perfectly on the canvas is a single, isolated [subject]. The subject is rendered in a clean, crisp, pure black and white photorealistic style with fine mechanical or structural details and realistic textures, completely free of any color or color casts. The subject is captured from a slight three-quarter overhead angle, sitting on an invisible surface with absolutely no drop shadows, reflections, or grounding lines beneath it, creating a floating effect. The composition is highly spacious, leaving generous, clean empty space above and to the sides for a blog title overlay. No human faces, no words, no text, and no numbers are visible anywhere on the subject.
+A 16:9 aspect ratio minimalist blog header image. The entire background is a completely solid, flat, vibrant medium-tone purple-violet with the exact hex color #9660ff. Centered perfectly on the canvas is a single, isolated [subject]. The subject is rendered in a clean, crisp, pure black and white photorealistic style with fine mechanical or structural details and realistic textures, completely free of any color or color casts. The subject is captured from a slight three-quarter overhead angle, sitting on an invisible surface with absolutely no drop shadows, reflections, or grounding lines beneath it, creating a floating effect. The composition is highly spacious, leaving generous, clean empty space above and to the sides for a blog title overlay. No human faces, no words, no text, and no numbers are visible anywhere on the subject.
 
 ---
 
