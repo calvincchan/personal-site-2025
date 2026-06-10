@@ -68,15 +68,15 @@ skills/atlassian/
 
 ## Installation and Auth
 
-Install `atlassian-cli` via Homebrew, then clone the skill into your Claude skills directory:
+Install `atlassian-cli` via Homebrew, then add the skill globally using [`npx skills`](https://skills.sh/):
 
 ```sh
 brew install omar16100/tap/atlassian-cli
 
-git clone https://github.com/calvincchan/atlassian-skill ~/.claude/skills/atlassian-skill
+npx skills add calvincchan/atlassian-skill -g
 ```
 
-That's it for registration. Because the skill's `SKILL.md` includes a `description` in its frontmatter, Claude picks it up automatically when you ask about Jira, Bitbucket, or Confluence. You can also invoke it explicitly with `/atlassian-skill`.
+That's it for registration. Because the skill's `SKILL.md` includes a `description` in its frontmatter, Claude picks it up automatically when you ask about Jira, Bitbucket, or Confluence. You can also invoke it explicitly with `/atlassian`.
 
 Auth configuration is where most people get stuck. The `atlassian-cli` config lives at `~/.atlassian-cli/config.yaml` and uses named profiles:
 
