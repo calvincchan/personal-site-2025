@@ -1,3 +1,4 @@
+import { BookingButton } from "@components/BookingButton";
 import { siteConfig } from "@/lib/site-config";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -154,6 +155,7 @@ export default async function Page() {
             >
               Start a Conversation →
             </Link>
+            <BookingButton />
             <Link
               href="/about"
               className="x-button-ghost x:focus-visible:ring-2 x:focus-visible:ring-primary-700 x:focus-visible:ring-offset-2"

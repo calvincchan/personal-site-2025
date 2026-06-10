@@ -1,3 +1,4 @@
+import { BookingButton } from "@components/BookingButton";
 import { siteConfig } from "@/lib/site-config";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -48,6 +49,12 @@ export default async function Page() {
             <li>Full-lifecycle development — architecture, build, ship, iterate</li>
             <li>Team embed — fractional senior dev on existing product teams</li>
           </ul>
+        </section>
+
+        <section className="x:my-24">
+          <h2>Book a Call</h2>
+          <p>Prefer to talk live? Book a 30-minute call directly.</p>
+          <BookingButton />
         </section>
 
         <section className="x:my-24">
