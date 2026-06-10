@@ -39,6 +39,8 @@ All global constants (author name, site URL, bio, resume URL) are in `src/lib/si
 
 Custom Tailwind utility classes (`.x-container`, `.x-button`, `.x-hero`, etc.) are defined in `src/globals.css`. Nextra default styles are also imported there.
 
+The primary theme colour is `#8046E6` (HSL: 262, 76%, 59%). Use this as the canonical brand colour for any new UI or styling work.
+
 ### SEO / feeds
 
 - `src/app/sitemap.ts` — dynamic sitemap
