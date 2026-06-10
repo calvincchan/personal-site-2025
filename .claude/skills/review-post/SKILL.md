@@ -42,18 +42,20 @@ Report findings per category. For each issue: quote the offending text → state
 - Dry, not warm-fuzzy — flag performative enthusiasm ("exciting!", "I'm passionate about")
 
 ### D. Frontmatter completeness
-- `title` — present, under 70 chars
-- `description` — present, under 160 chars, outcome language
+- `title` — present, descriptive, client-first (length is a Google display concern — don't penalise long titles)
+- `description` — present, outcome language (length truncation is Google-only — don't penalise)
 - `tags` — at least 4 tags
 - `keywords` — at least 4 keyword phrases (title-case, AEO-targeted)
 - `author` — `Calvin C. Chan`
 - `alternates.canonical` — correct slug
 - `date` — present
 
-### E. AEO basics (placeholder — full AEO skill deferred)
-- H2 headings — are they question-shaped or answer-shaped? (AI engines prefer "How I solved X" over "Background")
-- Does the opening paragraph directly answer the core question of the post?
-- Are there any lists or structured content that AI engines can extract?
+### E. AEO signals (primary discoverability check — AEO > SEO)
+- Opening paragraph — does it directly answer the core question of the post? AI engines surface this as the answer snippet.
+- H2 headings — are they question-shaped or answer-shaped? ("Why X Breaks" / "How I Solved Y" > "Background" / "Overview")
+- Structured content — tables, lists, code blocks AI engines can extract verbatim
+- Semantic clarity — does each section have a clear, self-contained point? AI engines chunk by section.
+- Entity specificity — are tool names, product names, and outcomes named explicitly (not "this tool", "the platform")?
 
 ## Step 3 — Score and summarise
 
@@ -81,4 +83,5 @@ REWRITE = structural proof-post issues or voice completely off.
 - Quote exact text when flagging. No vague "improve the opening."
 - Suggest concrete rewrites, not directions.
 - Do not rewrite the entire post unprompted — flag issues, let the user decide.
-- AEO section is advisory only until the full AEO skill is built.
+- AEO signals (section E) are must-fix candidates, not advisory. AEO > SEO.
+- Title/description length are never must-fix. Google display truncation is cosmetic.
