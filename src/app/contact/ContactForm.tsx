@@ -11,7 +11,7 @@ const PROJECT_TYPES = [
   "Other",
 ];
 
-const BUDGET_RANGES = ["<$5k", "$5–15k", "$15–50k", "$50k+"];
+const BUDGET_RANGES = ["<$5k", "$5–15k", "$15–50k", "$50k+", "Other"];
 
 const TIMELINES = ["ASAP", "1–3 months", "3–6 months", "Exploring"];
 
