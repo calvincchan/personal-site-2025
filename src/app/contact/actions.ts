@@ -26,6 +26,14 @@ export async function submitContactForm(
   const timeline = formData.get("timeline") as string;
   const message = (formData.get("message") as string | null)?.trim() ?? "";
 
+  if (!name || !email || !projectType || !budget || !timeline) {
+    return { status: "error", message: "All required fields must be filled." };
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { status: "error", message: "Please enter a valid email address." };
+  }
+
   const body = [
     `Name: ${name}`,
     `Email: ${email}`,
@@ -38,7 +46,7 @@ export async function submitContactForm(
     .join("\n\n");
 
   const { error } = await resend.emails.send({
-    from: "Contact Form <onboarding@resend.dev>",
+    from: `Contact Form <${siteConfig.siteEmail}>`,
     to: siteConfig.siteEmail,
     replyTo: email,
     subject: `New contact: ${projectType} — ${name}`,
@@ -46,7 +54,8 @@ export async function submitContactForm(
   });
 
   if (error) {
-    return { status: "error", message: error.message };
+    console.error("Resend error:", error);
+    return { status: "error", message: "Failed to send message. Please try again or email me directly." };
   }
 
   return { status: "success" };

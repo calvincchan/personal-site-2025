@@ -24,7 +24,7 @@ export function ContactForm() {
   );
 
   useEffect(() => {
-    if (state.status === "success" && typeof window !== "undefined" && window.gtag) {
+    if (state.status === "success" && window.gtag) {
       window.gtag("event", "contact_form_submit");
     }
   }, [state.status]);
@@ -139,7 +139,7 @@ export function ContactForm() {
 
       {state.status === "error" && (
         <div className="x:rounded x:border x:border-red-400 x:bg-red-50 x:dark:bg-red-950 x:p-4 x:text-red-700 x:dark:text-red-300 x:text-sm">
-          Something went wrong: {state.message}. Please try again or email me directly.
+          {state.message}
         </div>
       )}
 
