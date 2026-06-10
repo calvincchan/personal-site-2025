@@ -1,0 +1,128 @@
+---
+title: "Building a Claude Code Skill That Talks to Jira, Bitbucket, and Confluence — Without Leaving My Terminal"
+date: 2026-06-09
+lastmod: 2026-06-09
+description: How I built a Claude Code skill that automates Jira, Bitbucket, and Confluence from the terminal — including PR creation, sprint changelogs, and Confluence publishing in a single prompt.
+tags:
+  - claude-code
+  - atlassian
+  - jira
+  - bitbucket
+  - confluence
+  - developer-productivity
+  - ai-workflow
+keywords:
+  - Claude Code Atlassian skill
+  - Jira terminal workflow
+  - Bitbucket CLI automation
+  - Confluence automation developer
+  - Claude Code custom skill
+author: Calvin C. Chan
+image: /assets/claude-code-skill-atlassian.png
+alternates:
+  canonical: /blog/claude-code-skill-atlassian
+openGraph:
+  type: article
+  images:
+    - url: /assets/claude-code-skill-atlassian.png
+      width: 1600
+      height: 900
+---
+
+If your team runs on Bitbucket and Jira, every GitHub-first AI workflow leaves you out. I built a Claude Code skill that talks to all three Atlassian products — Jira, Bitbucket, and Confluence — without leaving the terminal.
+
+## Why GitHub-First AI Tools Break on Bitbucket
+
+The gap isn't just about PR creation. It's that the entire surface of AI-assisted dev workflows — triaging issues, linking commits to tickets, publishing release notes — assumes GitHub. Bitbucket teams either adapt (badly) or skip it entirely.
+
+The obvious fix would be [the official Atlassian CLI](https://developer.atlassian.com/cloud/acli/reference/commands/). The problem: it only supports Jira. No Bitbucket, no Confluence. That rules it out for a cross-product skill.
+
+Instead, I used [`atlassian-cli`](https://github.com/omar16100/atlassian-cli) by omar16100 — a community-built Rust binary that covers all three products with a consistent interface. It's Homebrew-installable, actively maintained, and handles everything from issue transitions to Confluence space management.
+
+## What a Claude Code Skill Is
+
+A Claude Code skill is a `SKILL.md` file — nothing more. Claude invokes it **automatically** when the task matches the `description` in the file's YAML frontmatter, or **explicitly** as a slash command (`/<name>`). No plugin system, no compiled extension, no deployment. If Claude does the wrong thing, you edit the Markdown.
+
+The [official skills documentation](https://code.claude.com/docs/en/skills) covers the full frontmatter schema.
+
+## What the Skill Covers
+
+The skill wraps the full `atlassian-cli` surface across all three products:
+
+| Product | Capabilities |
+|---|---|
+| Jira | Create, search, update, transition, comment, link issues |
+| Bitbucket | List/create/merge/approve PRs, branch management, repo permissions |
+| Confluence | Create/update/publish pages and blog posts, search, attachments, space management |
+
+The most useful detail is project auto-detection. On first use in a repo, the skill reads the git remote URL and current branch name to derive the Bitbucket workspace slug and Jira project key, confirms them with you once, then writes an `.atlassianrc` file to the repo root. Every subsequent operation in that repo has context without you typing a project key.
+
+The skill structure is four files:
+
+```
+skills/atlassian/
+├── SKILL.md        # Bootstrap, guardrails, coordinate resolution
+├── jira.md         # Jira command reference
+├── bitbucket.md    # Bitbucket command reference
+├── confluence.md   # Confluence command reference
+└── md-to-adf.ts    # Markdown → ADF converter (Bun, zero deps)
+```
+
+## Installation and Auth
+
+Install `atlassian-cli` via Homebrew, then add the skill globally using [`npx skills`](https://skills.sh/):
+
+```sh
+brew install omar16100/tap/atlassian-cli
+
+npx skills add calvincchan/atlassian-skill -g
+```
+
+That's it for registration. Because the skill's `SKILL.md` includes a `description` in its frontmatter, Claude picks it up automatically when you ask about Jira, Bitbucket, or Confluence. You can also invoke it explicitly with `/atlassian`.
+
+Auth setup is covered in the [atlassian-cli README](https://github.com/omar16100/atlassian-cli) — follow that for the most current steps. One gotcha worth flagging here: **Bitbucket requires a separate scoped API token**. The standard Atlassian API token (used for Jira and Confluence) does not work for Bitbucket. You need to create a dedicated token at [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens), selecting "Create API token with scopes" and choosing Bitbucket as the app with at minimum `read:repository:bitbucket` and `write:repository:bitbucket`.
+
+One more trap: `admin:*` scopes do **not** include `read:*`. If you grant admin scope expecting it to cover reads, Bitbucket operations will silently fail. Add both explicitly.
+
+Set the Bitbucket token via environment variable:
+
+```sh
+export ATLASSIAN_BITBUCKET_TOKEN=your-bitbucket-token
+```
+
+## Workflows It Unlocks
+
+Single-product tasks are useful, but the real value is cross-product pipelines in a single prompt. Some examples:
+
+**Release changelog to Confluence:**
+> "Fetch all Jira issues transitioned to Done this sprint, generate a changelog, and post it as a new Confluence blog post in the DEV space."
+
+Claude runs the Jira search, formats the results, and creates the page — no copy-pasting between tabs.
+
+**PR linked to ticket:**
+> "Create a PR from this branch to main. Use the Jira issue title from the branch name as the PR description."
+
+The skill resolves the issue key from the branch, fetches the title, and creates the PR with the right description and a link back to the ticket.
+
+**API docs from diff:**
+> "Based on the changes in this branch, update the API reference page in Confluence."
+
+These are workflows that were technically possible before. They just required enough manual steps that nobody did them.
+
+## Why Markdown Doesn't Work for Jira (and How the Skill Fixes It)
+
+The most important technical constraint in the skill is the format split. Jira descriptions use Atlassian Document Format (ADF) — a JSON schema, not Markdown. Bitbucket PR descriptions use plain Markdown. Confluence bodies use HTML storage format passed as a file path. Pass the wrong format and you get garbled output with no error message.
+
+I built `md-to-adf.ts` specifically for this. It's a zero-dependency TypeScript converter that runs on Bun, taking Markdown from stdin or a file and outputting valid ADF JSON:
+
+```sh
+printf '## Summary\n\n- Fix auth token expiry\n- Update rate limits' | bun skills/atlassian/md-to-adf.ts
+```
+
+Supported elements cover everything I've needed: headings, bold/italic, code blocks, lists, blockquotes, links, and raw `<adf>…</adf>` passthrough blocks for edge cases. The skill invokes it automatically when writing to Jira — you write Markdown, the skill handles conversion.
+
+The format split is what makes a wrapper like this non-trivial. Without it, you'd have to know which product you're targeting and format accordingly. The skill abstracts that away.
+
+## When to Use This Skill
+
+This took an afternoon to build and eliminated the copy-paste overhead I was paying on every sprint. If your team is on Atlassian, the source is at [github.com/calvincchan/atlassian-skill](https://github.com/calvincchan/atlassian-skill). Fork it, adapt it — the skill pattern works for any CLI-backed tool.
