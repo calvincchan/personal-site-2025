@@ -2,7 +2,7 @@
 title: "Building a Claude Code Skill That Talks to Jira, Bitbucket, and Confluence — Without Leaving My Terminal"
 date: 2026-06-09
 lastmod: 2026-06-09
-description: How I built a Claude Code skill to automate Jira, Bitbucket, and Confluence operations from the terminal — and why the official CLI wasn't an option.
+description: How I built a Claude Code skill that automates Jira, Bitbucket, and Confluence from the terminal — including PR creation, sprint changelogs, and Confluence publishing in a single prompt.
 tags:
   - claude-code
   - atlassian
@@ -11,6 +11,12 @@ tags:
   - confluence
   - developer-productivity
   - ai-workflow
+keywords:
+  - Claude Code Atlassian skill
+  - Jira terminal workflow
+  - Bitbucket CLI automation
+  - Confluence automation developer
+  - Claude Code custom skill
 author: Calvin C. Chan
 image: /assets/claude-code-skill-atlassian.png
 alternates:
@@ -23,9 +29,9 @@ openGraph:
       height: 900
 ---
 
-Most Claude Code productivity patterns assume you're on GitHub. The built-in `create-pr` skill calls `gh`. Community skills reference `gh` for issue tracking. If your team runs on Bitbucket and Jira — which plenty of enterprise and SMB shops do — you're left out. I wanted the same terminal-native workflow, so I built a Claude Code skill that talks to all three Atlassian products: Jira, Bitbucket, and Confluence.
+If your team runs on Bitbucket and Jira, every GitHub-first AI workflow leaves you out. I built a Claude Code skill that talks to all three Atlassian products — Jira, Bitbucket, and Confluence — without leaving the terminal.
 
-## The Bitbucket Problem
+## Why GitHub-First AI Tools Break on Bitbucket
 
 The gap isn't just about PR creation. It's that the entire surface of AI-assisted dev workflows — triaging issues, linking commits to tickets, publishing release notes — assumes GitHub. Bitbucket teams either adapt (badly) or skip it entirely.
 
@@ -35,13 +41,9 @@ Instead, I used [`atlassian-cli`](https://github.com/omar16100/atlassian-cli) by
 
 ## What a Claude Code Skill Is
 
-A Claude Code skill is a `SKILL.md` file — nothing more. You place it at `~/.claude/skills/<name>/SKILL.md` for personal use across all projects, or `.claude/skills/<name>/SKILL.md` for a single project. No plugin system, no compiled extension, no deployment.
+A Claude Code skill is a `SKILL.md` file — nothing more. Claude invokes it **automatically** when the task matches the `description` in the file's YAML frontmatter, or **explicitly** as a slash command (`/<name>`). No plugin system, no compiled extension, no deployment. If Claude does the wrong thing, you edit the Markdown.
 
-Claude invokes it in two ways: **automatically**, when the task matches the `description` in the file's YAML frontmatter, or **explicitly** as a slash command (`/<name>`). The body of the file contains instructions, guardrails, and CLI command examples — the frontmatter description is what tells Claude when to reach for it on its own.
-
-The [official skills documentation](https://code.claude.com/docs/en/skills) covers the full frontmatter schema, including `allowed-tools`, `disable-model-invocation`, and dynamic context injection (e.g., `!`git diff HEAD`` to inline shell output).
-
-This makes skills easy to write and easy to debug. If Claude does the wrong thing, you edit the Markdown.
+The [official skills documentation](https://code.claude.com/docs/en/skills) covers the full frontmatter schema.
 
 ## What the Skill Covers
 
@@ -118,7 +120,7 @@ The skill resolves the issue key from the branch, fetches the title, and creates
 
 These are workflows that were technically possible before. They just required enough manual steps that nobody did them.
 
-## The ADF Problem
+## Why Markdown Doesn't Work for Jira (and How the Skill Fixes It)
 
 The most important technical constraint in the skill is the format split. Jira descriptions use Atlassian Document Format (ADF) — a JSON schema, not Markdown. Bitbucket PR descriptions use plain Markdown. Confluence bodies use HTML storage format passed as a file path. Pass the wrong format and you get garbled output with no error message.
 
@@ -132,6 +134,6 @@ Supported elements cover everything I've needed: headings, bold/italic, code blo
 
 The format split is what makes a wrapper like this non-trivial. Without it, you'd have to know which product you're targeting and format accordingly. The skill abstracts that away.
 
-## Takeaway
+## When to Use This Skill
 
-If your team is on Atlassian, a Claude Code skill backed by `atlassian-cli` closes the gap that GitHub-first tooling leaves open. The skill pattern itself — a Markdown file that instructs Claude to call a specific CLI — is reusable for any tool that has a decent command-line interface. The source is at [github.com/calvincchan/atlassian-skill](https://github.com/calvincchan/atlassian-skill) if you want to use it or adapt it.
+This took an afternoon to build and eliminated the copy-paste overhead I was paying on every sprint. If your team is on Atlassian, the source is at [github.com/calvincchan/atlassian-skill](https://github.com/calvincchan/atlassian-skill). Fork it, adapt it — the skill pattern works for any CLI-backed tool.
