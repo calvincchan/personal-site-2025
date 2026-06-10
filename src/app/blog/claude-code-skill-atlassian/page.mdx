@@ -29,13 +29,17 @@ Most Claude Code productivity patterns assume you're on GitHub. The built-in `cr
 
 The gap isn't just about PR creation. It's that the entire surface of AI-assisted dev workflows — triaging issues, linking commits to tickets, publishing release notes — assumes GitHub. Bitbucket teams either adapt (badly) or skip it entirely.
 
-The obvious fix would be the official Atlassian CLI. The problem: it only supports Jira. No Bitbucket, no Confluence. That rules it out for a cross-product skill.
+The obvious fix would be [the official Atlassian CLI](https://developer.atlassian.com/cloud/acli/reference/commands/). The problem: it only supports Jira. No Bitbucket, no Confluence. That rules it out for a cross-product skill.
 
 Instead, I used [`atlassian-cli`](https://github.com/omar16100/atlassian-cli) by omar16100 — a community-built Go binary that covers all three products with a consistent interface. It's Homebrew-installable, actively maintained, and handles everything from issue transitions to Confluence space management.
 
 ## What a Claude Code Skill Is
 
-A Claude Code skill is a Markdown file — nothing more. You register it in `~/.claude/CLAUDE.md` with an instruction like "for all Jira operations, read this file first," and Claude reads it before acting. No plugin system, no compiled extension, no deployment. The skill contains instructions and CLI command examples; Claude decides when and how to invoke them based on what you ask.
+A Claude Code skill is a `SKILL.md` file — nothing more. You place it at `~/.claude/skills/<name>/SKILL.md` for personal use across all projects, or `.claude/skills/<name>/SKILL.md` for a single project. No plugin system, no compiled extension, no deployment.
+
+Claude invokes it in two ways: **automatically**, when the task matches the `description` in the file's YAML frontmatter, or **explicitly** as a slash command (`/<name>`). The body of the file contains instructions, guardrails, and CLI command examples — the frontmatter description is what tells Claude when to reach for it on its own.
+
+The [official skills documentation](https://code.claude.com/docs/en/skills) covers the full frontmatter schema, including `allowed-tools`, `disable-model-invocation`, and dynamic context injection (e.g., `!`git diff HEAD`` to inline shell output).
 
 This makes skills easy to write and easy to debug. If Claude does the wrong thing, you edit the Markdown.
 
@@ -69,16 +73,10 @@ Install `atlassian-cli` via Homebrew, then clone the skill into your Claude skil
 ```sh
 brew install omar16100/tap/atlassian-cli
 
-git clone https://github.com/calvinmclean/atlassian-skill ~/.claude/skills/atlassian-skill
+git clone https://github.com/calvincchan/atlassian-skill ~/.claude/skills/atlassian-skill
 ```
 
-Add to `~/.claude/CLAUDE.md`:
-
-```markdown
-## Atlassian (Jira + Bitbucket + Confluence)
-
-For all Jira, Bitbucket, and Confluence operations, read `~/.claude/skills/atlassian-skill/skills/atlassian/SKILL.md` first.
-```
+That's it for registration. Because the skill's `SKILL.md` includes a `description` in its frontmatter, Claude picks it up automatically when you ask about Jira, Bitbucket, or Confluence. You can also invoke it explicitly with `/atlassian-skill`.
 
 Auth configuration is where most people get stuck. The `atlassian-cli` config lives at `~/.atlassian-cli/config.yaml` and uses named profiles:
 
@@ -136,4 +134,4 @@ The format split is what makes a wrapper like this non-trivial. Without it, you'
 
 ## Takeaway
 
-If your team is on Atlassian, a Claude Code skill backed by `atlassian-cli` closes the gap that GitHub-first tooling leaves open. The skill pattern itself — a Markdown file that instructs Claude to call a specific CLI — is reusable for any tool that has a decent command-line interface. The source is at [github.com/calvinmclean/atlassian-skill](https://github.com/calvinmclean/atlassian-skill) if you want to use it or adapt it.
+If your team is on Atlassian, a Claude Code skill backed by `atlassian-cli` closes the gap that GitHub-first tooling leaves open. The skill pattern itself — a Markdown file that instructs Claude to call a specific CLI — is reusable for any tool that has a decent command-line interface. The source is at [github.com/calvincchan/atlassian-skill](https://github.com/calvincchan/atlassian-skill) if you want to use it or adapt it.
