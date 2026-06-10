@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import profilePic from 'public/images/calvincchan-profile.png';
 import { GitHubIcon, LinkedInIcon, YouTubeIcon } from "src/_icons";
+import { ContactForm } from "./ContactForm";
 
 export function generateMetadata() {
   const result: Metadata = {
@@ -52,16 +53,15 @@ export default async function Page() {
         </section>
 
         <section className="x:my-24">
-          <h2>Book a Call</h2>
-          <p>Prefer to talk live? Book a 30-minute call directly.</p>
-          <BookingButton />
+          <h2>Send a message</h2>
+          <p>Tell me about your project and I&apos;ll get back to you.</p>
+          <ContactForm />
         </section>
 
         <section className="x:my-24">
-          <h2>Email</h2>
-          <p>
-            You can also reach me via email at <a href="mailto:hello@calvincchan.com">hello@calvincchan.com</a>
-          </p>
+          <h2>Book a Call</h2>
+          <p>Prefer to talk live? Book a 30-minute call directly.</p>
+          <BookingButton />
         </section>
 
         <section className="x:my-24">
@@ -88,4 +88,3 @@ export default async function Page() {
     </div>
   );
 }
-
