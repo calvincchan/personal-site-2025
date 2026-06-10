@@ -80,18 +80,7 @@ npx skills add calvincchan/atlassian-skill -g
 
 That's it for registration. Because the skill's `SKILL.md` includes a `description` in its frontmatter, Claude picks it up automatically when you ask about Jira, Bitbucket, or Confluence. You can also invoke it explicitly with `/atlassian`.
 
-Auth configuration is where most people get stuck. The `atlassian-cli` config lives at `~/.atlassian-cli/config.yaml` and uses named profiles:
-
-```sh
-atlassian-cli auth login \
-  --profile work \
-  --base-url https://your-domain.atlassian.net \
-  --email you@example.com \
-  --token $ATLASSIAN_API_TOKEN \
-  --default
-```
-
-The critical gotcha: **Bitbucket requires a separate scoped API token**. The standard Atlassian API token (used for Jira and Confluence) does not work for Bitbucket. You need to create a dedicated token at [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens), selecting "Create API token with scopes" and choosing Bitbucket as the app with at minimum `read:repository:bitbucket` and `write:repository:bitbucket`.
+Auth setup is covered in the [atlassian-cli README](https://github.com/omar16100/atlassian-cli) — follow that for the most current steps. One gotcha worth flagging here: **Bitbucket requires a separate scoped API token**. The standard Atlassian API token (used for Jira and Confluence) does not work for Bitbucket. You need to create a dedicated token at [id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens), selecting "Create API token with scopes" and choosing Bitbucket as the app with at minimum `read:repository:bitbucket` and `write:repository:bitbucket`.
 
 One more trap: `admin:*` scopes do **not** include `read:*`. If you grant admin scope expecting it to cover reads, Bitbucket operations will silently fail. Add both explicitly.
 
