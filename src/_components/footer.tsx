@@ -1,6 +1,7 @@
 import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import type { FC } from 'react';
+import { SubscribeWidget } from './SubscribeWidget';
 
 export const Footer: FC = () => {
   const topLevelNavbarItems: { title: string, route: string, cta?: boolean; }[] = [
@@ -14,6 +15,9 @@ export const Footer: FC = () => {
 
   return (
     <footer className="x-global-footer">
+      <div className="x:px-4 x:py-8 x:max-w-2xl x:mx-auto">
+        <SubscribeWidget />
+      </div>
       <div className="x-row">
         <div className="x-col1">
           <span className="x-author">{new Date().getFullYear()} © {siteConfig.author}.</span>{' '}

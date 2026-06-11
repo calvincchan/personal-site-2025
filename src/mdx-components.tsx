@@ -19,6 +19,7 @@ import { useMDXComponents as getNextraMDXComponents } from 'nextra/mdx-component
 import type { FC } from 'react';
 import { siteConfig } from '@/lib/site-config';
 import { BioCard } from './_components/BioCard';
+import { SubscribeWidget } from './_components/SubscribeWidget';
 import { DateOnly } from './_components/date-only';
 import { Meta } from './_components/meta';
 import { isValidDate } from './is-valid-date';
@@ -199,6 +200,7 @@ export const useMDXComponents = (comp?: UseMDXComponentsProps): MDXComponents =>
             {children}
           </article>
           <BioCard />
+          <SubscribeWidget />
         </>
       );
     },
