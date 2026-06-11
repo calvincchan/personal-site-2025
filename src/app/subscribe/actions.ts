@@ -11,7 +11,7 @@ export async function subscribeEmail(
   _prev: SubscribeState,
   formData: FormData
 ): Promise<SubscribeState> {
-  const email = (formData.get("email") as string | null)?.trim() ?? "";
+  const email = (formData.get("email") as string | null)?.trim().toLowerCase() ?? "";
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { status: "error", message: "Please enter a valid email address." };
