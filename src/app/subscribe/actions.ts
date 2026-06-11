@@ -18,17 +18,15 @@ export async function subscribeEmail(
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
 
-  if (!apiKey || !audienceId) {
-    console.error("RESEND_API_KEY or RESEND_AUDIENCE_ID is not set");
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not set");
     return { status: "error", message: "Subscription service is not configured." };
   }
 
   const resend = new Resend(apiKey);
 
   const { error } = await resend.contacts.create({
-    audienceId,
     email,
     unsubscribed: false,
   });
