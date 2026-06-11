@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { submitContactForm, type ContactFormState } from "./actions";
 
 const PROJECT_TYPES = [
@@ -22,6 +22,23 @@ export function ContactForm() {
     submitContactForm,
     initialState
   );
+  const [clientError, setClientError] = useState<string | null>(null);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+    const projectType = (form.elements.namedItem("projectType") as HTMLSelectElement).value;
+    const budget = (form.elements.namedItem("budget") as HTMLSelectElement).value;
+    const timeline = (form.elements.namedItem("timeline") as HTMLSelectElement).value;
+
+    if (!name || !email || !projectType || !budget || !timeline) {
+      e.preventDefault();
+      setClientError("Please fill in all required fields.");
+      return;
+    }
+    setClientError(null);
+  }
 
   useEffect(() => {
     if (state.status === "success" && window.gtag) {
@@ -39,7 +56,7 @@ export function ContactForm() {
   }
 
   return (
-    <form action={action} noValidate className="x:flex x:flex-col x:gap-5">
+    <form action={action} noValidate onSubmit={handleSubmit} className="x:flex x:flex-col x:gap-5">
       {/* Honeypot */}
       <input type="text" name="website" className="x:hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
@@ -137,9 +154,9 @@ export function ContactForm() {
         />
       </div>
 
-      {state.status === "error" && (
+      {(clientError || state.status === "error") && (
         <div className="x:rounded x:border x:border-red-400 x:bg-red-50 x:dark:bg-red-950 x:p-4 x:text-red-700 x:dark:text-red-300 x:text-sm">
-          {state.message}
+          {clientError ?? (state.status === "error" ? state.message : null)}
         </div>
       )}
 

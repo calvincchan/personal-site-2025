@@ -3,8 +3,6 @@
 import { Resend } from "resend";
 import { siteConfig } from "@/lib/site-config";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export type ContactFormState =
   | { status: "idle" }
   | { status: "success" }
@@ -33,6 +31,13 @@ export async function submitContactForm(
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { status: "error", message: "Please enter a valid email address." };
   }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not set");
+    return { status: "error", message: "Email service is not configured. Please email me directly." };
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const body = [
     `Name: ${name}`,
