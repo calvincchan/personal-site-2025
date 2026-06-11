@@ -27,7 +27,7 @@ export function ContactForm() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     const form = e.currentTarget;
     const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
-    const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim().toLowerCase();
     const projectType = (form.elements.namedItem("projectType") as HTMLSelectElement).value;
     const budget = (form.elements.namedItem("budget") as HTMLSelectElement).value;
     const timeline = (form.elements.namedItem("timeline") as HTMLSelectElement).value;

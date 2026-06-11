@@ -18,7 +18,7 @@ export async function submitContactForm(
   }
 
   const name = (formData.get("name") as string).trim();
-  const email = (formData.get("email") as string).trim();
+  const email = (formData.get("email") as string).trim().toLowerCase();
   const projectType = formData.get("projectType") as string;
   const budget = formData.get("budget") as string;
   const timeline = formData.get("timeline") as string;
